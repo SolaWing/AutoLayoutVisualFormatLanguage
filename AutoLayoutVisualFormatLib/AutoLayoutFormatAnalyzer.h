@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-/**
+/** the syntax is as follow. and completely compatible with Apple Visual Format Language
+
 <visualFormat>      :   <visualStatement>(;<visualStatement>)*
 <visualStatement>   :   (<orientation>:)?(<superview><connection>)?<view>(<connection><view>)*(<connection><superview>)?(<align>)*
                         "orient def H, superview def empty"
@@ -27,12 +28,16 @@
 
                         "if attr1 and attr2 both empty, use default attr, that is:"
                         "when use in connect between super and view, they're both left or right. according to super at front or back"
-                        "when use in connect between views, they're right and left"
+                        "when use in connect between views, they're left and right"
                         "when use in view predicate, they're both width"
                         "when vertical predicate, change attr from left,right,width to top,bottom,height"
 
                         "if only set attr1, attr2 is supposed equal to attr1"
                         "if only set attr2, attr1 still set as default value"
+
+                        "so, each predicate will convert to a constraint"
+                        "for <connect>, equal to: secondView.attr1 == firstView.attr2 * multiplier + constant"
+                        "for <view>, equal to: mainView.attr1 == predicateView.attr2 * multiplier + constant"
 <attr>              :   [LRTBXYltbWH]
 <relation>          :   ==|<=|>=
 <constant>          :   ([+-])?<number>|<metricIndex>

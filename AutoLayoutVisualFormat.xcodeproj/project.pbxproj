@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		214951B91BAEEB0300364AA1 /* libAutoLayoutVisualFormatLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2173707D1BAD2EDE00366B5D /* libAutoLayoutVisualFormatLib.a */; };
 		217370531BAD2E8600366B5D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 217370521BAD2E8600366B5D /* main.m */; };
 		217370561BAD2E8600366B5D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 217370551BAD2E8600366B5D /* AppDelegate.m */; };
 		217370591BAD2E8600366B5D /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 217370581BAD2E8600366B5D /* MasterViewController.m */; };
@@ -94,6 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				214951B91BAEEB0300364AA1 /* libAutoLayoutVisualFormatLib.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,7 +531,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = AutoLayoutVisualFormat/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -539,7 +543,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = AutoLayoutVisualFormat/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -649,6 +655,7 @@
 				217370751BAD2E8600366B5D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		217370761BAD2E8600366B5D /* Build configuration list for PBXNativeTarget "AutoLayoutVisualFormatTests" */ = {
 			isa = XCConfigurationList;
@@ -657,6 +664,7 @@
 				217370781BAD2E8600366B5D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2173708E1BAD2EDF00366B5D /* Build configuration list for PBXNativeTarget "AutoLayoutVisualFormatLib" */ = {
 			isa = XCConfigurationList;
@@ -665,6 +673,7 @@
 				217370901BAD2EDF00366B5D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		217370911BAD2EDF00366B5D /* Build configuration list for PBXNativeTarget "AutoLayoutVisualFormatLibTests" */ = {
 			isa = XCConfigurationList;
@@ -673,6 +682,7 @@
 				217370931BAD2EDF00366B5D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

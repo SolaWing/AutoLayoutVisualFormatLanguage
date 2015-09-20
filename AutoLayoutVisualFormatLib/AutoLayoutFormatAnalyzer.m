@@ -56,45 +56,46 @@ typedef struct analyzeEnv{
 #define SkipSpace(charPtr) while( isspace(*(charPtr)) ) ++(charPtr)
 
 #define kDefaultSpace 8
-static void buildConstraints(id firstView, NSArray* predicates, id secondView, AnalyzeEnv* env) {
+static void buildConstraints(id leftView, NSArray* predicates, id rightView, AnalyzeEnv* env) {
     NSLayoutAttribute defAttr1, defAttr2;
 
-    if (!firstView) { // [V]-|
-        firstView = [secondView superview];
+    if (!leftView) { // [V]-|
+        leftView = [rightView superview];
         defAttr1 = defAttr2 = env->vertical ?
             NSLayoutAttributeBottom : NSLayoutAttributeRight;
-    } else if (!secondView) { // |-[V]
-        secondView = [firstView superview];
+    } else if (!rightView) { // |-[V]
+        rightView = [leftView superview];
         defAttr1 = defAttr2 = env->vertical ?
             NSLayoutAttributeTop : NSLayoutAttributeLeft;
-    } else if (secondView == [NSNull null]){ // [V(...)]
+    } else if (rightView == [NSNull null]){ // [V(...)]
         defAttr1 = defAttr2 = env->vertical ?
             NSLayoutAttributeHeight : NSLayoutAttributeWidth;
     } else { // [V]-[V]
         if (env->vertical) {
-            defAttr1 = NSLayoutAttributeBottom;
-            defAttr2 = NSLayoutAttributeTop;
+            defAttr1 = NSLayoutAttributeTop;
+            defAttr2 = NSLayoutAttributeBottom;
         } else {
-            defAttr1 = NSLayoutAttributeRight;
-            defAttr2 = NSLayoutAttributeLeft;
+            defAttr1 = NSLayoutAttributeLeft;
+            defAttr2 = NSLayoutAttributeRight;
         }
     }
 
     if (predicates.count == 0) { // flush layout [A][B]
         [env->constraints addObject:[NSLayoutConstraint
-            constraintWithItem:firstView attribute:defAttr1
+            constraintWithItem:leftView attribute:defAttr1
                      relatedBy:NSLayoutRelationEqual
-                        toItem:secondView attribute:defAttr2
+                        toItem:rightView attribute:defAttr2
                     multiplier:1.0 constant:0]];
     } else if (predicates[0] == [NSNull null]) { // represent default connection
         [env->constraints addObject:[NSLayoutConstraint
-            constraintWithItem:firstView attribute:defAttr1
+            constraintWithItem:leftView attribute:defAttr1
                      relatedBy:NSLayoutRelationEqual
-                        toItem:secondView attribute:defAttr2
+                        toItem:rightView attribute:defAttr2
                     multiplier:1.0 constant:kDefaultSpace]];
     } else { // contains specific predicate
         NSLayoutAttribute attr1, attr2;
         id view2;
+        NSLayoutConstraint *constraint;
         for (Predicate* predicate in predicates){
             if (predicate->attr1) {
                 attr1 = predicate->attr1;
@@ -111,19 +112,21 @@ static void buildConstraints(id firstView, NSArray* predicates, id secondView, A
                     attr2 = defAttr2; // not set 2, use default
                 }
             }
-            if (secondView != [NSNull null]) view2 = secondView;
+            if (rightView != [NSNull null]) view2 = rightView;
             else{
                 if (predicate->view2 == [NSNull null])
-                    view2 = [firstView superview];
+                    view2 = [leftView superview];
                 else
                     view2 = predicate->view2;
             }
-            [env->constraints addObject:[NSLayoutConstraint
-                 constraintWithItem:firstView attribute:attr1
-                          relatedBy:predicate->relation
-                             toItem:view2 attribute:attr2
-                         multiplier:predicate->multiplier
-                           constant:predicate->constant]];
+            constraint = [NSLayoutConstraint
+                constraintWithItem:leftView attribute:attr1
+                         relatedBy:predicate->relation
+                            toItem:view2 attribute:attr2
+                        multiplier:predicate->multiplier
+                          constant:predicate->constant];
+            constraint.priority = predicate->priority;
+            [env->constraints addObject:constraint];
         }
     }
 }
@@ -147,8 +150,10 @@ static inline NSLayoutAttribute getAttr(char attrChar){
 
 /** identifier begin with [a-zA-Z_], after may be [a-zA-Z0-9_] */
 static inline const char* getIdentifier(const char* format){
-    if (isalpha(*format) || *format == '_') ++format;
-    while ( isalnum(*format) || *format == '_') ++format;
+    if (isalpha(*format) || *format == '_') { // begin with [a-zA-Z_]
+        ++format;
+        while ( isalnum(*format) || *format == '_') ++format;
+    }
     return format;
 }
 
@@ -368,8 +373,9 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
     CONTINUE_LOOP:
         switch( *format ){
             case '|': {
+           superview:
                 if (firstView) { // [V]-|
-                    buildConstraints(firstView, connections, nil, env);
+                    buildConstraints(nil, connections, firstView, env);
 
                     firstIsSuperView = true;
                     firstView = secondView = nil;
@@ -385,6 +391,9 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
                 if (*format == '[') { // [A]-[B], single -
                     [connections addObject:[NSNull null]]; // use NSNull to represet default connection
                     goto View;
+                } else if (*format == '|') {
+                    [connections addObject:[NSNull null]]; // use NSNull to represet default connection
+                    goto superview;
                 } else { // should be a Predicate list
                     format = analyzePredicateListStatement(format, env, connections);
                     SkipSpace(format);
@@ -403,7 +412,10 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
                 format = analyzeViewStatement(format+1, env, &secondView);
                 [connectViews addObject:secondView];
                 if (firstView || firstIsSuperView) {
-                    buildConstraints(firstView, connections, secondView, env);
+                    // for connection, use
+                    // secondView.attr = firstView.attr * mul + constant
+                    // so constant can use positive number to represent space
+                    buildConstraints(secondView, connections, firstView, env);
                 }
 
                 firstView = secondView;

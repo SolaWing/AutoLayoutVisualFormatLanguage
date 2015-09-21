@@ -13,7 +13,7 @@
 
 <visualFormat>      :   <visualStatement>(;<visualStatement>)*
 <visualStatement>   :   (<orientation>:)?(<superview><connection>)?<view>(<connection><view>)*(<connection><superview>)?(<align>)*
-                        "orient def H, superview def empty"
+                        "orient init default H, after visualStatement default equal to previous orient. superview default empty"
 <orientation>       :   H|V
 <superview>         :   |
 <view>              :   [<viewIndex>(predicateList)?]

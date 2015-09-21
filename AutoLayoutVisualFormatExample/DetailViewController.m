@@ -89,7 +89,7 @@
     // Connection to SuperView, vertically
     [NSDictionaryOfVariableBindings(btn) installConstraintsWithVisualFormat:@"V:|-10-[btn]-10-|"];
     // add lack constraint
-    [@[v1,l1,btn,tf] installFullConstraintsWithVisualFormat:@"V:|[1(X|)]-[0] X; |-[2(Y$3)];[3(>=100)]-|"];
+    [@[v1,l1,btn,tf] installFullConstraintsWithVisualFormat:@"V:|[1(X|)]-[0] X; H:|-[2(Y$3)];[3(>=100)]-|"];
 
     UIView *v2 = [UIView new];
     ShowBorder(v2);
@@ -106,7 +106,7 @@
     // Multiplier Predicates And With different Priority
     [NSDictionaryOfVariableBindings(greenView,blueView) installConstraintsWithVisualFormat:@"[greenView(>=70,<=100@999,>=120@30)]"];
     // add lack constraint
-    [@[v1,v2,greenView,blueView] installFullConstraintsWithVisualFormat:@"V:[0]-[1] X; V:|[2(30,==$3,T$3)]|; |[2]; [3]|"];
+    [@[v1,v2,greenView,blueView] installFullConstraintsWithVisualFormat:@"V:[0]-[1] X; |[2(30,==$3,T$3)]|; H:|[2]; [3]|"];
 
     // a complete Line
     LabelWithName_Title_Color(l2, @"Complete Line", 0);
@@ -128,7 +128,7 @@
     [NSDictionaryOfVariableBindings(b1,b2,t1) installFullConstraintsWithVisualFormat:
         @"|-[b1]-[b2]-[t1(>=50)]-| b"];
     [@[v2, l2, v3, b1,b2,t1] installFullConstraintsWithVisualFormat:
-        @"V:[0]-[1]-[2] X; |-[3]; [5]-|; V:|-[3]-|"];
+        @"V:[0]-[1]-[2] X; H:|-[3]; [5]-|; V:|-[3]-|"];
 }
 
 - (void)viewDidLoad {

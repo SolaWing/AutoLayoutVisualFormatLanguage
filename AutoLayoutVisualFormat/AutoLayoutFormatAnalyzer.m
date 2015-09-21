@@ -360,8 +360,9 @@ static const char* analyzeViewStatement(const char* format, AnalyzeEnv* env, id*
 
 static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
     SkipSpace(format);
+    // set H or V according to label. if not set, don't change.(init default to H)
     if (*format == 'V') { env->vertical = true; ++format; }
-    else { env->vertical = false; }
+    else if (*format == 'H') { env->vertical = false; }
 
     id firstView = nil;
     bool firstIsSuperView = false;
@@ -473,6 +474,8 @@ id findCommonAncestor(id view1, id view2) {
     if (!view1) return view2;
     if (!view2 || view1 == view2) return view1;
     if ([view1 superview] == [view2 superview]) return [view1 superview];
+    if ([view2 superview] == view1) return view1;
+
     NSMutableSet* superviewSet = [NSMutableSet setWithObject:view1];
     UIView* superview = view1;
     while ((superview = [superview superview])) {

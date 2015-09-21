@@ -16,7 +16,7 @@
 @interface NSArray (SWAutoLayout)
 
 /** return array of NSLayoutConstraint by align all views in self */
--(NSArray*)constrainsAlignAll:(NSLayoutAttribute)format;
+-(NSArray*)constraintsAlignAllViews:(NSLayoutAttribute)format;
 
 /** return array of NSLayoutConstraint by analyze formatString.
  *  self is infos abount views and metrics.

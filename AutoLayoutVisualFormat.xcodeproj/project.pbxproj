@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		214951B91BAEEB0300364AA1 /* libAutoLayoutVisualFormatLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2173707D1BAD2EDE00366B5D /* libAutoLayoutVisualFormatLib.a */; };
 		217370531BAD2E8600366B5D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 217370521BAD2E8600366B5D /* main.m */; };
 		217370561BAD2E8600366B5D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 217370551BAD2E8600366B5D /* AppDelegate.m */; };
 		217370591BAD2E8600366B5D /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 217370581BAD2E8600366B5D /* MasterViewController.m */; };
@@ -15,30 +14,15 @@
 		2173705F1BAD2E8600366B5D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2173705D1BAD2E8600366B5D /* Main.storyboard */; };
 		217370611BAD2E8600366B5D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 217370601BAD2E8600366B5D /* Images.xcassets */; };
 		217370641BAD2E8600366B5D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 217370621BAD2E8600366B5D /* LaunchScreen.xib */; };
-		217370701BAD2E8600366B5D /* AutoLayoutVisualFormatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2173706F1BAD2E8600366B5D /* AutoLayoutVisualFormatTests.m */; };
 		217370801BAD2EDE00366B5D /* AutoLayoutVisualFormatLib.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2173707F1BAD2EDE00366B5D /* AutoLayoutVisualFormatLib.h */; };
 		217370821BAD2EDE00366B5D /* AutoLayoutVisualFormatLib.m in Sources */ = {isa = PBXBuildFile; fileRef = 217370811BAD2EDE00366B5D /* AutoLayoutVisualFormatLib.m */; };
-		217370881BAD2EDF00366B5D /* libAutoLayoutVisualFormatLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2173707D1BAD2EDE00366B5D /* libAutoLayoutVisualFormatLib.a */; };
 		217370961BAD632000366B5D /* NSArray+SWAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 217370951BAD632000366B5D /* NSArray+SWAutoLayout.m */; };
 		217370991BAD633400366B5D /* NSDictionary+SWAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 217370981BAD633400366B5D /* NSDictionary+SWAutoLayout.m */; };
 		2173709C1BAD637800366B5D /* AutoLayoutFormatAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2173709B1BAD637800366B5D /* AutoLayoutFormatAnalyzer.m */; };
+		21C6C9D11BAF902E007B6F58 /* libAutoLayoutVisualFormat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2173707D1BAD2EDE00366B5D /* libAutoLayoutVisualFormat.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		2173706A1BAD2E8600366B5D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 217370451BAD2E8600366B5D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2173704C1BAD2E8600366B5D;
-			remoteInfo = AutoLayoutVisualFormat;
-		};
-		217370891BAD2EDF00366B5D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 217370451BAD2E8600366B5D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2173707C1BAD2EDE00366B5D;
-			remoteInfo = AutoLayoutVisualFormatLib;
-		};
 		2173709D1BAD6ECE00366B5D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 217370451BAD2E8600366B5D /* Project object */;
@@ -62,7 +46,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2173704D1BAD2E8600366B5D /* AutoLayoutVisualFormat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoLayoutVisualFormat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2173704D1BAD2E8600366B5D /* AutoLayoutVisualFormatExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoLayoutVisualFormatExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		217370511BAD2E8600366B5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		217370521BAD2E8600366B5D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		217370541BAD2E8600366B5D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -74,14 +58,9 @@
 		2173705E1BAD2E8600366B5D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		217370601BAD2E8600366B5D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		217370631BAD2E8600366B5D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		217370691BAD2E8600366B5D /* AutoLayoutVisualFormatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AutoLayoutVisualFormatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2173706E1BAD2E8600366B5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2173706F1BAD2E8600366B5D /* AutoLayoutVisualFormatTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutoLayoutVisualFormatTests.m; sourceTree = "<group>"; };
-		2173707D1BAD2EDE00366B5D /* libAutoLayoutVisualFormatLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAutoLayoutVisualFormatLib.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2173707D1BAD2EDE00366B5D /* libAutoLayoutVisualFormat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAutoLayoutVisualFormat.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2173707F1BAD2EDE00366B5D /* AutoLayoutVisualFormatLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutoLayoutVisualFormatLib.h; sourceTree = "<group>"; };
 		217370811BAD2EDE00366B5D /* AutoLayoutVisualFormatLib.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutoLayoutVisualFormatLib.m; sourceTree = "<group>"; };
-		217370871BAD2EDF00366B5D /* AutoLayoutVisualFormatLibTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AutoLayoutVisualFormatLibTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2173708D1BAD2EDF00366B5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		217370941BAD632000366B5D /* NSArray+SWAutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+SWAutoLayout.h"; sourceTree = "<group>"; };
 		217370951BAD632000366B5D /* NSArray+SWAutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+SWAutoLayout.m"; sourceTree = "<group>"; };
 		217370971BAD633400366B5D /* NSDictionary+SWAutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+SWAutoLayout.h"; sourceTree = "<group>"; };
@@ -95,14 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				214951B91BAEEB0300364AA1 /* libAutoLayoutVisualFormatLib.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		217370661BAD2E8600366B5D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				21C6C9D11BAF902E007B6F58 /* libAutoLayoutVisualFormat.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,24 +85,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		217370841BAD2EDF00366B5D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				217370881BAD2EDF00366B5D /* libAutoLayoutVisualFormatLib.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		217370441BAD2E8600366B5D = {
 			isa = PBXGroup;
 			children = (
-				2173704F1BAD2E8600366B5D /* AutoLayoutVisualFormat */,
-				2173706C1BAD2E8600366B5D /* AutoLayoutVisualFormatTests */,
-				2173707E1BAD2EDE00366B5D /* AutoLayoutVisualFormatLib */,
-				2173708B1BAD2EDF00366B5D /* AutoLayoutVisualFormatLibTests */,
+				2173704F1BAD2E8600366B5D /* AutoLayoutVisualFormatExample */,
+				2173707E1BAD2EDE00366B5D /* AutoLayoutVisualFormat */,
 				2173704E1BAD2E8600366B5D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -138,15 +100,13 @@
 		2173704E1BAD2E8600366B5D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2173704D1BAD2E8600366B5D /* AutoLayoutVisualFormat.app */,
-				217370691BAD2E8600366B5D /* AutoLayoutVisualFormatTests.xctest */,
-				2173707D1BAD2EDE00366B5D /* libAutoLayoutVisualFormatLib.a */,
-				217370871BAD2EDF00366B5D /* AutoLayoutVisualFormatLibTests.xctest */,
+				2173704D1BAD2E8600366B5D /* AutoLayoutVisualFormatExample.app */,
+				2173707D1BAD2EDE00366B5D /* libAutoLayoutVisualFormat.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2173704F1BAD2E8600366B5D /* AutoLayoutVisualFormat */ = {
+		2173704F1BAD2E8600366B5D /* AutoLayoutVisualFormatExample */ = {
 			isa = PBXGroup;
 			children = (
 				217370541BAD2E8600366B5D /* AppDelegate.h */,
@@ -160,7 +120,7 @@
 				217370621BAD2E8600366B5D /* LaunchScreen.xib */,
 				217370501BAD2E8600366B5D /* Supporting Files */,
 			);
-			path = AutoLayoutVisualFormat;
+			path = AutoLayoutVisualFormatExample;
 			sourceTree = "<group>";
 		};
 		217370501BAD2E8600366B5D /* Supporting Files */ = {
@@ -172,24 +132,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		2173706C1BAD2E8600366B5D /* AutoLayoutVisualFormatTests */ = {
-			isa = PBXGroup;
-			children = (
-				2173706F1BAD2E8600366B5D /* AutoLayoutVisualFormatTests.m */,
-				2173706D1BAD2E8600366B5D /* Supporting Files */,
-			);
-			path = AutoLayoutVisualFormatTests;
-			sourceTree = "<group>";
-		};
-		2173706D1BAD2E8600366B5D /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				2173706E1BAD2E8600366B5D /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		2173707E1BAD2EDE00366B5D /* AutoLayoutVisualFormatLib */ = {
+		2173707E1BAD2EDE00366B5D /* AutoLayoutVisualFormat */ = {
 			isa = PBXGroup;
 			children = (
 				2173707F1BAD2EDE00366B5D /* AutoLayoutVisualFormatLib.h */,
@@ -201,31 +144,15 @@
 				2173709A1BAD637800366B5D /* AutoLayoutFormatAnalyzer.h */,
 				2173709B1BAD637800366B5D /* AutoLayoutFormatAnalyzer.m */,
 			);
-			path = AutoLayoutVisualFormatLib;
-			sourceTree = "<group>";
-		};
-		2173708B1BAD2EDF00366B5D /* AutoLayoutVisualFormatLibTests */ = {
-			isa = PBXGroup;
-			children = (
-				2173708C1BAD2EDF00366B5D /* Supporting Files */,
-			);
-			path = AutoLayoutVisualFormatLibTests;
-			sourceTree = "<group>";
-		};
-		2173708C1BAD2EDF00366B5D /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				2173708D1BAD2EDF00366B5D /* Info.plist */,
-			);
-			name = "Supporting Files";
+			path = AutoLayoutVisualFormat;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2173704C1BAD2E8600366B5D /* AutoLayoutVisualFormat */ = {
+		2173704C1BAD2E8600366B5D /* AutoLayoutVisualFormatExample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 217370731BAD2E8600366B5D /* Build configuration list for PBXNativeTarget "AutoLayoutVisualFormat" */;
+			buildConfigurationList = 217370731BAD2E8600366B5D /* Build configuration list for PBXNativeTarget "AutoLayoutVisualFormatExample" */;
 			buildPhases = (
 				217370491BAD2E8600366B5D /* Sources */,
 				2173704A1BAD2E8600366B5D /* Frameworks */,
@@ -236,32 +163,14 @@
 			dependencies = (
 				2173709E1BAD6ECE00366B5D /* PBXTargetDependency */,
 			);
-			name = AutoLayoutVisualFormat;
+			name = AutoLayoutVisualFormatExample;
 			productName = AutoLayoutVisualFormat;
-			productReference = 2173704D1BAD2E8600366B5D /* AutoLayoutVisualFormat.app */;
+			productReference = 2173704D1BAD2E8600366B5D /* AutoLayoutVisualFormatExample.app */;
 			productType = "com.apple.product-type.application";
 		};
-		217370681BAD2E8600366B5D /* AutoLayoutVisualFormatTests */ = {
+		2173707C1BAD2EDE00366B5D /* AutoLayoutVisualFormat */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 217370761BAD2E8600366B5D /* Build configuration list for PBXNativeTarget "AutoLayoutVisualFormatTests" */;
-			buildPhases = (
-				217370651BAD2E8600366B5D /* Sources */,
-				217370661BAD2E8600366B5D /* Frameworks */,
-				217370671BAD2E8600366B5D /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				2173706B1BAD2E8600366B5D /* PBXTargetDependency */,
-			);
-			name = AutoLayoutVisualFormatTests;
-			productName = AutoLayoutVisualFormatTests;
-			productReference = 217370691BAD2E8600366B5D /* AutoLayoutVisualFormatTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		2173707C1BAD2EDE00366B5D /* AutoLayoutVisualFormatLib */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2173708E1BAD2EDF00366B5D /* Build configuration list for PBXNativeTarget "AutoLayoutVisualFormatLib" */;
+			buildConfigurationList = 2173708E1BAD2EDF00366B5D /* Build configuration list for PBXNativeTarget "AutoLayoutVisualFormat" */;
 			buildPhases = (
 				217370791BAD2EDE00366B5D /* Sources */,
 				2173707A1BAD2EDE00366B5D /* Frameworks */,
@@ -271,28 +180,10 @@
 			);
 			dependencies = (
 			);
-			name = AutoLayoutVisualFormatLib;
+			name = AutoLayoutVisualFormat;
 			productName = AutoLayoutVisualFormatLib;
-			productReference = 2173707D1BAD2EDE00366B5D /* libAutoLayoutVisualFormatLib.a */;
+			productReference = 2173707D1BAD2EDE00366B5D /* libAutoLayoutVisualFormat.a */;
 			productType = "com.apple.product-type.library.static";
-		};
-		217370861BAD2EDF00366B5D /* AutoLayoutVisualFormatLibTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 217370911BAD2EDF00366B5D /* Build configuration list for PBXNativeTarget "AutoLayoutVisualFormatLibTests" */;
-			buildPhases = (
-				217370831BAD2EDF00366B5D /* Sources */,
-				217370841BAD2EDF00366B5D /* Frameworks */,
-				217370851BAD2EDF00366B5D /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				2173708A1BAD2EDF00366B5D /* PBXTargetDependency */,
-			);
-			name = AutoLayoutVisualFormatLibTests;
-			productName = AutoLayoutVisualFormatLibTests;
-			productReference = 217370871BAD2EDF00366B5D /* AutoLayoutVisualFormatLibTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -306,14 +197,7 @@
 					2173704C1BAD2E8600366B5D = {
 						CreatedOnToolsVersion = 6.4;
 					};
-					217370681BAD2E8600366B5D = {
-						CreatedOnToolsVersion = 6.4;
-						TestTargetID = 2173704C1BAD2E8600366B5D;
-					};
 					2173707C1BAD2EDE00366B5D = {
-						CreatedOnToolsVersion = 6.4;
-					};
-					217370861BAD2EDF00366B5D = {
 						CreatedOnToolsVersion = 6.4;
 					};
 				};
@@ -331,10 +215,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2173704C1BAD2E8600366B5D /* AutoLayoutVisualFormat */,
-				217370681BAD2E8600366B5D /* AutoLayoutVisualFormatTests */,
-				2173707C1BAD2EDE00366B5D /* AutoLayoutVisualFormatLib */,
-				217370861BAD2EDF00366B5D /* AutoLayoutVisualFormatLibTests */,
+				2173704C1BAD2E8600366B5D /* AutoLayoutVisualFormatExample */,
+				2173707C1BAD2EDE00366B5D /* AutoLayoutVisualFormat */,
 			);
 		};
 /* End PBXProject section */
@@ -347,20 +229,6 @@
 				2173705F1BAD2E8600366B5D /* Main.storyboard in Resources */,
 				217370641BAD2E8600366B5D /* LaunchScreen.xib in Resources */,
 				217370611BAD2E8600366B5D /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		217370671BAD2E8600366B5D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		217370851BAD2EDF00366B5D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,14 +246,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		217370651BAD2E8600366B5D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				217370701BAD2E8600366B5D /* AutoLayoutVisualFormatTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		217370791BAD2EDE00366B5D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -397,29 +257,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		217370831BAD2EDF00366B5D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		2173706B1BAD2E8600366B5D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2173704C1BAD2E8600366B5D /* AutoLayoutVisualFormat */;
-			targetProxy = 2173706A1BAD2E8600366B5D /* PBXContainerItemProxy */;
-		};
-		2173708A1BAD2EDF00366B5D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2173707C1BAD2EDE00366B5D /* AutoLayoutVisualFormatLib */;
-			targetProxy = 217370891BAD2EDF00366B5D /* PBXContainerItemProxy */;
-		};
 		2173709E1BAD6ECE00366B5D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2173707C1BAD2EDE00366B5D /* AutoLayoutVisualFormatLib */;
+			target = 2173707C1BAD2EDE00366B5D /* AutoLayoutVisualFormat */;
 			targetProxy = 2173709D1BAD6ECE00366B5D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -530,7 +373,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = AutoLayoutVisualFormat/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/AutoLayoutVisualFormatExample/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
@@ -542,45 +385,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = AutoLayoutVisualFormat/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/AutoLayoutVisualFormatExample/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		217370771BAD2E8600366B5D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = AutoLayoutVisualFormatTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AutoLayoutVisualFormat.app/AutoLayoutVisualFormat";
-			};
-			name = Debug;
-		};
-		217370781BAD2E8600366B5D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = AutoLayoutVisualFormatTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AutoLayoutVisualFormat.app/AutoLayoutVisualFormat";
 			};
 			name = Release;
 		};
@@ -606,36 +415,6 @@
 			};
 			name = Release;
 		};
-		217370921BAD2EDF00366B5D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = AutoLayoutVisualFormatLibTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		217370931BAD2EDF00366B5D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = AutoLayoutVisualFormatLibTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -648,7 +427,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		217370731BAD2E8600366B5D /* Build configuration list for PBXNativeTarget "AutoLayoutVisualFormat" */ = {
+		217370731BAD2E8600366B5D /* Build configuration list for PBXNativeTarget "AutoLayoutVisualFormatExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				217370741BAD2E8600366B5D /* Debug */,
@@ -657,29 +436,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		217370761BAD2E8600366B5D /* Build configuration list for PBXNativeTarget "AutoLayoutVisualFormatTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				217370771BAD2E8600366B5D /* Debug */,
-				217370781BAD2E8600366B5D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2173708E1BAD2EDF00366B5D /* Build configuration list for PBXNativeTarget "AutoLayoutVisualFormatLib" */ = {
+		2173708E1BAD2EDF00366B5D /* Build configuration list for PBXNativeTarget "AutoLayoutVisualFormat" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2173708F1BAD2EDF00366B5D /* Debug */,
 				217370901BAD2EDF00366B5D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		217370911BAD2EDF00366B5D /* Build configuration list for PBXNativeTarget "AutoLayoutVisualFormatLibTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				217370921BAD2EDF00366B5D /* Debug */,
-				217370931BAD2EDF00366B5D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

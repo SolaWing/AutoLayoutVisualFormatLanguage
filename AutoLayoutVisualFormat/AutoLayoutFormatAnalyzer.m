@@ -431,17 +431,17 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
                 goto CONTINUE_LOOP;
             }
             // align flags
-            case 'L': [env->constraints addObjectsFromArray:[connectViews constrainsAlignAll:NSLayoutAttributeLeft]]     ; break;
-            case 'R': [env->constraints addObjectsFromArray:[connectViews constrainsAlignAll:NSLayoutAttributeRight]]    ; break;
-            case 'T': [env->constraints addObjectsFromArray:[connectViews constrainsAlignAll:NSLayoutAttributeTop]]      ; break;
-            case 'B': [env->constraints addObjectsFromArray:[connectViews constrainsAlignAll:NSLayoutAttributeBottom]]   ; break;
-            case 'X': [env->constraints addObjectsFromArray:[connectViews constrainsAlignAll:NSLayoutAttributeCenterX]]  ; break;
-            case 'Y': [env->constraints addObjectsFromArray:[connectViews constrainsAlignAll:NSLayoutAttributeCenterY]]  ; break;
-            case 'l': [env->constraints addObjectsFromArray:[connectViews constrainsAlignAll:NSLayoutAttributeLeading]]  ; break;
-            case 't': [env->constraints addObjectsFromArray:[connectViews constrainsAlignAll:NSLayoutAttributeTrailing]] ; break;
-            case 'b': [env->constraints addObjectsFromArray:[connectViews constrainsAlignAll:NSLayoutAttributeBaseline]] ; break;
-            case 'W': [env->constraints addObjectsFromArray:[connectViews constrainsAlignAll:NSLayoutAttributeWidth]]    ; break;
-            case 'H': [env->constraints addObjectsFromArray:[connectViews constrainsAlignAll:NSLayoutAttributeHeight]]   ; break;
+            case 'L': [env->constraints addObjectsFromArray:[connectViews constraintsAlignAllViews:NSLayoutAttributeLeft]]     ; break;
+            case 'R': [env->constraints addObjectsFromArray:[connectViews constraintsAlignAllViews:NSLayoutAttributeRight]]    ; break;
+            case 'T': [env->constraints addObjectsFromArray:[connectViews constraintsAlignAllViews:NSLayoutAttributeTop]]      ; break;
+            case 'B': [env->constraints addObjectsFromArray:[connectViews constraintsAlignAllViews:NSLayoutAttributeBottom]]   ; break;
+            case 'X': [env->constraints addObjectsFromArray:[connectViews constraintsAlignAllViews:NSLayoutAttributeCenterX]]  ; break;
+            case 'Y': [env->constraints addObjectsFromArray:[connectViews constraintsAlignAllViews:NSLayoutAttributeCenterY]]  ; break;
+            case 'l': [env->constraints addObjectsFromArray:[connectViews constraintsAlignAllViews:NSLayoutAttributeLeading]]  ; break;
+            case 't': [env->constraints addObjectsFromArray:[connectViews constraintsAlignAllViews:NSLayoutAttributeTrailing]] ; break;
+            case 'b': [env->constraints addObjectsFromArray:[connectViews constraintsAlignAllViews:NSLayoutAttributeBaseline]] ; break;
+            case 'W': [env->constraints addObjectsFromArray:[connectViews constraintsAlignAllViews:NSLayoutAttributeWidth]]    ; break;
+            case 'H': [env->constraints addObjectsFromArray:[connectViews constraintsAlignAllViews:NSLayoutAttributeHeight]]   ; break;
 
             case ';': { ++format; } // ; mark this statement is end. exit
             case '\0': { goto exit; }

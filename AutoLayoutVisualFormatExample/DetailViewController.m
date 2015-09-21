@@ -8,8 +8,8 @@
 
 #import "DetailViewController.h"
 #import <objc/runtime.h>
-#import "../AutoLayoutVisualFormatLib/NSArray+SWAutoLayout.h"
-#import "../AutoLayoutVisualFormatLib/NSDictionary+SWAutoLayout.h"
+#import "../AutoLayoutVisualFormat/NSArray+SWAutoLayout.h"
+#import "../AutoLayoutVisualFormat/NSDictionary+SWAutoLayout.h"
 
 #define RGB(num) [UIColor colorWithRed:((num>>16)&0xff)/255.0 green:((num>>8)&0xff)/255.0 blue:(num&0xff)/255.0 alpha:1];
 #define RGBHEX(hex) RGB(0x##hex)
@@ -57,6 +57,8 @@
     name.layer.borderWidth = 1;                                     \
     name.layer.borderColor = [UIColor lightGrayColor].CGColor;      \
 
+//#define ShowBorder(...)
+
 - (void)System_Visual_Layout {
     UIScrollView* sv = [[UIScrollView alloc] initWithFrame:self.view.bounds];
     sv.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
@@ -87,7 +89,7 @@
     // Connection to SuperView, vertically
     [NSDictionaryOfVariableBindings(btn) installConstraintsWithVisualFormat:@"V:|-10-[btn]-10-|"];
     // add lack constraint
-    [@[v1,l1,btn,tf] installFullConstraintsWithVisualFormat:@"V:|[1(X|)]-[0] X; |[2(Y$3)];[3(>=100)]|"];
+    [@[v1,l1,btn,tf] installFullConstraintsWithVisualFormat:@"V:|[1(X|)]-[0] X; |-[2(Y$3)];[3(>=100)]-|"];
 
     UIView *v2 = [UIView new];
     ShowBorder(v2);

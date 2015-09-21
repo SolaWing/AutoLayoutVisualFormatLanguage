@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#define BuildConstraints(format, ...) [@[ __VA_ARGS__ ] constraintsWithVisualFormat:format]
+#define InstallConstraints(format, ...) [@[__VA_ARGS__] installConstraintsWithVisualFormat:format];
+#define InstallFullConstraints(format, ...) [@[__VA_ARGS__] installFullConstraintsWithVisualFormat:format];
+
 @interface NSArray (SWAutoLayout)
 
 /** return array of NSLayoutConstraint by align all views in self */

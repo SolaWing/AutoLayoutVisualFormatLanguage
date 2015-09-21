@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+#define BuildConstraintsWithEnv(format, ...) [NSDictionaryOfVariableBindings(__VA_ARGS__) constraintsWithVisualFormat:format]
+#define InstallConstraintsWithEnv(format, ...) [NSDictionaryOfVariableBindings(__VA_ARGS__) installConstraintsWithVisualFormat:format];
+#define InstallFullConstraintsWithEnv(format, ...) [NSDictionaryOfVariableBindings(__VA_ARGS__) installFullConstraintsWithVisualFormat:format];
 @interface NSDictionary (SWAutoLayout)
 
 /** return array of NSLayoutConstraint by analyze formatString.

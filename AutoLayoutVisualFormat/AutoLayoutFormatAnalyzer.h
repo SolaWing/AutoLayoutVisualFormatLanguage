@@ -22,7 +22,11 @@
                         "align all connect view in one statement(except superview) according to align flag"
 <connection>        :   <empty>|-<predicateList>-|-                             :empty use 0 space, - use default space
 <predicateList>     :   <predicate>(,<predicate>)*                              :encapsulate with () is optional
-<predicate>         :   (<attr1>)?(<relation>)?(<viewIndex>)?(.?<attr2>)?(*<multiplier>)?(<constant>)?(@<priority>)?
+<predicate>         :   (<identifier>:)?(<attr1>)?(<relation>)?(<viewIndex>)?(.?<attr2>)?(*<multiplier>)?(<constant>)?(@<priority>)?
+                        "predicate can give a identifier as name."
+                        "if give, the generate constraint is added to the associate dict of relative views"
+                        "see `NSObject+Dictionary`. you may replace it with you own implementation"
+
                         "relation default ==, priority default required. multiplier default 1.0, constant default 0"
                         "<viewIndex> can only be used in <view>, if attr2 followed, attr2 need use . to seperate"
 
@@ -47,6 +51,8 @@
 <metricIndex>       :   $?<identifier> in dict | $<index> in array
                         $ for dict index is optional. $ for array index can only omit at the <viewIndex> part of <view>
 <number>            :   As parsed by `strtod`
+<identifier>        :  [a-zA-Z_][a-zA-Z0-9_]*
+<index>             :  non-negative integer
  */
 NSArray* constraintsWithFormat(NSString* format, id env);
 

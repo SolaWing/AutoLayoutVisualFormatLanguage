@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		21212AB11BB12C680069D1DB /* NSObject+Dictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 21212AB01BB12C680069D1DB /* NSObject+Dictionary.m */; };
 		217370531BAD2E8600366B5D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 217370521BAD2E8600366B5D /* main.m */; };
 		217370561BAD2E8600366B5D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 217370551BAD2E8600366B5D /* AppDelegate.m */; };
 		217370591BAD2E8600366B5D /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 217370581BAD2E8600366B5D /* MasterViewController.m */; };
@@ -46,6 +47,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		21212AAF1BB12C680069D1DB /* NSObject+Dictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Dictionary.h"; sourceTree = "<group>"; };
+		21212AB01BB12C680069D1DB /* NSObject+Dictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Dictionary.m"; sourceTree = "<group>"; };
 		2173704D1BAD2E8600366B5D /* AutoLayoutVisualFormatExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoLayoutVisualFormatExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		217370511BAD2E8600366B5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		217370521BAD2E8600366B5D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -141,6 +144,8 @@
 				217370951BAD632000366B5D /* NSArray+SWAutoLayout.m */,
 				217370971BAD633400366B5D /* NSDictionary+SWAutoLayout.h */,
 				217370981BAD633400366B5D /* NSDictionary+SWAutoLayout.m */,
+				21212AAF1BB12C680069D1DB /* NSObject+Dictionary.h */,
+				21212AB01BB12C680069D1DB /* NSObject+Dictionary.m */,
 				2173709A1BAD637800366B5D /* AutoLayoutFormatAnalyzer.h */,
 				2173709B1BAD637800366B5D /* AutoLayoutFormatAnalyzer.m */,
 			);
@@ -253,6 +258,7 @@
 				217370991BAD633400366B5D /* NSDictionary+SWAutoLayout.m in Sources */,
 				217370821BAD2EDE00366B5D /* AutoLayoutVisualFormatLib.m in Sources */,
 				217370961BAD632000366B5D /* NSArray+SWAutoLayout.m in Sources */,
+				21212AB11BB12C680069D1DB /* NSObject+Dictionary.m in Sources */,
 				2173709C1BAD637800366B5D /* AutoLayoutFormatAnalyzer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

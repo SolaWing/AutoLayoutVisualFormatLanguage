@@ -21,6 +21,7 @@
     CGFloat constant;
     id view2;
     CGFloat priority;
+    NSString* name;
 }
 
 @end
@@ -127,6 +128,12 @@ static void buildConstraints(id leftView, NSArray* predicates, id rightView, Ana
                           constant:predicate->constant];
             constraint.priority = predicate->priority;
             [env->constraints addObject:constraint];
+            if (predicate->name){ // if has name. associate it
+                leftView[predicate->name] = constraint;
+                if (view2){
+                    view2[predicate->name] = constraint;
+                }
+            }
         }
     }
 }
@@ -194,9 +201,6 @@ static const char* tryGetIndexValue(const char* format, AnalyzeEnv* env, id* out
             // TODO: Error, $must follow a indexValue
             DLOG(@"can't found indexValue %s", format);
         }
-    } else if (*it == '|') { // superview
-        ++it;
-        *out = [NSNull null];  // use sharedinstance NSNull to represent superview;
     } else if (!env->envIsArray) { // dict $ may omit
         it = _tryGetIndexValue(it, env, out);
     }
@@ -223,13 +227,29 @@ static const char* analyzeConstant(const char* format, AnalyzeEnv* env, CGFloat*
     return format;
 }
 
+static inline const char* analyzeRelation(const char* format, NSLayoutRelation* outRelation){
+    SkipSpace(format);
+    if (*format == '='){
+        *outRelation = NSLayoutRelationEqual;
+        if (*++format == '=') ++format;
+    } else if (*format == '<'){
+        *outRelation = NSLayoutRelationLessThanOrEqual;
+        if (*++format == '=') ++format;
+    } else if (*format == '>') {
+        *outRelation = NSLayoutRelationGreaterThanOrEqual;
+        if (*++format == '=') ++format;
+    }
+    return format;
+}
+
 static const char* analyzePredicateStatement(const char* format, AnalyzeEnv* env, Predicate** outPredicate) {
-    // (<attr1>)?(<relation>)?(<viewIndex>)?(.?<attr2>)?(*<multiplier>)?<constant>(@<priority>)?
+    // (<identifier>:)?(<attr1>)?(<relation>)?(<viewIndex>)?(.?<attr2>)?(*<multiplier>)?(<constant>)?(@<priority>)?
     // because each part is optional, need to check if is the later part
     *outPredicate = [Predicate new];
     bool isMinus = false;
     const char* identifierEnd;
     id obj;
+
     SkipSpace(format);
     // check first is number, if so, direct get as constant and jump to last
     if (((*outPredicate)->constant = strtod(format, (char**)&identifierEnd)),
@@ -239,52 +259,63 @@ static const char* analyzePredicateStatement(const char* format, AnalyzeEnv* env
         goto Priority;
     }
 
-#define CheckIndexValue()                                       \
-    format = tryGetIndexValue(format, env, &obj);               \
-    if (obj) {                                                  \
-        if ( [obj isKindOfClass:[NSNumber class]] ) {           \
-            (*outPredicate)->constant = [obj doubleValue];      \
-            goto Priority;                                      \
-        } else {                                                \
-            (*outPredicate)->view2 = obj;                       \
-            goto Attr2;                                         \
-        }                                                       \
-    }                                                           \
+#define JumpAccordingToIndexValueType(obj)              \
+    if ( [obj isKindOfClass:[NSNumber class]] ) {       \
+        (*outPredicate)->constant = [obj doubleValue];  \
+        goto Priority;                                  \
+    } else {                                            \
+        (*outPredicate)->view2 = obj;                   \
+        goto Attr2;                                     \
+    }                                                   \
 
-    // check if first is ViewIndex
-    CheckIndexValue();
-
-    // check attr1
     identifierEnd = getIdentifier(format);
-    if ( identifierEnd != format ) {
-        // it's attr1
-        (*outPredicate)->attr1 = getAttr(*format);
-        if ( (*outPredicate)->attr1 == 0 ) {
-            // TODO: error, not recognized as attr1
-            DLOG(@"format error: unexpect str %s", format);
-        }
-        // check if after is attr2, and jump over equal and view2
-        if (identifierEnd - format == 2 && ((*outPredicate)->attr2 = getAttr(*(format+1))) != 0) {
+    if (identifierEnd != format) {
+        // check if if a predicate name
+        if ( *identifierEnd == ':')
+        {
+            (*outPredicate)->name = [[NSString alloc] initWithBytes:format
+                length:identifierEnd - format encoding:NSUTF8StringEncoding];
+            format = identifierEnd + 1; // skip :
+        } else {
+            if (!env->envIsArray) { // dict index, check if is and may jump
+                obj = [env->envTable objectForKey:[[NSString alloc]
+                                    initWithBytes:format length:identifierEnd-format
+                                         encoding:NSUTF8StringEncoding]];
+                if (obj) {
+                    format = identifierEnd;
+                    JumpAccordingToIndexValueType(obj);
+                }
+            }
+            // it's attr1
+            (*outPredicate)->attr1 = getAttr(*format);
+            if ( (*outPredicate)->attr1 == 0 ) {
+                // TODO: error, not recognized as attr1
+                DLOG(@"format error: unexpect str %s", format);
+            }
+            // check if after is attr2, and jump over equal and view2
+            if (identifierEnd - format == 2 && ((*outPredicate)->attr2 = getAttr(*(format+1))) != 0) {
+                format = identifierEnd;
+                goto Multiplier;
+            }
             format = identifierEnd;
-            goto Multiplier;
         }
-        format = identifierEnd;
     }
+
     // check relation
-    SkipSpace(format);
-    if (*format == '='){
-        (*outPredicate)->relation = NSLayoutRelationEqual;
-        if (*++format == '=') ++format;
-    } else if (*format == '<'){
-        (*outPredicate)->relation = NSLayoutRelationLessThanOrEqual;
-        if (*++format == '=') ++format;
-    } else if (*format == '>') {
-        (*outPredicate)->relation = NSLayoutRelationGreaterThanOrEqual;
-        if (*++format == '=') ++format;
-    }
+    format = analyzeRelation(format, &((*outPredicate)->relation));
 
     // check ViewIndex
-    CheckIndexValue();
+    SkipSpace(format);
+    if (*format == '|') { // check superview
+        ++format;
+        (*outPredicate)->view2 = [NSNull null]; // use NSNull represent superview
+    } else {
+        format = tryGetIndexValue(format, env, &obj);
+        if (obj) {
+            JumpAccordingToIndexValueType(obj);
+        }
+    }
+
 Attr2:
     SkipSpace(format);
     if (*format == '.') ++format;

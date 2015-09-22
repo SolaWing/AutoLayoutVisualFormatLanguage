@@ -427,8 +427,14 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
                     [connections addObject:[NSNull null]]; // use NSNull to represet default connection
                     goto superview;
                 } else { // should be a Predicate list
+                    if (*format == '(') ++format; // may enclosed by a ()
+
                     format = analyzePredicateListStatement(format, env, connections);
+
                     SkipSpace(format);
+                    if (*format == ')') {
+                        ++format; SkipSpace(format);
+                    }
                     if (*format == '-') {
                         ++format;
                     } else {

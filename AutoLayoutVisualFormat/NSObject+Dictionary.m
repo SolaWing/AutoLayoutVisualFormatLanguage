@@ -28,7 +28,10 @@ char associateDictKey;
         objc_setAssociatedObject(self, &associateDictKey, dict,
                 OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
-    [dict setObject:anObject forKey:aKey];
+    if (anObject)
+        [dict setObject:anObject forKey:aKey];
+    else
+        [dict removeObjectForKey:aKey];
 }
 
 - (void)setObject:(id)object forKeyedSubscript:(id<NSCopying>)aKey {

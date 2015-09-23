@@ -10,6 +10,7 @@
 #import "NSArray+SWAutoLayout.h"
 #import <UIKit/UIKit.h>
 #import <stdlib.h>
+#import <Foundation/Foundation.h>
 
 @interface _SWLayoutPredicate : NSObject
 {
@@ -197,10 +198,7 @@ static const char* tryGetIndexValue(const char* format, AnalyzeEnv* env, id* out
     if (*it == '$') {
         ++it;
         it = _tryGetIndexValue(it, env, out);
-        if (!*out) {
-            // TODO: Error, $must follow a indexValue
-            DLOG(@"can't found indexValue %s", format);
-        }
+        NSCAssert1(*out, @"can't found indexValue at %s", format);
     } else if (!env->envIsArray) { // dict $ may omit
         it = _tryGetIndexValue(it, env, out);
     }
@@ -288,10 +286,7 @@ static const char* analyzePredicateStatement(const char* format, AnalyzeEnv* env
             }
             // it's attr1
             (*outPredicate)->attr1 = getAttr(*format);
-            if ( (*outPredicate)->attr1 == 0 ) {
-                // TODO: error, not recognized as attr1
-                DLOG(@"format error: unexpect str %s", format);
-            }
+            NSCAssert1((*outPredicate)->attr1 != 0, @"format error: unexpect attr type %c", *format);
             // check if after is attr2, and jump over equal and view2
             if (identifierEnd - format == 2 && ((*outPredicate)->attr2 = getAttr(*(format+1))) != 0) {
                 format = identifierEnd;
@@ -322,11 +317,9 @@ Attr2:
     identifierEnd = getIdentifier(format);
     if (identifierEnd != format){
         (*outPredicate)->attr2 = getAttr(*format);
-        if ( (*outPredicate)->attr2 == 0 ) {
-            // TODO: error, not recognized as attr2 but has identifier
-            DLOG(@"format error: unexpect str %s", format);
+        if ( (*outPredicate)->attr2 != 0 ) {
+            format = identifierEnd; // recognized
         }
-        format = identifierEnd;
     }
 Multiplier:
     SkipSpace(format);
@@ -369,10 +362,7 @@ static const char* analyzeViewStatement(const char* format, AnalyzeEnv* env, id*
     SkipSpace(format);
     if (*format == '$') ++format;
     format = _tryGetIndexValue(format, env, outView);
-    if (!*outView) {
-        // TODO: Error!!
-        DLOG(@"can't found identifier at %s!", format);
-    }
+    NSCAssert1(*outView, @"can't found identifier at %s!", format);
     SkipSpace(format);
     if (*format == '(') { // view specific predicate
         NSMutableArray* predicates = [NSMutableArray new];
@@ -382,8 +372,7 @@ static const char* analyzeViewStatement(const char* format, AnalyzeEnv* env, id*
         if (*format == ')') {
             ++format;
         } else {
-            // TODO: Error
-            DLOG(@"unclose ')'");
+            DLOG(@"[WARN] unclose ')'");
         }
     }
     return format;
@@ -438,12 +427,11 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
                     if (*format == '-') {
                         ++format;
                     } else {
-                        // TODO: Error, connection predicate list should end with -
-                        DLOG(@"should end with -");
+                        DLOG(@"[WARN] predicate connection should end with -");
                     }
                     goto CONTINUE_LOOP;
                 }
-                DLOG(@"shouldn't exe!");
+                NSCAssert(NO, @"shouldn't exe!");
             }
             case '[': { // view statement
             View:
@@ -463,8 +451,7 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
                 SkipSpace(format);
                 if (*format == ']') { ++format; }
                 else {
-                    // TODO: Error, view statement end with ];
-                    DLOG(@"should end with ]");
+                    DLOG(@"[WARN] view statement should end with ]");
                 }
                 goto CONTINUE_LOOP;
             }

@@ -57,7 +57,8 @@
         [constraint setActive:YES];
     }
 #else
-    if ([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
+    
+    if ([NSLayoutConstraint instancesRespondToSelector:@selector(setActive:)]) {
         for (NSLayoutConstraint* constraint in self){
             [constraint setActive:YES];
         }

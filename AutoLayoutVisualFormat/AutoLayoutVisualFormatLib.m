@@ -7,7 +7,3 @@
 //
 
 #import "AutoLayoutVisualFormatLib.h"
-
-@implementation AutoLayoutVisualFormatLib
-
-@end

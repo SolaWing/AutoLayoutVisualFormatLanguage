@@ -61,8 +61,9 @@
 
 - (void)System_Visual_Layout {
     UIScrollView* sv = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-    sv.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:sv];
+
+    InstallFullConstraints(@"|[0]|; V:[1][0]|", sv, self.topLayoutGuide);
 
     LabelWithName_Title_Color(l1, @"System Visual Layout", 0);
     [sv addSubview:l1];
@@ -133,6 +134,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.automaticallyAdjustsScrollViewInsets = YES;
 }
 
 - (void)didReceiveMemoryWarning {

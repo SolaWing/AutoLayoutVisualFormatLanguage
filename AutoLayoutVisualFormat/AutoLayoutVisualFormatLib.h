@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@interface AutoLayoutVisualFormatLib : NSObject
-
-@end
+#import "NSArray+SWAutoLayout.h"
+#import "NSDictionary+SWAutoLayout.h"
+#import "NSObject+Dictionary.h"

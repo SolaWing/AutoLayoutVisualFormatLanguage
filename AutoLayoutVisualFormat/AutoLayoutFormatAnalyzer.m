@@ -515,6 +515,21 @@ NSArray<NSLayoutConstraint*>* VFLFullInstall(NSString* format, id env) {
     return ret;
 }
 
+NSArray<NSLayoutConstraint*>* VFLViewConstraints(NSString* format, UIView* view, id env) {
+    NSCParameterAssert(format);
+    NSCParameterAssert(view);
+    NSCParameterAssert(env);
+
+    NSMutableArray* constraints = [NSMutableArray new];
+    AnalyzeEnv environment = {constraints, env, [env isKindOfClass:[NSArray class]], 0};
+    const char* formatPtr = format.UTF8String;
+
+    NSMutableArray* predicates = [NSMutableArray new];
+    formatPtr = analyzePredicateListStatement(formatPtr, &environment, predicates);
+    buildConstraints(view, predicates, [NSNull null], &environment);
+
+    return constraints;
+}
 UIView* findCommonAncestor(UIView* view1, UIView* view2) {
     // this is the most common case, so test it first
     if (!view1) return view2;

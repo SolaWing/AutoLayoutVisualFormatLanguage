@@ -9,7 +9,6 @@
 import UIKit
 
 
-
 func RGB(color:Int32) -> UIColor {
     return UIColor(red: CGFloat((color>>16)&0xff)/255.0,
         green: CGFloat(color>>8&0xff)/255.0,
@@ -65,7 +64,7 @@ class DetailViewController: UIViewController {
         btn.backgroundColor = UIColor.blueColor()
 
         let tf = UITextField()
-        tf.borderStyle = UITextBorderStyle.Bezel
+        tf.borderStyle = .Bezel
         v1.addSubview(btn)
         v1.addSubview(tf)
 

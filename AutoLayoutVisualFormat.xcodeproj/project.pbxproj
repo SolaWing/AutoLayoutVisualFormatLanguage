@@ -20,6 +20,7 @@
 		217370961BAD632000366B5D /* NSArray+SWAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 217370951BAD632000366B5D /* NSArray+SWAutoLayout.m */; };
 		217370991BAD633400366B5D /* NSDictionary+SWAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 217370981BAD633400366B5D /* NSDictionary+SWAutoLayout.m */; };
 		2173709C1BAD637800366B5D /* AutoLayoutFormatAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2173709B1BAD637800366B5D /* AutoLayoutFormatAnalyzer.m */; };
+		218CF9951BB406EB00CA470C /* UIView+SWAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 218CF9941BB406EB00CA470C /* UIView+SWAutoLayout.m */; settings = {ASSET_TAGS = (); }; };
 		21C6C9D11BAF902E007B6F58 /* libAutoLayoutVisualFormat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2173707D1BAD2EDE00366B5D /* libAutoLayoutVisualFormat.a */; };
 		21F88EA41BB2D95A008AFDDB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F88EA31BB2D95A008AFDDB /* AppDelegate.swift */; };
 		21F88EA61BB2D95A008AFDDB /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F88EA51BB2D95A008AFDDB /* MasterViewController.swift */; };
@@ -94,6 +95,8 @@
 		217370981BAD633400366B5D /* NSDictionary+SWAutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+SWAutoLayout.m"; sourceTree = "<group>"; };
 		2173709A1BAD637800366B5D /* AutoLayoutFormatAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoLayoutFormatAnalyzer.h; sourceTree = "<group>"; };
 		2173709B1BAD637800366B5D /* AutoLayoutFormatAnalyzer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoLayoutFormatAnalyzer.m; sourceTree = "<group>"; };
+		218CF9931BB406EB00CA470C /* UIView+SWAutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SWAutoLayout.h"; sourceTree = "<group>"; };
+		218CF9941BB406EB00CA470C /* UIView+SWAutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SWAutoLayout.m"; sourceTree = "<group>"; };
 		21F88EA11BB2D95A008AFDDB /* AutoLayoutSwiftExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoLayoutSwiftExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21F88EA31BB2D95A008AFDDB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21F88EA51BB2D95A008AFDDB /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -191,6 +194,8 @@
 				21212AB01BB12C680069D1DB /* NSObject+Dictionary.m */,
 				2173709A1BAD637800366B5D /* AutoLayoutFormatAnalyzer.h */,
 				2173709B1BAD637800366B5D /* AutoLayoutFormatAnalyzer.m */,
+				218CF9931BB406EB00CA470C /* UIView+SWAutoLayout.h */,
+				218CF9941BB406EB00CA470C /* UIView+SWAutoLayout.m */,
 			);
 			path = AutoLayoutVisualFormat;
 			sourceTree = "<group>";
@@ -353,6 +358,7 @@
 				217370991BAD633400366B5D /* NSDictionary+SWAutoLayout.m in Sources */,
 				217370821BAD2EDE00366B5D /* AutoLayoutVisualFormatLib.m in Sources */,
 				217370961BAD632000366B5D /* NSArray+SWAutoLayout.m in Sources */,
+				218CF9951BB406EB00CA470C /* UIView+SWAutoLayout.m in Sources */,
 				21212AB11BB12C680069D1DB /* NSObject+Dictionary.m in Sources */,
 				2173709C1BAD637800366B5D /* AutoLayoutFormatAnalyzer.m in Sources */,
 			);

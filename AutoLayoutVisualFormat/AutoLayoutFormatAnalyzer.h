@@ -70,5 +70,10 @@ NSArray<NSLayoutConstraint*>* VFLInstall(NSString* format, id env);
 /** one shot for disable translatesAutoresizingMaskIntoConstraints of view in env, create constraints, and active it */
 NSArray<NSLayoutConstraint*>* VFLFullInstall(NSString* format, id env);
 
+/** subset of VFL, only contain <predicateList>, pass in view is firstView.
+ * @return generate constraints
+ */
+NSArray<NSLayoutConstraint*>* VFLViewConstraints(NSString* format, UIView* view, id env);
+
 /** helper func to active NSLayoutConstraint, if not found, return nil */
 UIView* findCommonAncestor(UIView* view1, UIView* view2);

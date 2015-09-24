@@ -12,10 +12,6 @@
 
 @implementation NSDictionary (SWAutoLayout)
 
--(NSArray*)constraintsWithVisualFormat:(NSString*)formatString {
-    return constraintsWithFormat(formatString, self);
-}
-
 - (instancetype)translatesAutoresizingMaskIntoConstraints:(BOOL)trans {
     [self enumerateKeysAndObjectsUsingBlock:^(__unused id key, UIView* obj, __unused BOOL *stop){
          if ([obj isKindOfClass:[UIView class]]) {
@@ -25,15 +21,19 @@
     return self;
 }
 
-- (NSArray*)installConstraintsWithVisualFormat:(NSString*)formatString {
-    NSArray* ret = constraintsWithFormat(formatString, self);
+-(NSArray<NSLayoutConstraint*>*) VFLConstraints:(NSString*)format {
+    return VFLConstraints(format, self);
+}
+
+- (NSArray<NSLayoutConstraint*>*)VFLInstall:(NSString*)format {
+    NSArray* ret = VFLConstraints(format, self);
     [ret activeConstrains];
     return ret;
 }
 
-- (NSArray*)installFullConstraintsWithVisualFormat:(NSString*)formatString {
+- (NSArray<NSLayoutConstraint*>*)VFLFullInstall:(NSString*)format {
     [self translatesAutoresizingMaskIntoConstraints:NO];
-    NSArray* ret = constraintsWithFormat(formatString, self);
+    NSArray* ret = VFLConstraints(format, self);
     [ret activeConstrains];
     return ret;
 }

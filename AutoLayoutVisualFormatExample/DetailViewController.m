@@ -84,13 +84,13 @@
     [v1 addSubview:tf];
 
     // Standard Space
-    [NSDictionaryOfVariableBindings(btn,tf) installFullConstraintsWithVisualFormat:@"[btn]-[tf]"];
+    [NSDictionaryOfVariableBindings(btn,tf) VFLFullInstall:@"[btn]-[tf]"];
     // Width Constraint
-    [NSDictionaryOfVariableBindings(btn) installConstraintsWithVisualFormat:@"[btn(>=100)]"];
+    [NSDictionaryOfVariableBindings(btn) VFLInstall:@"[btn(>=100)]"];
     // Connection to SuperView, vertically
-    [NSDictionaryOfVariableBindings(btn) installConstraintsWithVisualFormat:@"V:|-10-[btn]-10-|"];
+    [NSDictionaryOfVariableBindings(btn) VFLInstall:@"V:|-10-[btn]-10-|"];
     // add lack constraint
-    [@[v1,l1,btn,tf] installFullConstraintsWithVisualFormat:@"V:|[1(X|)]-[0] X; H:|-[2(Y$3)];[3(>=100)]-|"];
+    [@[v1,l1,btn,tf] VFLFullInstall:@"V:|[1(X|)]-[0] X; H:|-[2(Y$3)];[3(>=100)]-|"];
 
     UIView *v2 = [UIView new];
     ShowBorder(v2);
@@ -101,13 +101,13 @@
     [v2 addSubview:greenView];
     [v2 addSubview:blueView];
     // FlushView
-    [NSDictionaryOfVariableBindings(greenView,blueView) installFullConstraintsWithVisualFormat:@"[greenView][blueView]"];
+    [NSDictionaryOfVariableBindings(greenView,blueView) VFLFullInstall:@"[greenView][blueView]"];
     // EqualWidth And Priority
-    [NSDictionaryOfVariableBindings(greenView,blueView) installConstraintsWithVisualFormat:@"[greenView(==blueView@20)]"];
+    [NSDictionaryOfVariableBindings(greenView,blueView) VFLInstall:@"[greenView(==blueView@20)]"];
     // Multiplier Predicates And With different Priority
-    [NSDictionaryOfVariableBindings(greenView,blueView) installConstraintsWithVisualFormat:@"[greenView(>=70,<=100@999,>=120@30)]"];
+    [NSDictionaryOfVariableBindings(greenView,blueView) VFLFullInstall:@"[greenView(>=70,<=100@999,>=120@30)]"];
     // add lack constraint
-    [@[v1,v2,greenView,blueView] installFullConstraintsWithVisualFormat:@"V:[0]-[1] X; |[2(30,==$3,T$3)]|; H:|[2]; [3]|"];
+    [@[v1,v2,greenView,blueView] VFLFullInstall:@"V:[0]-[1] X; |[2(30,==$3,T$3)]|; H:|[2]; [3]|"];
 
     // a complete Line
     LabelWithName_Title_Color(l2, @"Complete Line", 0);
@@ -126,9 +126,9 @@
     [v3 addSubview:b2];
     [v3 addSubview:t1];
     // full line
-    [NSDictionaryOfVariableBindings(b1,b2,t1) installFullConstraintsWithVisualFormat:
+    [NSDictionaryOfVariableBindings(b1,b2,t1) VFLFullInstall:
         @"|-[b1]-[b2]-[t1(>=50)]-| b"];
-    [@[v2, l2, v3, b1,b2,t1] installFullConstraintsWithVisualFormat:
+    [@[v2, l2, v3, b1,b2,t1] VFLFullInstall:
         @"V:[0]-[1]-[2] X; H:|-[3]; [5]-|; V:|-[3]-|"];
 }
 

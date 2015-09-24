@@ -7,29 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
+@class NSLayoutConstraint;
 
-#define BuildConstraintsWithEnv(format, ...) [NSDictionaryOfVariableBindings(__VA_ARGS__) constraintsWithVisualFormat:format]
-#define InstallConstraintsWithEnv(format, ...) [NSDictionaryOfVariableBindings(__VA_ARGS__) installConstraintsWithVisualFormat:format];
-#define InstallFullConstraintsWithEnv(format, ...) [NSDictionaryOfVariableBindings(__VA_ARGS__) installFullConstraintsWithVisualFormat:format];
+#define BuildConstraintsWithEnv(format, ...) [NSDictionaryOfVariableBindings(__VA_ARGS__) VFLConstraints:format]
+#define InstallConstraintsWithEnv(format, ...) [NSDictionaryOfVariableBindings(__VA_ARGS__) VFLInstall:format];
+#define InstallFullConstraintsWithEnv(format, ...) [NSDictionaryOfVariableBindings(__VA_ARGS__) VFLFullInstall:format];
+
+/** Convenience category for use VFL, @see `AutoLayoutFormatAnalyzer.h` */
 @interface NSDictionary (SWAutoLayout)
-
-/** return array of NSLayoutConstraint by analyze formatString.
- *  self is infos abount views and metrics.
- *  see `AutoLayoutFormatAnalyzer`*/
--(NSArray*)constraintsWithVisualFormat:(NSString*)formatString;
 
 /** set all view element translatesAutoresizingMaskIntoConstraints property.
  * @return self
  */
 - (instancetype)translatesAutoresizingMaskIntoConstraints:(BOOL)trans;
 
-/** one shot for constraintsWithVisualFormat and activeConstrains.
- * @return constraints */
-- (NSArray*)installConstraintsWithVisualFormat:(NSString*)formatString;
-
-/** one shot for constraintsWithVisualFormat and activeConstrains.
- *  set translatesAutoresizingMaskIntoConstraints all views in self to NO
- * @return constraints  */
-- (NSArray*)installFullConstraintsWithVisualFormat:(NSString*)formatString;
+- (NSArray<NSLayoutConstraint*>*)VFLConstraints:(NSString*)format;
+- (NSArray<NSLayoutConstraint*>*)VFLInstall:(NSString*)format;
+- (NSArray<NSLayoutConstraint*>*)VFLFullInstall:(NSString*)format;
 
 @end

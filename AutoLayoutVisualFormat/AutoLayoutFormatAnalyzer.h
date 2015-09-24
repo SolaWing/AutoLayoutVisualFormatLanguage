@@ -54,7 +54,19 @@
 <identifier>        :  [a-zA-Z_][a-zA-Z0-9_]*
 <index>             :  non-negative integer
  */
-NSArray* constraintsWithFormat(NSString* format, id env);
+
+/** create and return a array of constraints
+ *
+ * @param format: VFL format string
+ * @param env:    NSArray or NSDictionary, used as index env
+ */
+NSArray<NSLayoutConstraint*>* VFLConstraints(NSString* format, id env);
+
+/** create and return a array of constraints. this constraints is active immediately */
+NSArray<NSLayoutConstraint*>* VFLInstall(NSString* format, id env);
+
+/** one shot for disable translatesAutoresizingMaskIntoConstraints of view in env, create constraints, and active it */
+NSArray<NSLayoutConstraint*>* VFLFullInstall(NSString* format, id env);
 
 /** helper func to active NSLayoutConstraint, if not found, return nil */
 UIView* findCommonAncestor(UIView* view1, UIView* view2);

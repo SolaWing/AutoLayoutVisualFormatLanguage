@@ -58,6 +58,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		21F2126E1BB3875D00344FE6 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -245,6 +255,7 @@
 				21F88E9D1BB2D95A008AFDDB /* Sources */,
 				21F88E9E1BB2D95A008AFDDB /* Frameworks */,
 				21F88E9F1BB2D95A008AFDDB /* Resources */,
+				21F2126E1BB3875D00344FE6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -607,6 +618,7 @@
 				21F88EB41BB2D95A008AFDDB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

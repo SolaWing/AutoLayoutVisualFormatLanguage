@@ -11,7 +11,7 @@
 
 @implementation NSArray (SWAutoLayout)
 
--(NSArray*)constraintsAlignAllViews:(NSLayoutAttribute)attr {
+- (NSArray<NSLayoutConstraint*>*)constraintsAlignAllViews:(NSLayoutAttribute)attr {
     NSUInteger count = self.count;
     if (count < 2) return nil;
 
@@ -25,10 +25,6 @@
     return constraints;
 }
 
--(NSArray*)constraintsWithVisualFormat:(NSString*)formatString {
-    return constraintsWithFormat(formatString, self);
-}
-
 - (instancetype)translatesAutoresizingMaskIntoConstraints:(BOOL)trans {
     for (UIView* element in self){
         if ([element isKindOfClass:[UIView class]]){
@@ -38,30 +34,29 @@
     return self;
 }
 
-- (NSArray*)installConstraintsWithVisualFormat:(NSString*)formatString {
-    NSArray* ret = constraintsWithFormat(formatString, self);
+-(NSArray*)VFLConstraints:(NSString*)format {
+    return VFLConstraints(format, self);
+}
+
+- (NSArray*)VFLInstall:(NSString*)format {
+    NSArray* ret = VFLConstraints(format, self);
     [ret activeConstrains];
     return ret;
 }
 
-- (NSArray*)installFullConstraintsWithVisualFormat:(NSString*)formatString {
+- (NSArray*)VFLFullInstall:(NSString*)format {
     [self translatesAutoresizingMaskIntoConstraints:NO];
-    NSArray* ret = constraintsWithFormat(formatString, self);
+    NSArray* ret = VFLConstraints(format, self);
     [ret activeConstrains];
     return ret;
 }
 
 - (void)activeConstrains {
 #if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_8_0
-    for (NSLayoutConstraint* constraint in self){
-        [constraint setActive:YES];
-    }
+    [NSLayoutConstraint activateConstraints:self];
 #else
-    
     if ([NSLayoutConstraint instancesRespondToSelector:@selector(setActive:)]) {
-        for (NSLayoutConstraint* constraint in self){
-            [constraint setActive:YES];
-        }
+        [NSLayoutConstraint activateConstraints:self];
     } else {
         for (NSLayoutConstraint* constraint in self){
             [findCommonAncestor(constraint.firstItem, constraint.secondItem)

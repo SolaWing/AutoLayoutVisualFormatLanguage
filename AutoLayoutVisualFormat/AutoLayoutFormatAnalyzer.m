@@ -480,7 +480,7 @@ exit:
 
 #pragma mark - API
 
-NSArray* constraintsWithFormat(NSString* format, id env) {
+NSArray<NSLayoutConstraint*>* VFLConstraints(NSString* format, id env) {
     NSCParameterAssert(format);
     NSCParameterAssert(env);
 
@@ -494,7 +494,21 @@ NSArray* constraintsWithFormat(NSString* format, id env) {
     return constraints;
 }
 
-id findCommonAncestor(id view1, id view2) {
+NSArray<NSLayoutConstraint*>* VFLInstall(NSString* format, id env) {
+    NSArray* ret = VFLConstraints(format, env);
+    [ret activeConstrains];
+    return ret;
+}
+
+NSArray<NSLayoutConstraint*>* VFLFullInstall(NSString* format, id env) {
+    [env translatesAutoresizingMaskIntoConstraints:NO];
+    NSArray* ret = VFLConstraints(format, env);
+    [ret activeConstrains];
+    return ret;
+}
+
+UIView* findCommonAncestor(UIView* view1, UIView* view2) {
+    // this is the most common case, so test it first
     if (!view1) return view2;
     if (!view2 || view1 == view2) return view1;
     if ([view1 superview] == [view2 superview]) return [view1 superview];
@@ -503,7 +517,7 @@ id findCommonAncestor(id view1, id view2) {
     NSMutableSet* superviewSet = [NSMutableSet setWithObject:view1];
     UIView* superview = view1;
     while ((superview = [superview superview])) {
-        if (superview == view2) return view2; // view2 is super of view1
+        if (superview == view2) return view2; // view2 is superview of view1
         [superviewSet addObject:superview];
     }
     superview = view2;

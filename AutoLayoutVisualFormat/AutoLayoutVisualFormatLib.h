@@ -10,3 +10,4 @@
 #import "NSArray+SWAutoLayout.h"
 #import "NSDictionary+SWAutoLayout.h"
 #import "NSObject+Dictionary.h"
+#import "AutoLayoutFormatAnalyzer.h"

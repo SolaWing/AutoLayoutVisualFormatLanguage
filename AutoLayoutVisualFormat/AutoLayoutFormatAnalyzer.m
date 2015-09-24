@@ -58,6 +58,11 @@ typedef struct analyzeEnv{
 #define SkipSpace(charPtr) while( isspace(*(charPtr)) ) ++(charPtr)
 
 #define kDefaultSpace 8
+
+static inline bool AttributeNeedPair(NSLayoutAttribute attr) {
+    return attr != NSLayoutAttributeWidth && attr != NSLayoutAttributeHeight;
+}
+
 static void buildConstraints(id leftView, NSArray* predicates, id rightView, AnalyzeEnv* env) {
     NSLayoutAttribute defAttr1, defAttr2;
 
@@ -116,10 +121,13 @@ static void buildConstraints(id leftView, NSArray* predicates, id rightView, Ana
             }
             if (rightView != [NSNull null]) view2 = rightView;
             else{
-                if (predicate->view2 == [NSNull null])
+                if (predicate->view2 == [NSNull null] ||
+                    (!predicate->view2 && AttributeNeedPair(attr1)) )
+                {
                     view2 = [leftView superview];
-                else
+                } else {
                     view2 = predicate->view2;
+                }
             }
             constraint = [NSLayoutConstraint
                 constraintWithItem:leftView attribute:attr1

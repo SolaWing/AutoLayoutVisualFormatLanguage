@@ -25,10 +25,12 @@
 <predicate>         :   (<identifier>:)?(<attr1>)?(<relation>)?(<viewIndex>)?(.?<attr2>)?(*<multiplier>)?(<constant>)?(@<priority>)?
                         "predicate can give a identifier as name."
                         "if give, the generate constraint is added to the associate dict of relative views"
-                        "see `NSObject+Dictionary`. you may replace it with you own implementation"
+                        "@see `NSObject+Dictionary`. you may replace it with you own implementation"
 
                         "relation default ==, priority default required. multiplier default 1.0, constant default 0"
-                        "<viewIndex> can only be used in <view>, if attr2 followed, attr2 need use . to seperate"
+                        "<viewIndex> can only be used in <view>, default nil."
+                        "or if first view attr must need a secondView, it's superview"
+                        "if attr2 followed, attr2 need use . to seperate"
 
                         "if attr1 and attr2 both empty, use default attr, that is:"
                         "when use in connect between super and view, they're both left or right. according to super at front or back"

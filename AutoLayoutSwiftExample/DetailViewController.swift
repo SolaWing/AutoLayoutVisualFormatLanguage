@@ -8,11 +8,7 @@
 
 import UIKit
 
-func showBorder(v : UIView) -> UIView {
-    v.layer.borderWidth = 1;
-    v.layer.borderColor = UIColor.lightGrayColor().CGColor
-    return v
-}
+
 
 func RGB(color:Int32) -> UIColor {
     return UIColor(red: CGFloat((color>>16)&0xff)/255.0,
@@ -29,7 +25,7 @@ class DetailViewController: UIViewController {
         didSet {
             // Update the view.
             self.configureView()
-            self.navigationItem.title = detailItem as! String
+            self.navigationItem.title = detailItem as? String
         }
     }
 
@@ -42,10 +38,15 @@ class DetailViewController: UIViewController {
         }
     }
 
-
+    func showBorder(v : UIView) -> UIView {
+        v.layer.borderWidth = 1;
+        v.layer.borderColor = UIColor.lightGrayColor().CGColor
+        return v
+    }
 
     func System_Visual_Layout() {
         print("System_Visual_Layout")
+        
         let sv = UIScrollView(frame: self.view.frame)
         self.view.addSubview(sv)
         VFLFullInstall("|[0]|;V:[1][0]|", [sv, self.topLayoutGuide])
@@ -75,7 +76,7 @@ class DetailViewController: UIViewController {
         // Connection to SuperView, vertically
         VFLInstall("V:|-[btn]-10-|", ["btn":btn])
         // add lack constraint
-        VFLFullInstall("V:|[1(X|)]-[0] X; H:|-[2(Y$3)];[3(>=100)]-|", [v1,l1,btn,tf])
+        VFLFullInstall("V:| [1(X)]-[0] X; H:|-[2(Y$3)];[3(>=100)]-|", [v1,l1,btn,tf])
         
         let v2 = UIView()
         showBorder(v2)
@@ -107,7 +108,6 @@ class DetailViewController: UIViewController {
         v3.addSubview(b1)
         v3.addSubview(b2)
         v3.addSubview(t1)
-
         // full line
         VFLFullInstall("|-[b1]-[b2]-[t1(>=50)]-| b", ["b1":b1, "b2":b2, "t1":t1])
         // lack constraints

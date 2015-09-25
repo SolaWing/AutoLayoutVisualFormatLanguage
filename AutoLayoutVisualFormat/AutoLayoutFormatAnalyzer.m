@@ -295,11 +295,6 @@ static const char* analyzePredicateStatement(const char* format, AnalyzeEnv* env
             // it's attr1
             (*outPredicate)->attr1 = getAttr(*format);
             NSCAssert1((*outPredicate)->attr1 != 0, @"format error: unexpect attr type %c", *format);
-            // check if after is attr2, and jump over equal and view2
-            if (identifierEnd - format == 2 && ((*outPredicate)->attr2 = getAttr(*(format+1))) != 0) {
-                format = identifierEnd;
-                goto Multiplier;
-            }
             format = identifierEnd;
         }
     }
@@ -530,6 +525,7 @@ NSArray<NSLayoutConstraint*>* VFLViewConstraints(NSString* format, UIView* view,
 
     return constraints;
 }
+
 UIView* findCommonAncestor(UIView* view1, UIView* view2) {
     // this is the most common case, so test it first
     if (!view1) return view2;

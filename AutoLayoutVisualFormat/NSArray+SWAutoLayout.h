@@ -29,6 +29,7 @@
 - (NSArray<NSLayoutConstraint*>*)VFLFullInstall:(NSString*)format;
 
 /** active array of NSLayoutConstraint */
-- (void)activeConstrains;
+- (void)activateConstraints;
+- (void)deactivateConstraints;
 
 @end

@@ -113,6 +113,39 @@ class DetailViewController: UIViewController {
         VFLFullInstall("V:[0]-[1]-[2] X; H:|-[3]; [5]-|; V:|-[3]-|", [v2,l2,v3,b1,b2,t1])
     }
 
+    func Basic() {
+        let v1 = UIView()
+        v1.backgroundColor = UIColor.redColor()
+
+        let v2 = UIView()
+        v2.backgroundColor = UIColor.greenColor()
+
+        let v3 = UIView()
+        v3.backgroundColor = UIColor.blueColor()
+
+        var env:[String : AnyObject] = ["v1":v1, "v2":v2, "v3":v3]
+        for (_, v) in env {
+            view.addSubview(v as! UIView)
+        }
+        env["top"] = topLayoutGuide
+
+        let big = VFLFullInstall("|-[v1]-[v2]-| WHY; |-[v3]-|;" +
+            "V:[top]-[v1]-[v3(v1*0.5)]-|", env)
+        let small = VFLConstraints("[v1(0,X=R*0.25)];[v2(0,X=R*0.75)];[v3(0,X)];" +
+            "V:[v1(0,Y=B*0.25)]; [v2(0,Y=B*0.25)];[v3(0,Y=B*0.75)]", env)
+
+        let animation = { [unowned self] () in
+            (big as NSArray).deactivateConstraints()
+            (small as NSArray).activateConstraints()
+            UIView.animateWithDuration(1, delay:0,
+                options:[.Repeat, .Autoreverse],
+                animations: { () -> Void in
+                    self.view.layoutIfNeeded()
+                }, completion: nil)
+        }
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), animation)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }

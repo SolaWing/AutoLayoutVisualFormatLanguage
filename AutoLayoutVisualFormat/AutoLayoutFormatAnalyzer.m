@@ -499,14 +499,14 @@ NSArray<NSLayoutConstraint*>* VFLConstraints(NSString* format, id env) {
 
 NSArray<NSLayoutConstraint*>* VFLInstall(NSString* format, id env) {
     NSArray* ret = VFLConstraints(format, env);
-    [ret activeConstrains];
+    [ret activateConstraints];
     return ret;
 }
 
 NSArray<NSLayoutConstraint*>* VFLFullInstall(NSString* format, id env) {
     [env translatesAutoresizingMaskIntoConstraints:NO];
     NSArray* ret = VFLConstraints(format, env);
-    [ret activeConstrains];
+    [ret activateConstraints];
     return ret;
 }
 

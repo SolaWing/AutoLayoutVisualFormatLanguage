@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		21212AB11BB12C680069D1DB /* NSObject+Dictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 21212AB01BB12C680069D1DB /* NSObject+Dictionary.m */; };
+		2166E45B1BB6721100869967 /* NSLayoutConstraint+SWAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2166E45A1BB6721100869967 /* NSLayoutConstraint+SWAutoLayout.m */; settings = {ASSET_TAGS = (); }; };
 		217370531BAD2E8600366B5D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 217370521BAD2E8600366B5D /* main.m */; };
 		217370561BAD2E8600366B5D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 217370551BAD2E8600366B5D /* AppDelegate.m */; };
 		217370591BAD2E8600366B5D /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 217370581BAD2E8600366B5D /* MasterViewController.m */; };
@@ -74,6 +75,8 @@
 /* Begin PBXFileReference section */
 		21212AAF1BB12C680069D1DB /* NSObject+Dictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Dictionary.h"; sourceTree = "<group>"; };
 		21212AB01BB12C680069D1DB /* NSObject+Dictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Dictionary.m"; sourceTree = "<group>"; };
+		2166E4591BB6721100869967 /* NSLayoutConstraint+SWAutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+SWAutoLayout.h"; sourceTree = "<group>"; };
+		2166E45A1BB6721100869967 /* NSLayoutConstraint+SWAutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+SWAutoLayout.m"; sourceTree = "<group>"; };
 		2173704D1BAD2E8600366B5D /* AutoLayoutVisualFormatExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoLayoutVisualFormatExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		217370511BAD2E8600366B5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		217370521BAD2E8600366B5D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -196,6 +199,8 @@
 				2173709B1BAD637800366B5D /* AutoLayoutFormatAnalyzer.m */,
 				218CF9931BB406EB00CA470C /* UIView+SWAutoLayout.h */,
 				218CF9941BB406EB00CA470C /* UIView+SWAutoLayout.m */,
+				2166E4591BB6721100869967 /* NSLayoutConstraint+SWAutoLayout.h */,
+				2166E45A1BB6721100869967 /* NSLayoutConstraint+SWAutoLayout.m */,
 			);
 			path = AutoLayoutVisualFormat;
 			sourceTree = "<group>";
@@ -359,6 +364,7 @@
 				217370821BAD2EDE00366B5D /* AutoLayoutVisualFormatLib.m in Sources */,
 				217370961BAD632000366B5D /* NSArray+SWAutoLayout.m in Sources */,
 				218CF9951BB406EB00CA470C /* UIView+SWAutoLayout.m in Sources */,
+				2166E45B1BB6721100869967 /* NSLayoutConstraint+SWAutoLayout.m in Sources */,
 				21212AB11BB12C680069D1DB /* NSObject+Dictionary.m in Sources */,
 				2173709C1BAD637800366B5D /* AutoLayoutFormatAnalyzer.m in Sources */,
 			);
@@ -512,7 +518,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "$(SRCROOT)/AutoLayoutVisualFormatExample/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -524,7 +530,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "$(SRCROOT)/AutoLayoutVisualFormatExample/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -560,7 +566,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = AutoLayoutSwiftExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = SW.AutoLayoutSwiftExample;
@@ -577,7 +583,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = AutoLayoutSwiftExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = SW.AutoLayoutSwiftExample;

@@ -40,30 +40,23 @@
 
 - (NSArray*)VFLInstall:(NSString*)format {
     NSArray* ret = VFLConstraints(format, self);
-    [ret activeConstrains];
+    [ret activateConstraints];
     return ret;
 }
 
 - (NSArray*)VFLFullInstall:(NSString*)format {
     [self translatesAutoresizingMaskIntoConstraints:NO];
     NSArray* ret = VFLConstraints(format, self);
-    [ret activeConstrains];
+    [ret activateConstraints];
     return ret;
 }
 
-- (void)activeConstrains {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_8_0
+- (void)activateConstraints {
     [NSLayoutConstraint activateConstraints:self];
-#else
-    if ([NSLayoutConstraint instancesRespondToSelector:@selector(setActive:)]) {
-        [NSLayoutConstraint activateConstraints:self];
-    } else {
-        for (NSLayoutConstraint* constraint in self){
-            [findCommonAncestor(constraint.firstItem, constraint.secondItem)
-                addConstraint:constraint];
-        }
-    }
-#endif
+}
+
+- (void)deactivateConstraints {
+    [NSLayoutConstraint deactivateConstraints:self];
 }
 
 @end

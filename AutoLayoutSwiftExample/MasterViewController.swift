@@ -11,8 +11,15 @@ import UIKit
 class MasterViewController: UITableViewController {
 
     var detailViewController: DetailViewController? = nil
-    var objects = ["System Visual Layout"]
+    var objects = ["System Visual Layout", "Basic"]
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            clearsSelectionOnViewWillAppear = false
+            preferredContentSize = CGSizeMake(320, 600)
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,11 +29,6 @@ class MasterViewController: UITableViewController {
             let controllers = split.viewControllers
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
-    }
-
-    override func viewWillAppear(animated: Bool) {
-        self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
-        super.viewWillAppear(animated)
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,7 +44,10 @@ class MasterViewController: UITableViewController {
                 let object = objects[indexPath.row]
                 let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
                 controller.detailItem = object
-                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
+                if #available(iOS 8.0, *) {
+                    controller.navigationItem.leftBarButtonItem =
+                        self.splitViewController?.displayModeButtonItem()
+                }
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
         }

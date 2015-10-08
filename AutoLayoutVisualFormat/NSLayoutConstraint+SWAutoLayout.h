@@ -12,7 +12,7 @@
 
 @property(getter=isActive) BOOL active;
 
-+ (void)activateConstraints:(NSArray<NSLayoutConstraint *> * _Nonnull)constraints;
-+ (void)deactivateConstraints:(NSArray<NSLayoutConstraint *> * _Nonnull)constraints;
+//+ (void)activateConstraints:(NSArray<NSLayoutConstraint *> * _Nonnull)constraints;
+//+ (void)deactivateConstraints:(NSArray<NSLayoutConstraint *> * _Nonnull)constraints;
 
 @end

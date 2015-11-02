@@ -63,18 +63,24 @@ static inline bool AttributeNeedPair(NSLayoutAttribute attr) {
     return attr != NSLayoutAttributeWidth && attr != NSLayoutAttributeHeight;
 }
 
+#define SUPER_TOKEN [NSNull null]
+#define DEFAULT_CONNECTION_TOKEN [NSNull null]
 static void buildConstraints(id leftView, NSArray* predicates, id rightView, AnalyzeEnv* env) {
     NSLayoutAttribute defAttr1, defAttr2;
 
-    if (!leftView) { // [V]-|
+    if (leftView == SUPER_TOKEN) { // [V]-|
         leftView = [rightView superview];
+        NSCAssert(leftView, @"superview not exist!");
+
         defAttr1 = defAttr2 = env->vertical ?
             NSLayoutAttributeBottom : NSLayoutAttributeRight;
-    } else if (!rightView) { // |-[V]
+    } else if (rightView == SUPER_TOKEN) { // |-[V]
         rightView = [leftView superview];
+        NSCAssert(rightView, @"superview not exist!");
+
         defAttr1 = defAttr2 = env->vertical ?
             NSLayoutAttributeTop : NSLayoutAttributeLeft;
-    } else if (rightView == [NSNull null]){ // [V(...)]
+    } else if (!rightView){ // [V(...)]
         defAttr1 = defAttr2 = env->vertical ?
             NSLayoutAttributeHeight : NSLayoutAttributeWidth;
     } else { // [V]-[V]
@@ -93,7 +99,7 @@ static void buildConstraints(id leftView, NSArray* predicates, id rightView, Ana
                      relatedBy:NSLayoutRelationEqual
                         toItem:rightView attribute:defAttr2
                     multiplier:1.0 constant:0]];
-    } else if (predicates[0] == [NSNull null]) { // represent default connection
+    } else if (predicates[0] == DEFAULT_CONNECTION_TOKEN) {
         [env->constraints addObject:[NSLayoutConstraint
             constraintWithItem:leftView attribute:defAttr1
                      relatedBy:NSLayoutRelationEqual
@@ -119,9 +125,9 @@ static void buildConstraints(id leftView, NSArray* predicates, id rightView, Ana
                     attr2 = defAttr2; // not set 2, use default
                 }
             }
-            if (rightView != [NSNull null]) view2 = rightView;
-            else{
-                if (predicate->view2 == [NSNull null] ||
+            if (rightView) view2 = rightView;
+            else{ // [view(predicates)]
+                if (predicate->view2 == SUPER_TOKEN ||
                     (!predicate->view2 && AttributeNeedPair(attr1)) )
                 {
                     view2 = [leftView superview];
@@ -306,7 +312,7 @@ static const char* analyzePredicateStatement(const char* format, AnalyzeEnv* env
     SkipSpace(format);
     if (*format == '|') { // check superview
         ++format;
-        (*outPredicate)->view2 = [NSNull null]; // use NSNull represent superview
+        (*outPredicate)->view2 = SUPER_TOKEN;
     } else {
         format = tryGetIndexValue(format, env, &obj);
         if (obj) {
@@ -370,7 +376,7 @@ static const char* analyzeViewStatement(const char* format, AnalyzeEnv* env, id*
     if (*format == '(') { // view specific predicate
         NSMutableArray* predicates = [NSMutableArray new];
         format = analyzePredicateListStatement(format+1, env, predicates);
-        buildConstraints(*outView, predicates, [NSNull null], env);
+        buildConstraints(*outView, predicates, nil, env);
         SkipSpace(format);
         if (*format == ')') {
             ++format;
@@ -388,7 +394,6 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
     else if (*format == 'H') { env->vertical = false; }
 
     id firstView = nil;
-    bool firstIsSuperView = false;
     id secondView = nil;
     NSMutableArray* connections = [NSMutableArray new];
     NSMutableArray* connectViews = [NSMutableArray new];
@@ -399,13 +404,13 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
             case '|': {
            superview:
                 if (firstView) { // [V]-|
-                    buildConstraints(nil, connections, firstView, env);
+                    buildConstraints(SUPER_TOKEN, connections, firstView, env);
 
-                    firstIsSuperView = true;
-                    firstView = secondView = nil;
+                    firstView = SUPER_TOKEN;
+                    secondView = nil;
                     [connections removeAllObjects];
                 } else { // first superview
-                    firstIsSuperView = true;
+                    firstView = SUPER_TOKEN;
                 }
                 break;
             }
@@ -413,10 +418,10 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
                 ++format;   // skip -
                 SkipSpace(format);
                 if (*format == '[') { // [A]-[B], single -
-                    [connections addObject:[NSNull null]]; // use NSNull to represet default connection
+                    [connections addObject:DEFAULT_CONNECTION_TOKEN];
                     goto View;
                 } else if (*format == '|') {
-                    [connections addObject:[NSNull null]]; // use NSNull to represet default connection
+                    [connections addObject:DEFAULT_CONNECTION_TOKEN];
                     goto superview;
                 } else { // should be a Predicate list
                     if (*format == '(') ++format; // may enclosed by a ()
@@ -440,7 +445,7 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
             View:
                 format = analyzeViewStatement(format+1, env, &secondView);
                 [connectViews addObject:secondView];
-                if (firstView || firstIsSuperView) {
+                if (firstView) {
                     // for connection, use
                     // secondView.attr = firstView.attr * mul + constant
                     // so constant can use positive number to represent space
@@ -521,7 +526,7 @@ NSArray<NSLayoutConstraint*>* VFLViewConstraints(NSString* format, UIView* view,
 
     NSMutableArray* predicates = [NSMutableArray new];
     formatPtr = analyzePredicateListStatement(formatPtr, &environment, predicates);
-    buildConstraints(view, predicates, [NSNull null], &environment);
+    buildConstraints(view, predicates, nil, &environment);
 
     return constraints;
 }

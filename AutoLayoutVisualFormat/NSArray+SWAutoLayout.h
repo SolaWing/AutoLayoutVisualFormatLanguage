@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#define BuildConstraints(format, ...) [@[ __VA_ARGS__ ] VFLConstraints:format]
-#define InstallConstraints(format, ...) [@[__VA_ARGS__] VFLInstall:format];
-#define InstallFullConstraints(format, ...) [@[__VA_ARGS__] VFLFullInstall:format];
+#define VFLConstraintsWithParams(format, ...) [@[ __VA_ARGS__ ] VFLConstraints:format]
+#define VFLInstallWithParams(format, ...) [@[__VA_ARGS__] VFLInstall:format]
+#define VFLFullInstallWithParams(format, ...) [@[__VA_ARGS__] VFLFullInstall:format]
 
 /** Convenience category for use VFL, @see `AutoLayoutFormatAnalyzer.h` */
 @interface NSArray (SWAutoLayout)

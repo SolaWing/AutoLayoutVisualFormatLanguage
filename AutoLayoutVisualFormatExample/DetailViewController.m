@@ -63,7 +63,7 @@
     UIScrollView* sv = [[UIScrollView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:sv];
 
-    InstallFullConstraints(@"|[0]|; V:[1][0]|", sv, self.topLayoutGuide);
+    VFLFullInstallWithParams(@"|[0]|; V:[1][0]|", sv, self.topLayoutGuide);
 
     LabelWithName_Title_Color(l1, @"System Visual Layout", 0);
     [sv addSubview:l1];

@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 @class NSLayoutConstraint;
 
-#define BuildConstraintsWithEnv(format, ...) [NSDictionaryOfVariableBindings(__VA_ARGS__) VFLConstraints:format]
-#define InstallConstraintsWithEnv(format, ...) [NSDictionaryOfVariableBindings(__VA_ARGS__) VFLInstall:format];
-#define InstallFullConstraintsWithEnv(format, ...) [NSDictionaryOfVariableBindings(__VA_ARGS__) VFLFullInstall:format];
+#define VFLConstraintsWithEnv(format, ...) [NSDictionaryOfVariableBindings(__VA_ARGS__) VFLConstraints:format]
+#define VFLInstallWithEnv(format, ...) [NSDictionaryOfVariableBindings(__VA_ARGS__) VFLInstall:format]
+#define VFLFullInstallWithEnv(format, ...) [NSDictionaryOfVariableBindings(__VA_ARGS__) VFLFullInstall:format]
 
 /** Convenience category for use VFL, @see `AutoLayoutFormatAnalyzer.h` */
 @interface NSDictionary (SWAutoLayout)

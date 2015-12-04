@@ -24,8 +24,8 @@
 <predicateList>     :   <predicate>(,<predicate>)*                              :encapsulate with () is optional
 <predicate>         :   (<identifier>:)?(<attr1>)?(<relation>)?(<viewIndex>)?(.?<attr2>)?(*<multiplier>)?(<constant>)?(@<priority>)?
                         "predicate can give a identifier as name."
-                        "if give, the generate constraint is added to the associate dict of relative views"
-                        "@see `NSObject+Dictionary`. you may replace it with you own implementation"
+                        "if give, the generate constraint is added to a weak table"
+                        "you can get it from `VFLConstraintForKey` function"
 
                         "relation default ==, priority default required. multiplier default 1.0, constant default 0"
                         "<viewIndex> can only be used in <view>, default nil."
@@ -77,3 +77,8 @@ NSArray<NSLayoutConstraint*>* VFLViewConstraints(NSString* format, UIView* view,
 
 /** helper func to active NSLayoutConstraint, if not found, return nil */
 UIView* findCommonAncestor(UIView* view1, UIView* view2);
+
+/** you can get identifier constraints from this function */
+id VFLObjectForKey(NSString* key);
+static inline NSLayoutConstraint* VFLConstraintForKey(NSString* key) { return VFLObjectForKey(key); }
+void VFLSetObjectForKey(id obj, NSString* key);

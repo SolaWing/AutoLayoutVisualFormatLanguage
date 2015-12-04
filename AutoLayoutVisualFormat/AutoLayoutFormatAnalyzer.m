@@ -12,6 +12,7 @@
 #import <stdlib.h>
 #import <Foundation/Foundation.h>
 
+#pragma mark - model
 @interface _SWLayoutPredicate : NSObject
 {
 @public
@@ -49,6 +50,10 @@ typedef struct analyzeEnv{
     bool vertical;
 } AnalyzeEnv;
 
+
+#pragma mark - CONSTRAINTS DICT
+
+#pragma mark - ANALYZER
 #ifdef DEBUG
 #define DLOG(format, ...) NSLog(@"%s[%d]: "format, __FILE__, __LINE__,  ##__VA_ARGS__)
 #else
@@ -143,15 +148,13 @@ static void buildConstraints(id leftView, NSArray* predicates, id rightView, Ana
                           constant:predicate->constant];
             constraint.priority = predicate->priority;
             [env->constraints addObject:constraint];
-            if (predicate->name){ // if has name. associate it
-                leftView[predicate->name] = constraint;
-                if (view2){
-                    view2[predicate->name] = constraint;
-                }
+            if (predicate->name.length > 0){ // if has name. associate it
+                VFLSetObjectForKey(constraint, predicate->name);
             }
         }
     }
 }
+
 
 static inline NSLayoutAttribute getAttr(char attrChar){
     switch( attrChar ){
@@ -551,5 +554,21 @@ UIView* findCommonAncestor(UIView* view1, UIView* view2) {
     } while(( superview = [superview superview]) );
 
     return nil; // not found
+}
+
+
+static NSMapTable* constraintsRepository =  nil;
+id VFLObjectForKey(NSString* key) {
+    if (!constraintsRepository) return nil;
+    return [constraintsRepository objectForKey:key];
+}
+
+void VFLSetObjectForKey(id obj, NSString* key) {
+    NSCParameterAssert(obj);
+    NSCParameterAssert(key);
+    if (!constraintsRepository) {
+        constraintsRepository = [NSMapTable strongToWeakObjectsMapTable];
+    }
+    [constraintsRepository setObject:obj forKey:key];
 }
 

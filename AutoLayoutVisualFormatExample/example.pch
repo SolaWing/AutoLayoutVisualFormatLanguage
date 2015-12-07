@@ -1,0 +1,38 @@
+//
+//  example.pch
+//  AutoLayoutVisualFormat
+//
+//  Created by SolaWing on 15/12/7.
+//  Copyright © 2015年 SW. All rights reserved.
+//
+
+#ifndef example_pch
+#define example_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#import <UIKit/UIKit.h>
+#import "AutoLayoutVisualFormatLib.h"
+
+#define RGB(num) [UIColor colorWithRed:((num>>16)&0xff)/255.0 green:((num>>8)&0xff)/255.0 blue:(num&0xff)/255.0 alpha:1];
+#define RGBHEX(hex) RGB(0x##hex)
+
+#define NamedViewWithColor(name, color)                         \
+UIView* name = [UIView new];                                    \
+name.layer.borderWidth = 1.0;                                   \
+name.layer.borderColor = [UIColor lightGrayColor].CGColor;      \
+name.backgroundColor = RGBHEX(color);                           \
+
+#define LabelWithName_Title_Color(name,title,color)             \
+UILabel* name = [UILabel new];                                  \
+name.text = title;                                              \
+name.textColor = RGBHEX(color);                                 \
+name.textAlignment = NSTextAlignmentCenter;                     \
+name.numberOfLines = 0;
+
+#define ShowBorder(name)                                        \
+name.layer.borderWidth = 1;                                     \
+name.layer.borderColor = [UIColor lightGrayColor].CGColor;      \
+
+#endif /* example_pch */

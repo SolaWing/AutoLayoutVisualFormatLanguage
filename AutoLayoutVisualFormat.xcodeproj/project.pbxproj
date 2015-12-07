@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2166E45B1BB6721100869967 /* NSLayoutConstraint+SWAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2166E45A1BB6721100869967 /* NSLayoutConstraint+SWAutoLayout.m */; };
+		216A79AC1C15C29B0018645A /* SystemVisualLayoutExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 216A79AB1C15C29B0018645A /* SystemVisualLayoutExample.m */; };
 		217370531BAD2E8600366B5D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 217370521BAD2E8600366B5D /* main.m */; };
 		217370561BAD2E8600366B5D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 217370551BAD2E8600366B5D /* AppDelegate.m */; };
 		217370591BAD2E8600366B5D /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 217370581BAD2E8600366B5D /* MasterViewController.m */; };
@@ -74,6 +75,9 @@
 /* Begin PBXFileReference section */
 		2166E4591BB6721100869967 /* NSLayoutConstraint+SWAutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+SWAutoLayout.h"; sourceTree = "<group>"; };
 		2166E45A1BB6721100869967 /* NSLayoutConstraint+SWAutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+SWAutoLayout.m"; sourceTree = "<group>"; };
+		216A79AA1C15C29B0018645A /* SystemVisualLayoutExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemVisualLayoutExample.h; sourceTree = "<group>"; };
+		216A79AB1C15C29B0018645A /* SystemVisualLayoutExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemVisualLayoutExample.m; sourceTree = "<group>"; };
+		216A79AD1C15C3080018645A /* example.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = example.pch; sourceTree = "<group>"; };
 		2173704D1BAD2E8600366B5D /* AutoLayoutVisualFormatExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoLayoutVisualFormatExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		217370511BAD2E8600366B5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		217370521BAD2E8600366B5D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -135,6 +139,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		216A79A91C15C2610018645A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				216A79AA1C15C29B0018645A /* SystemVisualLayoutExample.h */,
+				216A79AB1C15C29B0018645A /* SystemVisualLayoutExample.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		217370441BAD2E8600366B5D = {
 			isa = PBXGroup;
 			children = (
@@ -158,6 +171,7 @@
 		2173704F1BAD2E8600366B5D /* AutoLayoutVisualFormatExample */ = {
 			isa = PBXGroup;
 			children = (
+				216A79A91C15C2610018645A /* Views */,
 				217370541BAD2E8600366B5D /* AppDelegate.h */,
 				217370551BAD2E8600366B5D /* AppDelegate.m */,
 				217370571BAD2E8600366B5D /* MasterViewController.h */,
@@ -177,6 +191,7 @@
 			children = (
 				217370511BAD2E8600366B5D /* Info.plist */,
 				217370521BAD2E8600366B5D /* main.m */,
+				216A79AD1C15C3080018645A /* example.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -346,6 +361,7 @@
 			files = (
 				217370561BAD2E8600366B5D /* AppDelegate.m in Sources */,
 				217370591BAD2E8600366B5D /* MasterViewController.m in Sources */,
+				216A79AC1C15C29B0018645A /* SystemVisualLayoutExample.m in Sources */,
 				217370531BAD2E8600366B5D /* main.m in Sources */,
 				2173705C1BAD2E8600366B5D /* DetailViewController.m in Sources */,
 			);
@@ -511,6 +527,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = $PROJECT_DIR/AutoLayoutVisualFormatExample/example.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/AutoLayoutVisualFormatExample/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -523,6 +541,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = $PROJECT_DIR/AutoLayoutVisualFormatExample/example.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/AutoLayoutVisualFormatExample/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

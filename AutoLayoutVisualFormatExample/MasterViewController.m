@@ -31,6 +31,7 @@
         @"System Visual Layout"
         ,@"Basic Flow Layout"
         ,@"Switch Layout"
+        ,@"Individual View"
         ,nil];
 
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];

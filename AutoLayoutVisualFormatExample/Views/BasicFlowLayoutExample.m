@@ -33,7 +33,9 @@
         [plusButton addTarget:self action:@selector(clickPlusButton) forControlEvents:UIControlEventTouchUpInside];
         [rightView addSubview:plusButton];
 
-        // create flow layout from left to right. all equal width, equal height, equal centerY
+        // create flow layout from left to right.
+        // specify all views in predicate statement are equal width, equal height, equal centerY at end (WHY)
+        // use ; to seperate statement
         // save space in global weak table to ref later
         VFLFullInstallWithEnv(@"|-(space0:0)-[leftView]-(space1:0)-[centerView]-(space2:0)-[rightView]-(space3:0)-| WHY;"
                 @"V:|-[centerView]-|;", leftView, rightView, centerView);

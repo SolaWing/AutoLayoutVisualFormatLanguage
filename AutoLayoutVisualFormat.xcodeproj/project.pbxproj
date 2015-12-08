@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		214901461C168092005AFB6F /* IndividualViewExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 214901451C168092005AFB6F /* IndividualViewExample.m */; };
 		2149E2581C166AFC005AFB6F /* SwitchLayoutExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 2149E2571C166AFC005AFB6F /* SwitchLayoutExample.m */; };
 		2166E45B1BB6721100869967 /* NSLayoutConstraint+SWAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2166E45A1BB6721100869967 /* NSLayoutConstraint+SWAutoLayout.m */; };
 		216A79AC1C15C29B0018645A /* SystemVisualLayoutExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 216A79AB1C15C29B0018645A /* SystemVisualLayoutExample.m */; };
@@ -75,6 +76,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		214901441C168092005AFB6F /* IndividualViewExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndividualViewExample.h; sourceTree = "<group>"; };
+		214901451C168092005AFB6F /* IndividualViewExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndividualViewExample.m; sourceTree = "<group>"; };
 		2149E2561C166AFC005AFB6F /* SwitchLayoutExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchLayoutExample.h; sourceTree = "<group>"; };
 		2149E2571C166AFC005AFB6F /* SwitchLayoutExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchLayoutExample.m; sourceTree = "<group>"; };
 		2166E4591BB6721100869967 /* NSLayoutConstraint+SWAutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+SWAutoLayout.h"; sourceTree = "<group>"; };
@@ -154,6 +157,8 @@
 				216A79B31C15D47F0018645A /* BasicFlowLayoutExample.m */,
 				2149E2561C166AFC005AFB6F /* SwitchLayoutExample.h */,
 				2149E2571C166AFC005AFB6F /* SwitchLayoutExample.m */,
+				214901441C168092005AFB6F /* IndividualViewExample.h */,
+				214901451C168092005AFB6F /* IndividualViewExample.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -371,6 +376,7 @@
 			files = (
 				217370561BAD2E8600366B5D /* AppDelegate.m in Sources */,
 				217370591BAD2E8600366B5D /* MasterViewController.m in Sources */,
+				214901461C168092005AFB6F /* IndividualViewExample.m in Sources */,
 				216A79AC1C15C29B0018645A /* SystemVisualLayoutExample.m in Sources */,
 				216A79B41C15D47F0018645A /* BasicFlowLayoutExample.m in Sources */,
 				217370531BAD2E8600366B5D /* main.m in Sources */,

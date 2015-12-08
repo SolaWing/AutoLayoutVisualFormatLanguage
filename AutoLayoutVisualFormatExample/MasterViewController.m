@@ -27,7 +27,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    self.objects = [NSMutableArray arrayWithObjects:@"System Visual Layout",nil];
+    self.objects = [NSMutableArray arrayWithObjects:
+        @"System Visual Layout"
+        ,@"Basic Flow Layout"
+        ,nil];
 
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 }

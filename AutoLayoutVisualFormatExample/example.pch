@@ -15,7 +15,7 @@
 #import <UIKit/UIKit.h>
 #import "AutoLayoutVisualFormatLib.h"
 
-#define RGB(num) [UIColor colorWithRed:((num>>16)&0xff)/255.0 green:((num>>8)&0xff)/255.0 blue:(num&0xff)/255.0 alpha:1];
+#define RGB(num) [UIColor colorWithRed:((num>>16)&0xff)/255.0 green:((num>>8)&0xff)/255.0 blue:(num&0xff)/255.0 alpha:1]
 #define RGBHEX(hex) RGB(0x##hex)
 
 #define NamedViewWithColor(name, color)                         \

@@ -28,15 +28,10 @@
 }
 
 - (void)configureView {
-    UIView* containerView = [UIScrollView new];
-    [self.view addSubview:containerView];
-    [containerView VFLFullInstall:@"L,R, B,T=$1", self.topLayoutGuide];
-
     NSString* name = [_detailItem stringByReplacingOccurrencesOfString:@" " withString:@""];
     UIView* view = [NSClassFromString([name stringByAppendingString:@"Example"]) new];
-    [containerView addSubview:view];
-    // vertical center if possible, or top align.
-    [view VFLFullInstall:@"L=$1,R=$1, Y@999, T>=0", self.view];
+    [self.view addSubview:view];
+    [view VFLFullInstall:@"Left,Right, Bottom,Top=$1.Bottom", self.topLayoutGuide];
 }
 
 - (void)viewDidLoad {

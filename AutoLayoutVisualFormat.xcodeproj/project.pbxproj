@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2166E45B1BB6721100869967 /* NSLayoutConstraint+SWAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2166E45A1BB6721100869967 /* NSLayoutConstraint+SWAutoLayout.m */; };
 		216A79AC1C15C29B0018645A /* SystemVisualLayoutExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 216A79AB1C15C29B0018645A /* SystemVisualLayoutExample.m */; };
+		216A79B41C15D47F0018645A /* BasicFlowLayoutExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 216A79B31C15D47F0018645A /* BasicFlowLayoutExample.m */; };
 		217370531BAD2E8600366B5D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 217370521BAD2E8600366B5D /* main.m */; };
 		217370561BAD2E8600366B5D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 217370551BAD2E8600366B5D /* AppDelegate.m */; };
 		217370591BAD2E8600366B5D /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 217370581BAD2E8600366B5D /* MasterViewController.m */; };
@@ -78,6 +79,8 @@
 		216A79AA1C15C29B0018645A /* SystemVisualLayoutExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemVisualLayoutExample.h; sourceTree = "<group>"; };
 		216A79AB1C15C29B0018645A /* SystemVisualLayoutExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemVisualLayoutExample.m; sourceTree = "<group>"; };
 		216A79AD1C15C3080018645A /* example.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = example.pch; sourceTree = "<group>"; };
+		216A79B21C15D47F0018645A /* BasicFlowLayoutExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicFlowLayoutExample.h; sourceTree = "<group>"; };
+		216A79B31C15D47F0018645A /* BasicFlowLayoutExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicFlowLayoutExample.m; sourceTree = "<group>"; };
 		2173704D1BAD2E8600366B5D /* AutoLayoutVisualFormatExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoLayoutVisualFormatExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		217370511BAD2E8600366B5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		217370521BAD2E8600366B5D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -144,8 +147,10 @@
 			children = (
 				216A79AA1C15C29B0018645A /* SystemVisualLayoutExample.h */,
 				216A79AB1C15C29B0018645A /* SystemVisualLayoutExample.m */,
+				216A79B21C15D47F0018645A /* BasicFlowLayoutExample.h */,
+				216A79B31C15D47F0018645A /* BasicFlowLayoutExample.m */,
 			);
-			name = Views;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		217370441BAD2E8600366B5D = {
@@ -362,6 +367,7 @@
 				217370561BAD2E8600366B5D /* AppDelegate.m in Sources */,
 				217370591BAD2E8600366B5D /* MasterViewController.m in Sources */,
 				216A79AC1C15C29B0018645A /* SystemVisualLayoutExample.m in Sources */,
+				216A79B41C15D47F0018645A /* BasicFlowLayoutExample.m in Sources */,
 				217370531BAD2E8600366B5D /* main.m in Sources */,
 				2173705C1BAD2E8600366B5D /* DetailViewController.m in Sources */,
 			);

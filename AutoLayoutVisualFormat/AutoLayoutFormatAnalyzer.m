@@ -196,7 +196,7 @@ static const char* _tryGetIndexValue(const char* format, AnalyzeEnv* env, id* ou
         }
     } else {
         const char* begin = it;
-        while ( isalnum(*it) || *it == '_' ) ++it; // identifier contains _A-Za-z0-9
+        it = getIdentifier(it);
         if (begin != it) {
             *out = [env->envTable objectForKey:[[NSString alloc]
                             initWithBytes:begin length:it-begin
@@ -266,9 +266,9 @@ static const char* analyzePredicateStatement(const char* format, AnalyzeEnv* env
     id obj;
 
     SkipSpace(format);
+    (*outPredicate)->constant = strtod(format, (char**)&identifierEnd);
     // check first is number, if so, direct get as constant and jump to last
-    if (((*outPredicate)->constant = strtod(format, (char**)&identifierEnd)),
-            format != identifierEnd)
+    if (format != identifierEnd)
     {
         format = identifierEnd;
         goto Priority;
@@ -285,13 +285,16 @@ static const char* analyzePredicateStatement(const char* format, AnalyzeEnv* env
 
     identifierEnd = getIdentifier(format);
     if (identifierEnd != format) {
-        // check if if a predicate name
+        // check if it's a predicate name
         if ( *identifierEnd == ':')
         {
             (*outPredicate)->name = [[NSString alloc] initWithBytes:format
                 length:identifierEnd - format encoding:NSUTF8StringEncoding];
             format = identifierEnd + 1; // skip :
-        } else {
+            SkipSpace(format);
+            identifierEnd = getIdentifier(format);
+        }
+        if (identifierEnd != format) {
             if (!env->envIsArray) { // dict index, check if is and may jump
                 obj = [env->envTable objectForKey:[[NSString alloc]
                                     initWithBytes:format length:identifierEnd-format
@@ -333,7 +336,8 @@ Attr2:
             format = identifierEnd; // recognized
         }
     }
-Multiplier:
+
+// Multiplier:
     SkipSpace(format);
     if (*format == '*'){
         format = analyzeConstant(format+1, env, &((*outPredicate)->multiplier));

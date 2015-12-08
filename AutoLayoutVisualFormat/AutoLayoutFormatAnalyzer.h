@@ -64,7 +64,7 @@
  */
 NSArray<NSLayoutConstraint*>* VFLConstraints(NSString* format, id env);
 
-/** create and return a array of constraints. this constraints is active immediately */
+/** create and return a array of constraints. these constraints are active immediately */
 NSArray<NSLayoutConstraint*>* VFLInstall(NSString* format, id env);
 
 /** one shot for disable translatesAutoresizingMaskIntoConstraints of view in env, create constraints, and active it */

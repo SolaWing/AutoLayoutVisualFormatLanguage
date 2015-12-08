@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2149E2581C166AFC005AFB6F /* SwitchLayoutExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 2149E2571C166AFC005AFB6F /* SwitchLayoutExample.m */; };
 		2166E45B1BB6721100869967 /* NSLayoutConstraint+SWAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2166E45A1BB6721100869967 /* NSLayoutConstraint+SWAutoLayout.m */; };
 		216A79AC1C15C29B0018645A /* SystemVisualLayoutExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 216A79AB1C15C29B0018645A /* SystemVisualLayoutExample.m */; };
 		216A79B41C15D47F0018645A /* BasicFlowLayoutExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 216A79B31C15D47F0018645A /* BasicFlowLayoutExample.m */; };
@@ -74,6 +75,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2149E2561C166AFC005AFB6F /* SwitchLayoutExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchLayoutExample.h; sourceTree = "<group>"; };
+		2149E2571C166AFC005AFB6F /* SwitchLayoutExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchLayoutExample.m; sourceTree = "<group>"; };
 		2166E4591BB6721100869967 /* NSLayoutConstraint+SWAutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+SWAutoLayout.h"; sourceTree = "<group>"; };
 		2166E45A1BB6721100869967 /* NSLayoutConstraint+SWAutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+SWAutoLayout.m"; sourceTree = "<group>"; };
 		216A79AA1C15C29B0018645A /* SystemVisualLayoutExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemVisualLayoutExample.h; sourceTree = "<group>"; };
@@ -149,6 +152,8 @@
 				216A79AB1C15C29B0018645A /* SystemVisualLayoutExample.m */,
 				216A79B21C15D47F0018645A /* BasicFlowLayoutExample.h */,
 				216A79B31C15D47F0018645A /* BasicFlowLayoutExample.m */,
+				2149E2561C166AFC005AFB6F /* SwitchLayoutExample.h */,
+				2149E2571C166AFC005AFB6F /* SwitchLayoutExample.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -370,6 +375,7 @@
 				216A79B41C15D47F0018645A /* BasicFlowLayoutExample.m in Sources */,
 				217370531BAD2E8600366B5D /* main.m in Sources */,
 				2173705C1BAD2E8600366B5D /* DetailViewController.m in Sources */,
+				2149E2581C166AFC005AFB6F /* SwitchLayoutExample.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

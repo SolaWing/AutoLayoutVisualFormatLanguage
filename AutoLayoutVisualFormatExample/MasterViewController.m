@@ -30,6 +30,7 @@
     self.objects = [NSMutableArray arrayWithObjects:
         @"System Visual Layout"
         ,@"Basic Flow Layout"
+        ,@"Switch Layout"
         ,nil];
 
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];

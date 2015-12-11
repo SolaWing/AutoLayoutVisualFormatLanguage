@@ -532,7 +532,7 @@ NSArray<NSLayoutConstraint*>* VFLViewConstraints(NSString* format, UIView* view,
     const char* formatPtr = format.UTF8String;
 
     NSMutableArray* predicates = [NSMutableArray new];
-    formatPtr = analyzePredicateListStatement(formatPtr, &environment, predicates);
+    analyzePredicateListStatement(formatPtr, &environment, predicates);
     buildConstraints(view, predicates, nil, &environment);
 
     return constraints;

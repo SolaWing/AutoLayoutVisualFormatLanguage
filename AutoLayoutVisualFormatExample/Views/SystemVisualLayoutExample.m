@@ -18,7 +18,8 @@
 
         UIView* containerView = [UIView new];
         [scrollView addSubview:containerView];
-        [containerView VFLFullInstall:@"L=$1,R=$1,Y@999,T>=0", self];
+        // if content View not fill Height, center it.
+        [containerView VFLFullInstall:@"L,R, W=|,Y@500, T>=0, B", self];
 
         LabelWithName_Title_Color(titleLabel, @"System Visual Layout\nPlease see code", 0);
         [containerView addSubview:titleLabel];

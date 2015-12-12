@@ -40,7 +40,10 @@ static void sw_NSLayoutConstraint_deactivateConstraints(__unused id cls, __unuse
 }
 
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wincomplete-implementation"
 @implementation NSLayoutConstraint (SWAutoLayout)
+#pragma clang diagnostic pop
 
 + (void)load {
     // if no active property, add it.

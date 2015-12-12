@@ -9,13 +9,6 @@
 import UIKit
 import VFL
 
-
-func RGB(color:Int32) -> UIColor {
-    return UIColor(red: CGFloat((color>>16)&0xff)/255.0,
-        green: CGFloat(color>>8&0xff)/255.0,
-        blue: CGFloat(color&0xff)/255.0, alpha: 1.0)
-}
-
 class DetailViewController: UIViewController {
 
     @IBOutlet weak var detailDescriptionLabel: UILabel!
@@ -155,6 +148,7 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.automaticallyAdjustsScrollViewInsets = false;
     }
 
     override func didReceiveMemoryWarning() {

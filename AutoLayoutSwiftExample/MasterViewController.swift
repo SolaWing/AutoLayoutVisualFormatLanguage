@@ -11,7 +11,11 @@ import UIKit
 class MasterViewController: UITableViewController {
 
     var detailViewController: DetailViewController? = nil
-    var objects = ["System Visual Layout", "Basic"]
+    // @"System Visual Layout"
+    //     ,@"Basic Flow Layout"
+    //     ,@"Switch Layout"
+    //     ,@"Individual View"
+    var objects = ["System Visual Layout", "Basic Flow Layout"]
 
     override func awakeFromNib() {
         super.awakeFromNib()

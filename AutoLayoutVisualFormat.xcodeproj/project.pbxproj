@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2106E3D41C1BEF16009539B8 /* SystemVisualLayoutExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2106E3D31C1BEF16009539B8 /* SystemVisualLayoutExample.swift */; };
 		214901461C168092005AFB6F /* IndividualViewExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 214901451C168092005AFB6F /* IndividualViewExample.m */; };
 		2149E2581C166AFC005AFB6F /* SwitchLayoutExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 2149E2571C166AFC005AFB6F /* SwitchLayoutExample.m */; };
 		2166E45B1BB6721100869967 /* NSLayoutConstraint+SWAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2166E45A1BB6721100869967 /* NSLayoutConstraint+SWAutoLayout.m */; };
@@ -117,6 +118,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2106E3D31C1BEF16009539B8 /* SystemVisualLayoutExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemVisualLayoutExample.swift; sourceTree = "<group>"; };
 		214901441C168092005AFB6F /* IndividualViewExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndividualViewExample.h; sourceTree = "<group>"; };
 		214901451C168092005AFB6F /* IndividualViewExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndividualViewExample.m; sourceTree = "<group>"; };
 		2149E2561C166AFC005AFB6F /* SwitchLayoutExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchLayoutExample.h; sourceTree = "<group>"; };
@@ -204,6 +206,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2106E3D01C1BEBC7009539B8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2106E3D31C1BEF16009539B8 /* SystemVisualLayoutExample.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		216A79A91C15C2610018645A /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -304,6 +314,7 @@
 		21F88EA21BB2D95A008AFDDB /* AutoLayoutSwiftExample */ = {
 			isa = PBXGroup;
 			children = (
+				2106E3D01C1BEBC7009539B8 /* Views */,
 				21F88EA31BB2D95A008AFDDB /* AppDelegate.swift */,
 				21F88EA51BB2D95A008AFDDB /* MasterViewController.swift */,
 				21F88EA71BB2D95A008AFDDB /* DetailViewController.swift */,
@@ -311,6 +322,7 @@
 				21F88EAC1BB2D95A008AFDDB /* Assets.xcassets */,
 				21F88EAE1BB2D95A008AFDDB /* LaunchScreen.storyboard */,
 				21F88EB11BB2D95A008AFDDB /* Info.plist */,
+				21B4B6441C1D54BA0065F3EA /* Global.swift */,
 			);
 			path = AutoLayoutSwiftExample;
 			sourceTree = "<group>";
@@ -417,7 +429,7 @@
 				KnownAssetTags = (
 					New,
 				);
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = SW;
 				TargetAttributes = {
@@ -531,7 +543,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				21F88EA81BB2D95A008AFDDB /* DetailViewController.swift in Sources */,
+				2106E3D41C1BEF16009539B8 /* SystemVisualLayoutExample.swift in Sources */,
 				21F88EA61BB2D95A008AFDDB /* MasterViewController.swift in Sources */,
+				21B4B6451C1D54BA0065F3EA /* Global.swift in Sources */,
 				21F88EA41BB2D95A008AFDDB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

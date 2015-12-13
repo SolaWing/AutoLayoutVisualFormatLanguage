@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import VFL
 
 
 func RGB(color:Int32) -> UIColor {
@@ -31,9 +32,16 @@ class DetailViewController: UIViewController {
     func configureView() {
         // Update the user interface for the detail item.
         if let detail = self.detailItem {
-            let name = (detail as! String).stringByReplacingOccurrencesOfString(" ", withString: "_")
-            let sel = sel_getUid(name)
-            self.performSelector(sel)
+            let appName : String = NSBundle.mainBundle()
+                .objectForInfoDictionaryKey(kCFBundleNameKey as String) as! String
+            let name = String(format: "%@.%@Example", appName,
+                (detail as! String).stringByReplacingOccurrencesOfString(" ", withString:"") )
+            print("name is \(name)")
+            let view: UIView =  (objc_getClass(name)
+                as! UIView.Type).init(frame: CGRectZero)
+            self.view.addSubview(view)
+
+            view.VFLFullInstall("Left,Right, Bottom,Top=$1.Bottom", self.topLayoutGuide)
         }
     }
 
@@ -135,7 +143,7 @@ class DetailViewController: UIViewController {
             "V:[v1(0,Y=B*0.25)]; [v2(0,Y=B*0.25)];[v3(0,Y=B*0.75)]", env)
 
         let animation = { [unowned self] () in
-            (big as NSArray).deactivateConstraints()
+            big.deactivateConstraints()
             (small as NSArray).activateConstraints()
             UIView.animateWithDuration(1, delay:0,
                 options:[.Repeat, .Autoreverse],

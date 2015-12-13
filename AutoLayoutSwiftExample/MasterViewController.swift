@@ -44,10 +44,8 @@ class MasterViewController: UITableViewController {
                 let object = objects[indexPath.row]
                 let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
                 controller.detailItem = object
-                if #available(iOS 8.0, *) {
-                    controller.navigationItem.leftBarButtonItem =
+                controller.navigationItem.leftBarButtonItem =
                         self.splitViewController?.displayModeButtonItem()
-                }
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
         }

@@ -9,18 +9,45 @@
 import Foundation
 import UIKit
 
-public func VFLConstraints(interpolation: VFLInterpolation) -> [NSLayoutConstraint] {
+public func constraints(interpolation: VFLInterpolation) -> [NSLayoutConstraint] {
     let (format, env) = interpolation.result()
     return VFL.VFLConstraints(format, env)
 }
 
-public func VFLInstall(interpolation: VFLInterpolation) -> [NSLayoutConstraint] {
+public func install(interpolation: VFLInterpolation) -> [NSLayoutConstraint] {
     let (format, env) = interpolation.result()
     return VFL.VFLInstall(format, env)
 }
 
-public func VFLFullInstall(interpolation: VFLInterpolation) -> [NSLayoutConstraint] {
+public func fullInstall(interpolation: VFLInterpolation) -> [NSLayoutConstraint] {
     let (format, env) = interpolation.result()
+    return VFL.VFLFullInstall(format, env)
+}
+
+func buildInterpolationResult(parts: [VFLInterpolation]) -> (format: String, env: [AnyObject])! {
+    let format = NSMutableString()
+    let env = NSMutableArray()
+    for part in parts {
+        part.result(format, env)
+        if !format.hasSuffix(";") {
+            format.appendString("; ")
+        }
+    }
+    return (format as String, env as [AnyObject])
+}
+
+public func constraints(interpolation: [VFLInterpolation]) -> [NSLayoutConstraint] {
+    let (format, env) = buildInterpolationResult(interpolation)
+    return VFL.VFLConstraints(format, env)
+}
+
+public func install(interpolation: [VFLInterpolation]) -> [NSLayoutConstraint] {
+    let (format, env) = buildInterpolationResult(interpolation)
+    return VFL.VFLInstall(format, env)
+}
+
+public func fullInstall(interpolation: [VFLInterpolation]) -> [NSLayoutConstraint] {
+    let (format, env) = buildInterpolationResult(interpolation)
     return VFL.VFLFullInstall(format, env)
 }
 
@@ -86,6 +113,26 @@ public enum VFLInterpolation : StringInterpolationConvertible, StringLiteralConv
         default:
             assertionFailure("call result on incomplete type")
             return nil
+        }
+    }
+
+    /** fill format and env acording to self part */
+    func result(format: NSMutableString, _ env: NSMutableArray) {
+        switch self {
+        case .Format(let str):
+            format.appendString(str)
+        case .Metric(let value):
+            format.appendFormat("$%u", env.count)
+            env.addObject(value)
+        case .Other(let obj):
+            format.appendFormat("$%u", env.count)
+            env.addObject(obj)
+        case .Collection(let parts): // recursive add format and env
+            for part in parts {
+                part.result(format, env)
+            }
+//        default:
+//            assertionFailure("invalid part to build result")
         }
     }
 }

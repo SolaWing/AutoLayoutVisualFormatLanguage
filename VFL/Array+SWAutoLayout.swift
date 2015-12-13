@@ -9,13 +9,13 @@
 import Foundation
 import UIKit
 
-public extension Array {
+public extension Array where Element:AnyObject {
     func VFLConstraints(format:String) -> [NSLayoutConstraint] {
-        return VFL.VFLConstraints(format, self as! AnyObject)
+        return VFL.VFLConstraints(format, self)
     }
 
     func VFLInstall(format:String) -> [NSLayoutConstraint] {
-        let constrains = VFL.VFLConstraints(format, self as! AnyObject)
+        let constrains = VFL.VFLConstraints(format, self)
         NSLayoutConstraint.activateConstraints(constrains)
         return constrains
     }
@@ -23,7 +23,7 @@ public extension Array {
     func VFLFullInstall(format:String) -> [NSLayoutConstraint] {
         self.translatesAutoresizingMaskIntoConstraints(false)
 
-        let constrains = VFL.VFLConstraints(format, self as! AnyObject)
+        let constrains = VFL.VFLConstraints(format, self)
         NSLayoutConstraint.activateConstraints(constrains)
         return constrains
     }

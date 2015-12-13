@@ -40,8 +40,7 @@ class DetailViewController: UIViewController {
             let view: UIView =  (objc_getClass(name)
                 as! UIView.Type).init(frame: CGRectZero)
             self.view.addSubview(view)
-
-            view.VFLFullInstall("Left,Right, Bottom,Top=$1.Bottom", self.topLayoutGuide)
+            view.VFLFullInstall("Left,Right, Bottom,Top=\(self.topLayoutGuide).Bottom")
         }
     }
 

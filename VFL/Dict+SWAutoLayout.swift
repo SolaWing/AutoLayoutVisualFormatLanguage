@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public extension Dictionary {
+public extension Dictionary where Value : AnyObject {
     func VFLConstraints(format:String) -> [NSLayoutConstraint] {
         return VFL.VFLConstraints(format, self as! AnyObject)
     }

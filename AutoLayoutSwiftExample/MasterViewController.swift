@@ -15,7 +15,7 @@ class MasterViewController: UITableViewController {
     //     ,@"Basic Flow Layout"
     //     ,@"Switch Layout"
     //     ,@"Individual View"
-    var objects = ["System Visual Layout", "Basic Flow Layout"]
+    var objects = ["System Visual Layout", "Basic Flow Layout", "Switch Layout"]
 
     override func awakeFromNib() {
         super.awakeFromNib()

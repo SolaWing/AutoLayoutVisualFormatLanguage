@@ -34,6 +34,7 @@
 		21B4B6451C1D54BA0065F3EA /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B4B6441C1D54BA0065F3EA /* Global.swift */; };
 		21B4B6471C1D66810065F3EA /* VFLInterpolation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B4B6461C1D66810065F3EA /* VFLInterpolation.swift */; };
 		21B4B6491C1DA0930065F3EA /* BasicFlowLayoutExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B4B6481C1DA0930065F3EA /* BasicFlowLayoutExample.swift */; };
+		21B4B64B1C1DB8E40065F3EA /* SwitchLayoutExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B4B64A1C1DB8E40065F3EA /* SwitchLayoutExample.swift */; };
 		21C6C9D11BAF902E007B6F58 /* libAutoLayoutVisualFormat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2173707D1BAD2EDE00366B5D /* libAutoLayoutVisualFormat.a */; };
 		21D6C0A21C1D029000A80A39 /* Array+SWAutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D6C0A11C1D029000A80A39 /* Array+SWAutoLayout.swift */; };
 		21D6C0A51C1D0C7F00A80A39 /* libAutoLayoutVisualFormat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2173707D1BAD2EDE00366B5D /* libAutoLayoutVisualFormat.a */; };
@@ -160,6 +161,7 @@
 		21B4B6441C1D54BA0065F3EA /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		21B4B6461C1D66810065F3EA /* VFLInterpolation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VFLInterpolation.swift; sourceTree = "<group>"; };
 		21B4B6481C1DA0930065F3EA /* BasicFlowLayoutExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicFlowLayoutExample.swift; sourceTree = "<group>"; };
+		21B4B64A1C1DB8E40065F3EA /* SwitchLayoutExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchLayoutExample.swift; sourceTree = "<group>"; };
 		21D6C0A11C1D029000A80A39 /* Array+SWAutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+SWAutoLayout.swift"; sourceTree = "<group>"; };
 		21D6C0A91C1D15DC00A80A39 /* Dict+SWAutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dict+SWAutoLayout.swift"; sourceTree = "<group>"; };
 		21D6C0AB1C1D176E00A80A39 /* UIView+SWAutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+SWAutoLayout.swift"; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 			children = (
 				2106E3D31C1BEF16009539B8 /* SystemVisualLayoutExample.swift */,
 				21B4B6481C1DA0930065F3EA /* BasicFlowLayoutExample.swift */,
+				21B4B64A1C1DB8E40065F3EA /* SwitchLayoutExample.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -550,6 +553,7 @@
 				21F88EA61BB2D95A008AFDDB /* MasterViewController.swift in Sources */,
 				21B4B6491C1DA0930065F3EA /* BasicFlowLayoutExample.swift in Sources */,
 				21B4B6451C1D54BA0065F3EA /* Global.swift in Sources */,
+				21B4B64B1C1DB8E40065F3EA /* SwitchLayoutExample.swift in Sources */,
 				21F88EA41BB2D95A008AFDDB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

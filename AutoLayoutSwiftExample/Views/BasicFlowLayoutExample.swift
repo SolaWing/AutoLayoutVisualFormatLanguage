@@ -48,7 +48,7 @@ class BasicFlowLayoutExample: UIView {
         //
         // use ; to seperate statement
         // save space in global weak table to ref later
-        // support string interpolation
+        // support string interpolation (when use [], auto join with separator ";")
         VFL.fullInstall([
             "|-(space0:0)-[\(leftView)]-(space1:0)-[\(centerView)]-(space2:0)-[\(rightView)]-(space3:0)-| WHY",
             "V:|-[\(centerView)]-|;"])

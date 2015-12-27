@@ -500,7 +500,7 @@ NSArray<NSLayoutConstraint*>* VFLConstraints(NSString* format, id env) {
     NSCParameterAssert(env);
 
     NSMutableArray* constraints = [NSMutableArray new];
-    AnalyzeEnv environment = {constraints, env, [env isKindOfClass:[NSArray class]], 0};
+    AnalyzeEnv environment = {constraints, env, [env isKindOfClass:[NSArray class]], false};
     const char* formatPtr = format.UTF8String;
     while(*formatPtr) {
         formatPtr = analyzeStatement(formatPtr, &environment);

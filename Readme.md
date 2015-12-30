@@ -30,24 +30,33 @@ How to use
 ==========
 
 First, this project is **compatible** with [Apple's AutoLayout Visual Format Language][0].
-if you used to use Apple's, just change the API, and format string don't need to change.
+if you used to use Apple's VFL, just change the API, and you can still use your familiar format string syntax.
 
 **Apple's API:**
+
+Objective-C:
 
 ```objc
 NSArray* constraints = [NSLayoutConstraint constraintsWithVisualFormat:formatString options:opts metrics:metrics views:views];
 ```
 
+Swift:
+
 ```Swift
 let constraints = NSLayoutConstraint.constraintsWithVisualFormat(formatString, options:opts, metrics:metrics, views:views)
 ```
 
-**New VFL API:**
-env contains metrics and views. options integrated into formatString.
+**New VFL EQUIVALENT API:**
+
+env, which can be a **array** or **dict** container, contains **metrics** and **views**. **options** integrated into **formatString**.
+
+Objective-C
 
 ```objc
 NSArray* constraints = VFLConstraints(formatString, env);
 ```
+
+Swift
 
 ```Swift
 let constraints = VFLConstraints(formatString, env);
@@ -70,7 +79,63 @@ and for Objective-C, there have macros to support **variadic** params like forma
 for swift, it's not support macro and c variable argument list. but it support
     **string interpolation**. So it is recommended over use Array or Dict API.
 
-### Syntax
+### Example
+
+To build 3 buttons in a view, centered and all have same space, width, height. as Follow:
+![](https://raw.githubusercontent.com/SolaWing/Assets/VFL/FlowBtns.png)
+
+Objective-C
+
+```objc
+VFLFullInstallWithEnv(@"|-space-[red(Y)]-space-[green]-space-[blue]-space-| WHY", red, green, blue, space);
+```
+
+Swift
+
+```swift
+VFL.fullInstall("|-\(space)-[\(red)(Y)]-\(space)-[\(green)]-\(space)-[\(blue)]-\(space)-| WHY")
+```
+
+To build a cell, which have a image, title, detail, and action button, as Follow:
+![](https://raw.githubusercontent.com/SolaWing/Assets/VFL/Cell.png)
+
+Objective-C
+
+```objc
+VFLFullInstallWithEnv(@"|-20-[image(Y, Top=10, Width=image.Height)]-[title(Top=image)]-(>=0)-[action(Y)]-20-|; V:[title]-(>=0)-[detail(Bottom=image)] L", image, title, detail, action);
+```
+
+Swift
+
+```swift
+VFL.fullInstall("|-20-[\(image)(Y, Top=10, Width=\(image).Height)]-[\(title)(Top=\(image))]-(>=0)-[\(action)(Y)]-20-|; V:[\(title)]-(>=0)-[\(detail)(Bottom=\(image))] L")
+```
+
+Or if you like to build constraints each view individually, you can use:
+
+Objective-C
+
+```objc
+[image VFLFullInstall:@"Left=20, Y, Top=10, Width=$0.Height"];
+[title VFLFullInstall:@"Left=$1.Right+8, Top=$1", image];
+[action VFLFullInstall:@"Left>=$1.Right, Y, Right=|-20", title];
+[detail VFLFullInstall:@"Left=$1, Bottom=$2", title, image];
+```
+
+Swift
+
+```swift
+image.VFLFullInstall("Left=20, Y, Top=10, Width=\(image).Height")
+title.VFLFullInstall("Left=$1.Right+8, Top=\(image)")
+action.VFLFullInstall("Left>=\(title).Right, Y, Right=|-20")
+detail.VFLFullInstall("Left=\(title), Bottom=\(image)")
+```
+
+more examples please see project.
+
+Syntax
+======
+
 for [Apple's Syntax][0], you can see it [here][0].
 
 for dict env, you can ref view or metric by key directly.  
@@ -139,21 +204,6 @@ VFL recognize first letter as attribute, after is ignoring and can write word co
 * A full complete constraint example:(as `attr1 == view2.attr2 * multiplier + constant @priority`, each part is optional and have default value)  
 `[view(Left==|.Left * 1.0 + 0 @1000, Top==|.Top * 1.0 + 0 @1000)]`
 
-##### Complete Examples
-
-Suppose I need a cell which have left ImageView, a Title text, a Detail text, and rihgt have a action button.
-I can write all constraints as follow: (use ; to seperator statement and change default horzontal layout to vertical layout)
-
-    |-[Image(Y)]-[Title(Top=Image)]-(>=0)-[button(Y)]-|; V:[Title]-(>=0)-[Detail(Bottom=Image)] L;
-
-If I want to have a video play control bar, from left to right is:
-play button, play time label, progress bar, total time label, fullscreen btn.
-I can write as:
-
-    |-[play(Y)]-[playTime]-[progress]-[total]-[fullscreen]-| Y;
-
-more examples please see project.
-
 full detail syntax you can see in `AutoLayoutFormatAnalyzer.h`
 
 More
@@ -197,20 +247,29 @@ PR is welcome.
 
 **Apple's API:**
 
+Objective-C
+
 ```objc
 NSArray* constraints = [NSLayoutConstraint constraintsWithVisualFormat:formatString options:opts metrics:metrics views:views];
 ```
+
+Swift
 
 ```Swift
 let constraints = NSLayoutConstraint.constraintsWithVisualFormat(formatString, options:opts, metrics:metrics, views:views)
 ```
 
-**New VFL API:**
+**New VFL EQUIVALENT API:**
+
 metrics和views都放入env中, options集成到字符串里了
+
+Objective-C
 
 ```objc
 NSArray* constraints = VFLConstraints(formatString, env);
 ```
+
+Swift
 
 ```Swift
 let constraints = VFLConstraints(formatString, env);
@@ -224,12 +283,67 @@ let constraints = VFLConstraints(formatString, env);
   immediately.
 * 类似`VFLFullInstall`的API, 除自动生效外, 会将相应视图`translatesAutoresizingMaskIntoConstraints`属性设为NO. (数组字典中的View, 使用View扩展类中的API则为View自身)
 
-对于Objective-C项目, 有支持可变参数的方便使用的宏.
-对于Swift项目, 支持字符串插值格式的字符串.
+对于Objective-C项目, 有支持**可变参数**的方便使用的宏.
+对于Swift项目, 支持**字符串插值**格式的字符串.
 
 具体API请看源文件.
 
-### 语法
+### Example
+
+创建3个等宽等高等间距的button, 并居中:
+![](https://raw.githubusercontent.com/SolaWing/Assets/VFL/FlowBtns.png)
+
+Objective-C
+
+```objc
+VFLFullInstallWithEnv(@"|-space-[red(Y)]-space-[green]-space-[blue]-space-| WHY", red, green, blue, space);
+```
+
+Swift
+
+```swift
+VFL.fullInstall("|-\(space)-[\(red)(Y)]-\(space)-[\(green)]-\(space)-[\(blue)]-\(space)-| WHY")
+```
+
+创建包含image, title, detail, 和action button的Cell:
+![](https://raw.githubusercontent.com/SolaWing/Assets/VFL/Cell.png)
+
+Objective-C
+
+```objc
+VFLFullInstallWithEnv(@"|-20-[image(Y, Top=10, Width=image.Height)]-[title(Top=image)]-(>=0)-[action(Y)]-20-|; V:[title]-(>=0)-[detail(Bottom=image)] L", image, title, detail, action);
+```
+
+Swift
+
+```swift
+VFL.fullInstall("|-20-[\(image)(Y, Top=10, Width=\(image).Height)]-[\(title)(Top=\(image))]-(>=0)-[\(action)(Y)]-20-|; V:[\(title)]-(>=0)-[\(detail)(Bottom=\(image))] L")
+```
+
+如果你喜欢一个个view的指定约束, 可以这样写:
+
+Objective-C
+
+```objc
+[image VFLFullInstall:@"Left=20, Y, Top=10, Width=$0.Height"];
+[title VFLFullInstall:@"Left=$1.Right+8, Top=$1", image];
+[action VFLFullInstall:@"Left>=$1.Right, Y, Right=|-20", title];
+[detail VFLFullInstall:@"Left=$1, Bottom=$2", title, image];
+```
+
+Swift
+
+```swift
+image.VFLFullInstall("Left=20, Y, Top=10, Width=\(image).Height")
+title.VFLFullInstall("Left=$1.Right+8, Top=\(image)")
+action.VFLFullInstall("Left>=\(title).Right, Y, Right=|-20")
+detail.VFLFullInstall("Left=\(title), Bottom=\(image)")
+```
+
+更多例子请看项目示例
+
+语法
+====
 
 对于使用Dict相关API, 你可以直接通过Key Identifier引用对应元素.
 对于使用Array相关API, 你可以使用$0,$1...类似的索引.
@@ -299,20 +413,6 @@ VFL使用首字母来区分指定的属性, 后面的字母忽略, 所以可以�
 * 完整的约束语法:(`attr1 == view2.attr2 * multiplier + constant @priority`,
   每一部分都有相应的默认值且可省略)  
 `[view(Left==|.Left * 1.0 + 0 @1000, Top==|.Top * 1.0 + 0 @1000)]`
-
-##### 完整的例子
-
-假设我们需要一个Cell, 包含左边的缩略图, 中间是标题和介绍, 右边有一个操作按钮,
-完整字符串如下(使用`;`来分隔多条语句, 并更改当前是水平还是垂直布局):
-
-    |-[Image(Y)]-[Title(Top=Image)]-(>=0)-[button(Y)]-|; V:[Title]-(>=0)-[Detail(Bottom=Image)] L;
-
-假设我们需要一个视频播放控制条, 从左到右依次是播放按钮, 播放时间, 进度条,
-总时间, 全屏按钮, 完整字符串如下:
-
-    |-[play(Y)]-[playTime]-[progress]-[total]-[fullscreen]-| Y;
-
-更多例子请看项目
 
 完整语法解释请看`AutoLayoutFormatAnalyzer.h`
 

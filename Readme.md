@@ -111,7 +111,7 @@ Swift
 VFL.fullInstall("|-20-[\(image)(Y, Top=10, Width=\(image).Height)]-[\(title)(Top=\(image))]-(>=0)-[\(action)(Y)]-20-|; V:[\(title)]-(>=0)-[\(detail)(Bottom=\(image))] L")
 ```
 
-Or if you like to build constraints each view individually, you can use:
+Or if you like to build constraints of each view individually, you can use:
 
 Objective-C
 

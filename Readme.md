@@ -209,9 +209,11 @@ full detail syntax you can see in `AutoLayoutFormatAnalyzer.h`
 More
 ====
 
+if you like it, please support me and star it.
+
 if you find any bugs or have any ideas, please contact me.
 
-PR is welcome.
+PR is also welcome.
 
 <br/><br/>
 - - -
@@ -419,6 +421,7 @@ VFL使用首字母来区分指定的属性, 后面的字母忽略, 所以可以�
 更多
 ====
 
+如果你喜欢本项目, 请支持我点个星.
 如果你发现任何BUG, 或有任何好想法, 请联系我.  
 如果有PR, 就更加感激啦.
 

@@ -62,7 +62,9 @@ Swift
 let constraints = VFLConstraints(formatString, env);
 ```
 
-for convenience, VFL mainly have three kind of API:
+</br>
+</br>
+**for convenience, VFL mainly have three kind of API:**
 
 * API like `VFLConstraints`, create a array of constraints, and return it. this
   is the basic api
@@ -95,7 +97,8 @@ Swift
 ```swift
 VFL.fullInstall("|-\(space)-[\(red)(Y)]-\(space)-[\(green)]-\(space)-[\(blue)]-\(space)-| WHY")
 ```
-
+</br>
+</br>
 To build a cell, which have a image, title, detail, and action button, as Follow:
 ![](https://raw.githubusercontent.com/SolaWing/Assets/VFL/Cell.png)
 
@@ -276,8 +279,9 @@ Swift
 ```Swift
 let constraints = VFLConstraints(formatString, env);
 ```
-
-本项目主要有三种类型的API:
+</br>
+</br>
+**本项目主要有三种类型的API:**
 
 * 类似`VFLConstraints`的API, 创建一组约束并返回. 这是最基本的API.
   is the basic api
@@ -306,6 +310,11 @@ Swift
 ```swift
 VFL.fullInstall("|-\(space)-[\(red)(Y)]-\(space)-[\(green)]-\(space)-[\(blue)]-\(space)-| WHY")
 ```
+
+</br>
+</br>
+
+
 
 创建包含image, title, detail, 和action button的Cell:
 ![](https://raw.githubusercontent.com/SolaWing/Assets/VFL/Cell.png)

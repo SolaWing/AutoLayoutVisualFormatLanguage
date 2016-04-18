@@ -71,26 +71,30 @@ static inline bool AttributeNeedPair(NSLayoutAttribute attr) {
 
 #define SUPER_TOKEN [NSNull null]
 #define DEFAULT_CONNECTION_TOKEN [NSNull null]
-static void buildConstraints(id leftView, NSArray* predicates, id rightView, AnalyzeEnv* env) {
+/** create constraint and add it into constraints
+ * @param leftView: view at equation left.
+ * @param rightView: view at equation right.
+ * */
+static void buildConstraints(id leftView, NSArray* predicates, id rightView, bool vertical, NSMutableArray* constraints) {
     NSLayoutAttribute defAttr1, defAttr2;
 
     if (leftView == SUPER_TOKEN) { // [V]-|
         leftView = [rightView superview];
         NSCAssert(leftView, @"superview not exist!");
 
-        defAttr1 = defAttr2 = env->vertical ?
+        defAttr1 = defAttr2 = vertical ?
             NSLayoutAttributeBottom : NSLayoutAttributeRight;
     } else if (rightView == SUPER_TOKEN) { // |-[V]
         rightView = [leftView superview];
         NSCAssert(rightView, @"superview not exist!");
 
-        defAttr1 = defAttr2 = env->vertical ?
+        defAttr1 = defAttr2 = vertical ?
             NSLayoutAttributeTop : NSLayoutAttributeLeft;
     } else if (!rightView){ // [V(...)]
-        defAttr1 = defAttr2 = env->vertical ?
+        defAttr1 = defAttr2 = vertical ?
             NSLayoutAttributeHeight : NSLayoutAttributeWidth;
     } else { // [V]-[V]
-        if (env->vertical) {
+        if (vertical) {
             defAttr1 = NSLayoutAttributeTop;
             defAttr2 = NSLayoutAttributeBottom;
         } else {
@@ -100,13 +104,13 @@ static void buildConstraints(id leftView, NSArray* predicates, id rightView, Ana
     }
 
     if (predicates.count == 0) { // flush layout [A][B]
-        [env->constraints addObject:[NSLayoutConstraint
+        [constraints addObject:[NSLayoutConstraint
             constraintWithItem:leftView attribute:defAttr1
                      relatedBy:NSLayoutRelationEqual
                         toItem:rightView attribute:defAttr2
                     multiplier:1.0 constant:0]];
-    } else if (predicates[0] == DEFAULT_CONNECTION_TOKEN) {
-        [env->constraints addObject:[NSLayoutConstraint
+    } else if (predicates[0] == DEFAULT_CONNECTION_TOKEN) { // [A]-[B]
+        [constraints addObject:[NSLayoutConstraint
             constraintWithItem:leftView attribute:defAttr1
                      relatedBy:NSLayoutRelationEqual
                         toItem:rightView attribute:defAttr2
@@ -148,7 +152,7 @@ static void buildConstraints(id leftView, NSArray* predicates, id rightView, Ana
                         multiplier:predicate->multiplier
                           constant:predicate->constant];
             constraint.priority = predicate->priority;
-            [env->constraints addObject:constraint];
+            [constraints addObject:constraint];
             if (predicate->name.length > 0){ // if has name. associate it
                 VFLSetObjectForKey(constraint, predicate->name);
             }
@@ -375,22 +379,25 @@ static const char* analyzePredicateListStatement(const char* format, AnalyzeEnv*
     return format;
 }
 
-static const char* analyzeViewStatement(const char* format, AnalyzeEnv* env, id* outView) {
+static const char* analyzeViewStatement(const char* format, AnalyzeEnv* env, id* outView, NSMutableArray** outConstraints) {
     SkipSpace(format);
     if (*format == '$') ++format;
     format = _tryGetIndexValue(format, env, outView);
     NSCAssert1(*outView, @"can't found identifier at %s!", format);
     SkipSpace(format);
-    if (*format == '(') { // view specific predicate
+    if (*format == '(') { // [view(predicateList)]: view specific predicate
+        *outConstraints = [NSMutableArray new];
         NSMutableArray* predicates = [NSMutableArray new];
         format = analyzePredicateListStatement(format+1, env, predicates);
-        buildConstraints(*outView, predicates, nil, env);
+        buildConstraints(*outView, predicates, nil, env->vertical, *outConstraints);
         SkipSpace(format);
         if (*format == ')') {
             ++format;
         } else {
             DLOG(@"[WARN] unclose ')'");
         }
+    } else {
+         *outConstraints = nil;
     }
     return format;
 }
@@ -401,10 +408,11 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
     if (*format == 'V') { env->vertical = true; ++format; }
     else if (*format == 'H') { env->vertical = false; }
 
-    id firstView = nil;
-    id secondView = nil;
-    NSMutableArray* connections = [NSMutableArray new];
-    NSMutableArray* connectViews = [NSMutableArray new];
+    id firstView = nil;   ///< view at the - connection left
+    id secondView = nil;  ///< view at the - connection right
+    NSMutableArray* connections = [NSMutableArray new];   ///< connection constraints between two view.
+    NSMutableArray* connectViews = [NSMutableArray new];  ///< collect all view show in [], used for batch align.
+    NSMutableArray* viewConstraints; ///< use to hold constraints in [view(predicateList)]
 
     do {
     CONTINUE_LOOP:
@@ -412,7 +420,7 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
             case '|': {
            superview:
                 if (firstView) { // [V]-|
-                    buildConstraints(SUPER_TOKEN, connections, firstView, env);
+                    buildConstraints(SUPER_TOKEN, connections, firstView, env->vertical, env->constraints);
 
                     firstView = SUPER_TOKEN;
                     secondView = nil;
@@ -451,13 +459,16 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
             }
             case '[': { // view statement
             View:
-                format = analyzeViewStatement(format+1, env, &secondView);
+                format = analyzeViewStatement(format+1, env, &secondView, &viewConstraints);
                 [connectViews addObject:secondView];
                 if (firstView) {
                     // for connection, use
                     // secondView.attr = firstView.attr * mul + constant
                     // so constant can use positive number to represent space
-                    buildConstraints(secondView, connections, firstView, env);
+                    buildConstraints(secondView, connections, firstView, env->vertical, env->constraints);
+                }
+                if (viewConstraints) { // guarantee constraint create order from left to right
+                     [env->constraints addObjectsFromArray:viewConstraints];
                 }
 
                 firstView = secondView;
@@ -534,7 +545,7 @@ NSArray<NSLayoutConstraint*>* VFLViewConstraints(NSString* format, UIView* view,
 
     NSMutableArray* predicates = [NSMutableArray new];
     analyzePredicateListStatement(formatPtr, &environment, predicates);
-    buildConstraints(view, predicates, nil, &environment);
+    buildConstraints(view, predicates, nil, NO, constraints);
 
     return constraints;
 }

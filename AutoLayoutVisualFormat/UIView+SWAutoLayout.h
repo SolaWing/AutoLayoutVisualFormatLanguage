@@ -13,7 +13,9 @@
 @interface UIView (SWAutoLayout)
 
 /** create constraint based on format, format is <predictList>.
- * index use array index, and self is $0 */
+ * index use array index, and self is $0
+ * @warning index in format must not beyond provide args count!
+ */
 - (NSArray<NSLayoutConstraint*>*)VFLConstraints:(NSString*)format, ...;
 
 /** create constraint and active it, format is <predictList> */

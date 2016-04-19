@@ -17,9 +17,8 @@
     if (count < 2) return nil;
 
     NSMutableArray* constraints = [NSMutableArray arrayWithCapacity:count - 1];
-    UIView* first = self[0];
     for (NSUInteger i = 1; i < count; ++i) {
-        [constraints addObject:[NSLayoutConstraint constraintWithItem:first
+        [constraints addObject:[NSLayoutConstraint constraintWithItem:self[i-1]
              attribute:attr relatedBy:NSLayoutRelationEqual
                 toItem:self[i] attribute:attr multiplier:1.0 constant:0]];
     }

@@ -52,8 +52,6 @@ typedef struct analyzeEnv{
 } AnalyzeEnv;
 
 
-#pragma mark - CONSTRAINTS DICT
-
 #pragma mark - ANALYZER
 #ifdef DEBUG
 #define DLOG(format, ...) NSLog(@"%s[%d]: "format, __FILE__, __LINE__,  ##__VA_ARGS__)
@@ -61,7 +59,7 @@ typedef struct analyzeEnv{
 #define DLOG(...)
 #endif
 
-#define SkipSpace(charPtr) while( isspace(*(charPtr)) ) ++(charPtr)
+#define SkipSpace(charPtr) while( isspace(*(charPtr)) ) {++(charPtr);}
 
 #define kDefaultSpace 8
 
@@ -69,6 +67,8 @@ static inline bool AttributeNeedPair(NSLayoutAttribute attr) {
     return attr != NSLayoutAttributeWidth && attr != NSLayoutAttributeHeight;
 }
 
+
+#pragma mark - ANALYZER
 #define SUPER_TOKEN [NSNull null]
 #define DEFAULT_CONNECTION_TOKEN [NSNull null]
 /** create constraint and add it into constraints
@@ -120,6 +120,7 @@ static void buildConstraints(id leftView, NSArray* predicates, id rightView, boo
         id view2;
         NSLayoutConstraint *constraint;
         for (Predicate* predicate in predicates){
+            // set attr1, attr2
             if (predicate->attr1) {
                 attr1 = predicate->attr1;
                 if (predicate->attr2) {
@@ -135,6 +136,7 @@ static void buildConstraints(id leftView, NSArray* predicates, id rightView, boo
                     attr2 = defAttr2; // not set 2, use default
                 }
             }
+            // set rightView
             if (rightView) view2 = rightView;
             else{ // [view(predicates)]
                 if (predicate->view2 == SUPER_TOKEN ||
@@ -248,7 +250,6 @@ static const char* analyzeConstant(const char* format, AnalyzeEnv* env, CGFloat*
 }
 
 static inline const char* analyzeRelation(const char* format, NSLayoutRelation* outRelation){
-    SkipSpace(format);
     if (*format == '='){
         *outRelation = NSLayoutRelationEqual;
         if (*++format == '=') ++format;
@@ -317,6 +318,7 @@ static const char* analyzePredicateStatement(const char* format, AnalyzeEnv* env
     }
 
     // check relation
+    SkipSpace(format);
     format = analyzeRelation(format, &((*outPredicate)->relation));
 
     // check ViewIndex
@@ -345,20 +347,28 @@ Attr2:
 // Multiplier:
     SkipSpace(format);
     if (*format == '*'){
-        format = analyzeConstant(format+1, env, &((*outPredicate)->multiplier));
+        ++format;
+        SkipSpace(format);
+        identifierEnd = analyzeConstant(format, env, &((*outPredicate)->multiplier));
+        NSCAssert( identifierEnd != format, @"* should follow metric. at %s", format);
+        format = identifierEnd;
     }
 
     // constant
     SkipSpace(format);
-    if (*format == '+') {++format;}
-    else if (*format == '-') {++format; isMinus = true;}
+    if (*format == '+') {++format; SkipSpace(format);}
+    else if (*format == '-') {++format; isMinus = true; SkipSpace(format);}
     format = analyzeConstant(format, env, &((*outPredicate)->constant));
     if (isMinus) (*outPredicate)->constant *= -1;
 
 Priority:
     SkipSpace(format);
     if (*format == '@') {
-        format = analyzeConstant(format+1, env, &((*outPredicate)->priority));
+        ++format;
+        SkipSpace(format);
+        identifierEnd = analyzeConstant(format, env, &((*outPredicate)->priority));
+        NSCAssert( identifierEnd != format, @"@ should follow priority. at %s", format);
+        format = identifierEnd;
     }
 
     return format;
@@ -587,4 +597,3 @@ void VFLSetObjectForKey(id obj, NSString* key) {
     }
     [constraintsRepository setObject:obj forKey:key];
 }
-

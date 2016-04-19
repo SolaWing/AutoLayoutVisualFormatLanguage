@@ -21,11 +21,12 @@
 <align>             :   [LRTBXYltbWH]
                         "Left,Right,Top,Bottom,CenterX,CenterY,leading,trailing,baseline,Width,Height"
                         "align all connect view in one statement(except superview) according to align flag"
+                        "generate align constraints will connect adjacent views"
 <connection>        :   <empty>|-<predicateList>-|-                             :empty use 0 space, - use default space
 <predicateList>     :   <predicate>(,<predicate>)*                              :encapsulate with () is optional
-<predicate>         :   (<identifier>:)?(<attr1>)?(<relation>)?(<viewIndex>)?(.?<attr2>)?(*<multiplier>)?(<constant>)?(@<priority>)?
+<predicate>         :   (<identifier>:)?(<attr1>)?(<relation>)?(<viewIndex>)?(.?<attr2>)?(*<multiplier>)?([+-]?<constant>)?(@<priority>)?
                         "predicate can give a identifier as name."
-                        "if give, the generate constraint is added to a weak table"
+                        "if given, the generate constraint is added to a weak table"
                         "you can get it from `VFLConstraintForKey` function"
 
                         "relation default ==, priority default required. multiplier default 1.0, constant default 0"
@@ -47,7 +48,7 @@
                         "for <view>, equal to: mainView.attr1 == predicateView.attr2 * multiplier + constant"
 <attr>              :   [LRTBXYltbWH]
 <relation>          :   ==|<=|>=
-<constant>          :   ([+-])?<number>|<metricIndex>
+<constant>          :   <number>|<metricIndex>
 <multiplier>        :   <number>|<metricIndex>
 <priority>          :   <number>|<metricIndex>
 <viewIndex>         :   $?<identifier> in dict | $<index> in array | `|` as superview

@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
 /** the syntax is as follow. and completely compatible with Apple Visual Format Language
 
 <visualFormat>      :   <visualStatement>(;<visualStatement>)*
@@ -78,9 +79,11 @@ NSArray<NSLayoutConstraint*>* VFLFullInstall(NSString* format, id env);
 NSArray<NSLayoutConstraint*>* VFLViewConstraints(NSString* format, UIView* view, id env);
 
 /** helper func to active NSLayoutConstraint, if not found, return nil */
-UIView* findCommonAncestor(UIView* view1, UIView* view2);
+ UIView* _Nullable findCommonAncestor(UIView* _Nullable view1, UIView* _Nullable view2);
 
 /** you can get identifier constraints from this function */
-id VFLObjectForKey(NSString* key);
-static inline NSLayoutConstraint* VFLConstraintForKey(NSString* key) { return VFLObjectForKey(key); }
-void VFLSetObjectForKey(id obj, NSString* key);
+_Nullable id VFLObjectForKey(NSString* key);
+static inline NSLayoutConstraint* _Nullable VFLConstraintForKey(NSString* key) { return VFLObjectForKey(key); }
+void VFLSetObjectForKey(id _Nullable obj, NSString* key);
+
+NS_ASSUME_NONNULL_END

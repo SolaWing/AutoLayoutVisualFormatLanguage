@@ -28,14 +28,14 @@
 
 - (NSArray<NSLayoutConstraint*>*)VFLInstall:(NSString*)format {
     NSArray* ret = VFLConstraints(format, self);
-    [ret activateConstraints];
+    [NSLayoutConstraint activateConstraints:ret];
     return ret;
 }
 
 - (NSArray<NSLayoutConstraint*>*)VFLFullInstall:(NSString*)format {
     [self translatesAutoresizingMaskIntoConstraints:NO];
     NSArray* ret = VFLConstraints(format, self);
-    [ret activateConstraints];
+    [NSLayoutConstraint activateConstraints:ret];
     return ret;
 }
 @end

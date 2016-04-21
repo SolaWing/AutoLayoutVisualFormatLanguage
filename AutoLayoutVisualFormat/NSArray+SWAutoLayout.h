@@ -9,6 +9,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+NS_ASSUME_NONNULL_BEGIN
 
 #define VFLConstraintsWithParams(format, ...) [@[ __VA_ARGS__ ] VFLConstraints:format]
 #define VFLInstallWithParams(format, ...) [@[__VA_ARGS__] VFLInstall:format]
@@ -34,3 +35,5 @@
 - (void)deactivateConstraints;
 
 @end
+
+NS_ASSUME_NONNULL_END

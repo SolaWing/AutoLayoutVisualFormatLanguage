@@ -61,30 +61,32 @@ class BasicFlowLayoutExample: UIView {
 
     func clickMinusButton() {
         // add space to minus width
-        var space = VFLConstraintForKey("space0").constant
-        if space > 60 { return }
-        space += 10;
-        for var i = 0; i < 4; ++i {
-            VFLConstraintForKey(String(format:"space%d", i) ).constant = space;
-        }
+        if var space = VFLConstraintForKey("space0")?.constant {
+            if space > 60 { return }
+            space += 10;
+            for var i = 0; i < 4; ++i {
+                VFLConstraintForKey(String(format:"space%d", i) )!.constant = space;
+            }
 
-        UIView.animateWithDuration(0.25, animations:{
-            self.layoutIfNeeded()
-        })
+            UIView.animateWithDuration(0.25, animations:{
+                self.layoutIfNeeded()
+            })
+        }
     }
 
     func clickPlusButton() {
         // minus space to add width
-        var space = VFLConstraintForKey("space0").constant
-        if space == 0 { return }
-        space -= 10;
-        for var i = 0; i < 4; ++i {
-            VFLConstraintForKey(String(format:"space%d", i) ).constant = space;
-        }
+        if var space = VFLConstraintForKey("space0")?.constant {
+            if space == 0 { return }
+            space -= 10;
+            for var i = 0; i < 4; ++i {
+                VFLConstraintForKey(String(format:"space%d", i) )!.constant = space;
+            }
 
-        UIView.animateWithDuration(0.25, animations:{
-            self.layoutIfNeeded()
-        })
+            UIView.animateWithDuration(0.25, animations:{
+                self.layoutIfNeeded()
+            })
+        }
     }
 
 }

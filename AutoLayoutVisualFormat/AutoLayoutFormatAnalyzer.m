@@ -46,13 +46,12 @@ typedef _SWLayoutPredicate Predicate;
 
 typedef struct analyzeEnv{
     __unsafe_unretained NSMutableArray* constraints;
-    __unsafe_unretained id envTable; // array or dict
+    __unsafe_unretained id env; // array or dict
     bool envIsArray;
     bool vertical;
 } AnalyzeEnv;
 
 
-#pragma mark - ANALYZER
 #ifdef DEBUG
 #define DLOG(format, ...) NSLog(@"%s[%d]: "format, __FILE__, __LINE__,  ##__VA_ARGS__)
 #else
@@ -63,12 +62,92 @@ typedef struct analyzeEnv{
 
 #define kDefaultSpace 8
 
+#pragma mark - Getter
+static inline NSLayoutAttribute getAttr(char attrChar){
+    switch( attrChar ){
+        case 'L': return NSLayoutAttributeLeft;
+        case 'R': return NSLayoutAttributeRight;
+        case 'T': return NSLayoutAttributeTop;
+        case 'B': return NSLayoutAttributeBottom;
+        case 'X': return NSLayoutAttributeCenterX;
+        case 'Y': return NSLayoutAttributeCenterY;
+        case 'l': return NSLayoutAttributeLeading;
+        case 't': return NSLayoutAttributeTrailing;
+        case 'b': return NSLayoutAttributeBaseline;
+        case 'W': return NSLayoutAttributeWidth;
+        case 'H': return NSLayoutAttributeHeight;
+        default: { return 0; }
+    }
+}
+
+/** identifier begin with [a-zA-Z_], after may be [a-zA-Z0-9_] */
+static inline const char* getIdentifier(const char* format){
+    if (isalpha(*format) || *format == '_') { // begin with [a-zA-Z_]
+        ++format;
+        while ( isalnum(*format) || *format == '_') ++format;
+    }
+    return format;
+}
+
+/** try convert format to a string identifier */
+static inline const char* getKey(const char* format, __strong NSString** out) {
+    const char* end = getIdentifier(format);
+    if (end != format) {
+        *out = CFBridgingRelease(CFStringCreateWithBytesNoCopy(nil, (void*)format, end-format,
+                    kCFStringEncodingUTF8, NO, kCFAllocatorNull));
+    } else {
+        *out = nil;
+    }
+    return end;
+}
+
+/** try get indexValue, if found, set in out, and return end ptr. else return passin ptr */
+static const char* _tryGetIndexValue(const char* format, AnalyzeEnv* env, id* out) {
+    const char* it;
+
+    if (env->envIsArray) {
+        unsigned long index = strtoul(format, (char**)&it, 10);
+        if ( format != it && [env->env count] > index)
+        {
+            *out = env->env[index];
+            return it;
+        }
+    } else {
+        NSString* key;
+        it = getKey(format, &key);
+        if (format != it) {
+            *out = [env->env objectForKey:key];
+            if (*out) return it;
+        }
+    }
+    // get identifier fail
+    *out = nil;
+    return format;
+}
+
+static const char* tryGetIndexValue(const char* format, AnalyzeEnv* env, id* out) {
+    const char* it;
+    if (*format == '$') {
+        ++format;
+        it = _tryGetIndexValue(format, env, out);
+        NSCAssert1(*out, @"can't found indexValue at %s", format);
+        return it;
+    } else if (!env->envIsArray) { // dict $ may omit
+        it = _tryGetIndexValue(format, env, out);
+        if (out) {
+            return it;
+        }
+    }
+    return format;
+}
+
 static inline bool AttributeNeedPair(NSLayoutAttribute attr) {
     return attr != NSLayoutAttributeWidth && attr != NSLayoutAttributeHeight;
 }
 
 
 #pragma mark - ANALYZER
+
 #define SUPER_TOKEN [NSNull null]
 #define DEFAULT_CONNECTION_TOKEN [NSNull null]
 /** create constraint and add it into constraints
@@ -162,73 +241,6 @@ static void buildConstraints(id leftView, NSArray* predicates, id rightView, boo
     }
 }
 
-
-static inline NSLayoutAttribute getAttr(char attrChar){
-    switch( attrChar ){
-        case 'L': return NSLayoutAttributeLeft;
-        case 'R': return NSLayoutAttributeRight;
-        case 'T': return NSLayoutAttributeTop;
-        case 'B': return NSLayoutAttributeBottom;
-        case 'X': return NSLayoutAttributeCenterX;
-        case 'Y': return NSLayoutAttributeCenterY;
-        case 'l': return NSLayoutAttributeLeading;
-        case 't': return NSLayoutAttributeTrailing;
-        case 'b': return NSLayoutAttributeBaseline;
-        case 'W': return NSLayoutAttributeWidth;
-        case 'H': return NSLayoutAttributeHeight;
-        default: { return 0; }
-    }
-}
-
-/** identifier begin with [a-zA-Z_], after may be [a-zA-Z0-9_] */
-static inline const char* getIdentifier(const char* format){
-    if (isalpha(*format) || *format == '_') { // begin with [a-zA-Z_]
-        ++format;
-        while ( isalnum(*format) || *format == '_') ++format;
-    }
-    return format;
-}
-
-/** try get indexValue, if found, set in out, and return end ptr. else return passin ptr */
-static const char* _tryGetIndexValue(const char* format, AnalyzeEnv* env, id* out) {
-    const char *it = format;
-
-    if (env->envIsArray) {
-        char* end;
-        unsigned long index = strtoul(it, &end, 10);
-        if ([env->envTable count]> index)
-        {
-            *out = env->envTable[index];
-            return end;
-        }
-    } else {
-        const char* begin = it;
-        it = getIdentifier(it);
-        if (begin != it) {
-            *out = [env->envTable objectForKey:[[NSString alloc]
-                            initWithBytes:begin length:it-begin
-                                 encoding:NSUTF8StringEncoding]];
-            if (*out) return it;
-        }
-    }
-    // get identifier fail
-    *out = nil;
-    return format;
-}
-
-static const char* tryGetIndexValue(const char* format, AnalyzeEnv* env, id* out) {
-    const char* it = format;
-    SkipSpace(it);
-    if (*it == '$') {
-        ++it;
-        it = _tryGetIndexValue(it, env, out);
-        NSCAssert1(*out, @"can't found indexValue at %s", format);
-    } else if (!env->envIsArray) { // dict $ may omit
-        it = _tryGetIndexValue(it, env, out);
-    }
-    return *out ? it : format;
-}
-
 static const char* analyzeConstant(const char* format, AnalyzeEnv* env, CGFloat* outConstant) {
     char* end;
     CGFloat constant = strtod(format, &end);
@@ -273,7 +285,7 @@ static const char* analyzePredicateStatement(const char* format, AnalyzeEnv* env
 
     SkipSpace(format);
     (*outPredicate)->constant = strtod(format, (char**)&identifierEnd);
-    // check first is number, if so, direct get as constant and jump to last
+    // check first is number, this is a common use case. if so, direct get as constant and jump to last
     if (format != identifierEnd)
     {
         format = identifierEnd;
@@ -302,9 +314,10 @@ static const char* analyzePredicateStatement(const char* format, AnalyzeEnv* env
         }
         if (identifierEnd != format) {
             if (!env->envIsArray) { // dict index, check if is and may jump
-                obj = [env->envTable objectForKey:[[NSString alloc]
-                                    initWithBytes:format length:identifierEnd-format
-                                         encoding:NSUTF8StringEncoding]];
+                NSString* key = CFBridgingRelease(CFStringCreateWithBytesNoCopy(
+                            nil, (void*)format, identifierEnd-format,
+                            kCFStringEncodingUTF8, NO, kCFAllocatorNull));
+                obj = [env->env objectForKey:key];
                 if (obj) {
                     format = identifierEnd;
                     JumpAccordingToIndexValueType(obj);
@@ -312,7 +325,7 @@ static const char* analyzePredicateStatement(const char* format, AnalyzeEnv* env
             }
             // it's attr1
             (*outPredicate)->attr1 = getAttr(*format);
-            NSCAssert1((*outPredicate)->attr1 != 0, @"format error: unexpect attr type %c", *format);
+            NSCAssert((*outPredicate)->attr1 != 0, @"format error: unexpect attr type %c", *format);
             format = identifierEnd;
         }
     }
@@ -382,7 +395,7 @@ static const char* analyzePredicateListStatement(const char* format, AnalyzeEnv*
         [predicates addObject:predicate];
 
         SkipSpace(format);
-        if (*format != ',') break;
+        if (*format != ',') {break;} // predicate, predicate, ...
         ++format;
     }while( true );
 
@@ -393,7 +406,8 @@ static const char* analyzeViewStatement(const char* format, AnalyzeEnv* env, id*
     SkipSpace(format);
     if (*format == '$') ++format;
     format = _tryGetIndexValue(format, env, outView);
-    NSCAssert1(*outView, @"can't found identifier at %s!", format);
+    NSCAssert([*outView isKindOfClass:[UIView class]], @"can't found identifier at %s!", format);
+
     SkipSpace(format);
     if (*format == '(') { // [view(predicateList)]: view specific predicate
         *outConstraints = [NSMutableArray new];
@@ -415,8 +429,15 @@ static const char* analyzeViewStatement(const char* format, AnalyzeEnv* env, id*
 static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
     SkipSpace(format);
     // set H or V according to label. if not set, don't change.(init default to H)
-    if (*format == 'V') { env->vertical = true; ++format; }
-    else if (*format == 'H') { env->vertical = false; }
+    if (*format == 'V') {
+        env->vertical = true;
+        NSCAssert(*(format+1) == ':', @"V should followed by :!");
+        format += 2;
+    } else if (*format == 'H') {
+        env->vertical = false;
+        NSCAssert(*(format+1) == ':', @"H should followed by :!");
+        format += 2;
+    }
 
     id firstView = nil;   ///< view at the - connection left
     id secondView = nil;  ///< view at the - connection right
@@ -428,7 +449,7 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
     CONTINUE_LOOP:
         switch( *format ){
             case '|': {
-           superview:
+           Superview:
                 if (firstView) { // [V]-|
                     buildConstraints(SUPER_TOKEN, connections, firstView, env->vertical, env->constraints);
 
@@ -448,9 +469,9 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
                     goto View;
                 } else if (*format == '|') {
                     [connections addObject:DEFAULT_CONNECTION_TOKEN];
-                    goto superview;
+                    goto Superview;
                 } else { // should be a Predicate list
-                    if (*format == '(') ++format; // may enclosed by a ()
+                    if (*format == '(') { ++format; } // may enclosed by a ()
 
                     format = analyzePredicateListStatement(format, env, connections);
 
@@ -465,7 +486,7 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
                     }
                     goto CONTINUE_LOOP;
                 }
-                NSCAssert(NO, @"shouldn't exe!");
+                NSCAssert(NO, @"shouldn't happen!");
             }
             case '[': { // view statement
             View:
@@ -507,7 +528,8 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
 
             case ';': { ++format; } // ; mark this statement is end. exit
             case '\0': { goto exit; }
-            default: { break; }
+            case ' ': case '\t': case '\n': { break; }
+            default: { DLOG(@"[WARN] shouldn't enter!"); break; }
         }
         ++format;
     } while(true);
@@ -515,8 +537,8 @@ exit:
     return format;
 }
 
-#pragma mark - API
 
+#pragma mark - API
 NSArray<NSLayoutConstraint*>* VFLConstraints(NSString* format, id env) {
     NSCParameterAssert(format);
     NSCParameterAssert(env);
@@ -533,14 +555,14 @@ NSArray<NSLayoutConstraint*>* VFLConstraints(NSString* format, id env) {
 
 NSArray<NSLayoutConstraint*>* VFLInstall(NSString* format, id env) {
     NSArray* ret = VFLConstraints(format, env);
-    [ret activateConstraints];
+    [NSLayoutConstraint activateConstraints:ret];
     return ret;
 }
 
 NSArray<NSLayoutConstraint*>* VFLFullInstall(NSString* format, id env) {
     [env translatesAutoresizingMaskIntoConstraints:NO];
     NSArray* ret = VFLConstraints(format, env);
-    [ret activateConstraints];
+    [NSLayoutConstraint activateConstraints:ret];
     return ret;
 }
 
@@ -590,10 +612,13 @@ id VFLObjectForKey(NSString* key) {
 }
 
 void VFLSetObjectForKey(id obj, NSString* key) {
-    NSCParameterAssert(obj);
     NSCParameterAssert(key);
-    if (!constraintsRepository) {
-        constraintsRepository = [NSMapTable strongToWeakObjectsMapTable];
+    if (obj) {
+        if (!constraintsRepository) {
+            constraintsRepository = [NSMapTable mapTableWithKeyOptions:NSMapTableCopyIn valueOptions:NSMapTableWeakMemory];
+        }
+        [constraintsRepository setObject:obj forKey:key];
+    } else if (constraintsRepository) {
+        [constraintsRepository removeObjectForKey:key];
     }
-    [constraintsRepository setObject:obj forKey:key];
 }

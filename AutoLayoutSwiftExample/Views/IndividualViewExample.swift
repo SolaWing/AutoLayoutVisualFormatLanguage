@@ -52,8 +52,8 @@ class IndividualViewExample: UIView {
     }
 
     func updateCenter(offset p:CGPoint) {
-        VFLConstraintForKey("x").constant = p.x
-        VFLConstraintForKey("y").constant = p.y
+        VFLConstraintForKey("x")?.constant = p.x
+        VFLConstraintForKey("y")?.constant = p.y
     }
 
     func updateCenter(var p:CGPoint) {

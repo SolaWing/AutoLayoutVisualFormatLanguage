@@ -170,7 +170,7 @@
     // default connection
     NSArray* layouts;
     NSMutableArray* compareLayouts;
-    XCTAssertEqualObjects( [arrayEnv[0] VFLConstraints:@"L=8"], [arrayEnv VFLConstraints:@"|-[$0]"] );
+    XCTAssertEqualObjects( [arrayEnv[0] VFLConstraints:@"L=8"], [arrayEnv VFLConstraints:@"H:|-[$0]"] );
     XCTAssertEqualObjects( ([superView VFLConstraints:@"R=$1+8", arrayEnv[0]]), [arrayEnv VFLConstraints:@"[0]-|"] );
     XCTAssertEqualObjects( ([(UIView*)arrayEnv[0] VFLConstraints:@"L=$1.R+8", arrayEnv[1]]), [arrayEnv VFLConstraints:@"[$1]-[0]"] );
     XCTAssertEqualObjects( [arrayEnv[0] VFLConstraints:@"T=8"], [arrayEnv VFLConstraints:@"V:|-[0]"] );

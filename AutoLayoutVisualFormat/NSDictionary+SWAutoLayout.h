@@ -9,6 +9,7 @@
 
 #import <Foundation/Foundation.h>
 @class NSLayoutConstraint;
+NS_ASSUME_NONNULL_BEGIN
 
 #define VFLConstraintsWithEnv(format, ...) [NSDictionaryOfVariableBindings(__VA_ARGS__) VFLConstraints:format]
 #define VFLInstallWithEnv(format, ...) [NSDictionaryOfVariableBindings(__VA_ARGS__) VFLInstall:format]
@@ -27,3 +28,5 @@
 - (NSArray<NSLayoutConstraint*>*)VFLFullInstall:(NSString*)format;
 
 @end
+
+NS_ASSUME_NONNULL_END

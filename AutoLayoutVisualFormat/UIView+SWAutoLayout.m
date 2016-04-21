@@ -47,7 +47,7 @@ static NSUInteger getMaxIndexValueInFormat(NSString* format) {
     va_list ap; va_start(ap, format);
     NSArray* constraints = [self VFLConstraints:format andVarArg:&ap];
     va_end(ap);
-    [constraints activateConstraints];
+    [NSLayoutConstraint activateConstraints:constraints];
     return constraints;
 }
 
@@ -56,7 +56,7 @@ static NSUInteger getMaxIndexValueInFormat(NSString* format) {
     self.translatesAutoresizingMaskIntoConstraints = NO;
     NSArray* constraints = [self VFLConstraints:format andVarArg:&ap];
     va_end(ap);
-    [constraints activateConstraints];
+    [NSLayoutConstraint activateConstraints:constraints];
     return constraints;
 }
 

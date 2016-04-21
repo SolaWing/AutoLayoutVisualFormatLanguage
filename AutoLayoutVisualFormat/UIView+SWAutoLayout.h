@@ -25,4 +25,9 @@
  *  Notice this only disable self autoresizing, not the view in var-list*/
 - (NSArray<NSLayoutConstraint*>*)VFLFullInstall:(NSString*)format, ...;
 
+#pragma mark - array version
+- (NSArray<NSLayoutConstraint*>*)VFLConstraints:(NSString*)format withArgs:(NSArray*)args;
+- (NSArray<NSLayoutConstraint*>*)VFLInstall:(NSString*)format withArgs:(NSArray*)args;
+- (NSArray<NSLayoutConstraint*>*)VFLFullInstall:(NSString*)format withArgs:(NSArray*)args;
+
 @end

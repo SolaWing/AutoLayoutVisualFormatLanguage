@@ -60,4 +60,24 @@ static NSUInteger getMaxIndexValueInFormat(NSString* format) {
     return constraints;
 }
 
+#pragma mark - array api
+- (NSArray<NSLayoutConstraint*>*)VFLConstraints:(NSString*)format withArgs:(NSArray*)args {
+    NSMutableArray* obj = [NSMutableArray arrayWithObject:self];
+    [obj addObjectsFromArray:args];
+    return VFLViewConstraints(format, self, obj);
+}
+
+- (NSArray<NSLayoutConstraint*>*)VFLInstall:(NSString*)format withArgs:(NSArray*)args {
+    NSArray* constraints = [self VFLConstraints:format withArgs:args];
+    [NSLayoutConstraint activateConstraints:constraints];
+    return constraints;
+}
+
+- (NSArray<NSLayoutConstraint*>*)VFLFullInstall:(NSString*)format withArgs:(NSArray*)args {
+    self.translatesAutoresizingMaskIntoConstraints = NO;
+    NSArray* constraints = [self VFLConstraints:format withArgs:args];
+    [NSLayoutConstraint activateConstraints:constraints];
+    return constraints;
+}
+
 @end

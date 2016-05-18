@@ -14,15 +14,18 @@ NS_ASSUME_NONNULL_BEGIN
 /** the syntax is as follow. and completely compatible with Apple Visual Format Language
 
 <visualFormat>      :   <visualStatement>(;<visualStatement>)*
-<visualStatement>   :   (<orientation>:)?(<superview><connection>)?<view>(<connection><view>)*(<connection><superview>)?(<align>)*
+<visualStatement>   :   (<orientation>:)?(<superview><connection>)?<view>(<connection><view>)*(<connection><superview>)?(<align>)*(<otherFlag>)*
                         "orient init default H, after visualStatement default equal to previous orient. superview default empty"
 <orientation>       :   H|V
 <superview>         :   |
-<view>              :   [<viewIndex>(<predicateList>)?]
+<view>              :   [<viewIndex>(<otherFlag>)*((<predicateList>))?]
 <align>             :   [LRTBXYltbWH]
                         "Left,Right,Top,Bottom,CenterX,CenterY,leading,trailing,baseline,Width,Height"
                         "align all connect view in one statement(except superview) according to align flag"
                         "generate align constraints will connect adjacent views"
+<otherFlag>         :   [!]
+                        "if use at the end of visualStatement, apply to all connectViews"
+                        "!: mark view use frame to position view, not autolayout"
 <connection>        :   <empty>|-<predicateList>-|-                             :empty use 0 space, - use default space
 <predicateList>     :   <predicate>(,<predicate>)*                              :encapsulate with () is optional
 <predicate>         :   (<identifier>:)?(<attr1>)?(<relation>)?(<viewIndex>)?(.?<attr2>)?(*<multiplier>)?([+-]?<constant>)?(@<priority>)?

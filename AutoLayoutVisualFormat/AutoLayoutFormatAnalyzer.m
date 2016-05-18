@@ -402,13 +402,15 @@ static const char* analyzePredicateListStatement(const char* format, AnalyzeEnv*
     return format;
 }
 
-static const char* analyzeViewStatement(const char* format, AnalyzeEnv* env, id* outView, NSMutableArray** outConstraints) {
+static const char* analyzeViewStatement(const char* format, AnalyzeEnv* env, UIView** outView, NSMutableArray** outConstraints) {
     SkipSpace(format);
     if (*format == '$') ++format;
     format = _tryGetIndexValue(format, env, outView);
-    NSCAssert([*outView isKindOfClass:[UIView class]], @"can't found identifier at %s!", format);
+    // outView should be UIView or layoutGuide
+    NSCAssert(*outView, @"can't found identifier at %s!", format);
 
     SkipSpace(format);
+    if (*format == '!') { (*outView).translatesAutoresizingMaskIntoConstraints = NO; SkipSpace(format); }
     if (*format == '(') { // [view(predicateList)]: view specific predicate
         *outConstraints = [NSMutableArray new];
         NSMutableArray* predicates = [NSMutableArray new];
@@ -525,6 +527,8 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
             case 'b': [env->constraints addObjectsFromArray:[connectViews constraintsAlignAllViews:NSLayoutAttributeBaseline]] ; break;
             case 'W': [env->constraints addObjectsFromArray:[connectViews constraintsAlignAllViews:NSLayoutAttributeWidth]]    ; break;
             case 'H': [env->constraints addObjectsFromArray:[connectViews constraintsAlignAllViews:NSLayoutAttributeHeight]]   ; break;
+
+            case '!': [connectViews translatesAutoresizingMaskIntoConstraints:NO]; break;
 
             case ';': { ++format; } // ; mark this statement is end. exit
             case '\0': { goto exit; }

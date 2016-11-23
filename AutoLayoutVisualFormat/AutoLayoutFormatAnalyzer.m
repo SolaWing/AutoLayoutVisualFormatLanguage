@@ -54,8 +54,10 @@ typedef struct analyzeEnv{
 
 #ifdef DEBUG
 #define DLOG(format, ...) NSLog(@"%s[%d]: "format, __FILE__, __LINE__,  ##__VA_ARGS__)
+#define WARN(...) NSCAssert(false, __VA_ARGS__)
 #else
 #define DLOG(...)
+#define WARN(...)
 #endif
 
 #define SkipSpace(charPtr) while( isspace(*(charPtr)) ) {++(charPtr);}
@@ -420,7 +422,7 @@ static const char* analyzeViewStatement(const char* format, AnalyzeEnv* env, UIV
         if (*format == ')') {
             ++format;
         } else {
-            DLOG(@"[WARN] unclose ')'");
+            WARN(@"[WARN] unclose ')'");
         }
     } else {
          *outConstraints = nil;
@@ -484,7 +486,7 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
                     if (*format == '-') {
                         ++format;
                     } else {
-                        DLOG(@"[WARN] predicate connection should end with -");
+                        WARN(@"[WARN] predicate connection should end with -");
                     }
                     goto CONTINUE_LOOP;
                 }
@@ -511,7 +513,7 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
                 SkipSpace(format);
                 if (*format == ']') { ++format; }
                 else {
-                    DLOG(@"[WARN] view statement should end with ]");
+                    WARN(@"[WARN] view statement should end with ]");
                 }
                 goto CONTINUE_LOOP;
             }
@@ -533,7 +535,7 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
             case ';': { ++format; } // ; mark this statement is end. exit
             case '\0': { goto exit; }
             case ' ': case '\t': case '\n': { break; }
-            default: { DLOG(@"[WARN] shouldn't enter!"); break; }
+            default: { WARN(@"[WARN] shouldn't enter!"); break; }
         }
         ++format;
     } while(true);

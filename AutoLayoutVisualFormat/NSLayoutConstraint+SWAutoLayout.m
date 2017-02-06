@@ -7,6 +7,8 @@
 //  Copyright © 2015年 SW. All rights reserved.
 //
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_8_0
+
 #import "NSLayoutConstraint+SWAutoLayout.h"
 #import "objc/runtime.h"
 #import "AutoLayoutFormatAnalyzer.h"
@@ -67,3 +69,5 @@ static void sw_NSLayoutConstraint_deactivateConstraints(__unused id cls, __unuse
 
 
 @end
+
+#endif

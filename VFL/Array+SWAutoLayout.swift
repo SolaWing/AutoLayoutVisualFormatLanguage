@@ -10,26 +10,29 @@
 import Foundation
 import UIKit
 
-public extension Array where Element:AnyObject {
-    func VFLConstraints(format:String) -> [NSLayoutConstraint] {
+public extension Array {
+    func VFLConstraints(_ format:String) -> [NSLayoutConstraint] {
         return VFL.VFLConstraints(format, self)
     }
 
-    func VFLInstall(format:String) -> [NSLayoutConstraint] {
+    @discardableResult
+    func VFLInstall(_ format:String) -> [NSLayoutConstraint] {
         let constrains = VFL.VFLConstraints(format, self)
-        NSLayoutConstraint.activateConstraints(constrains)
+        NSLayoutConstraint.activate(constrains)
         return constrains
     }
 
-    func VFLFullInstall(format:String) -> [NSLayoutConstraint] {
+    @discardableResult
+    func VFLFullInstall(_ format:String) -> [NSLayoutConstraint] {
         self.translatesAutoresizingMaskIntoConstraints(false)
 
         let constrains = VFL.VFLConstraints(format, self)
-        NSLayoutConstraint.activateConstraints(constrains)
+        NSLayoutConstraint.activate(constrains)
         return constrains
     }
 
-    func translatesAutoresizingMaskIntoConstraints(trans:Bool) -> Array {
+    @discardableResult
+    func translatesAutoresizingMaskIntoConstraints(_ trans:Bool) -> Array {
         for element in self {
             if let view = element as? UIView {
                 view.translatesAutoresizingMaskIntoConstraints = trans
@@ -41,10 +44,10 @@ public extension Array where Element:AnyObject {
 
 public extension Array where Element:NSLayoutConstraint {
     func activateConstraints() {
-        NSLayoutConstraint.activateConstraints(self)
+        NSLayoutConstraint.activate(self)
     }
 
     func deactivateConstraints() {
-        NSLayoutConstraint.deactivateConstraints(self)
+        NSLayoutConstraint.deactivate(self)
     }
 }

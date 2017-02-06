@@ -23,13 +23,13 @@ class DetailViewController: UIViewController {
     func configureView() {
         // Update the user interface for the detail item.
         if let detail = self.detailItem {
-            let appName : String = NSBundle.mainBundle()
-                .objectForInfoDictionaryKey(kCFBundleNameKey as String) as! String
+            let appName : String = Bundle.main
+                .object(forInfoDictionaryKey: kCFBundleNameKey as String) as! String
             let name = String(format: "%@.%@Example", appName,
-                (detail as! String).stringByReplacingOccurrencesOfString(" ", withString:"") )
+                (detail as! String).replacingOccurrences(of: " ", with:"") )
             print("name is \(name)")
             let view: UIView =  (objc_getClass(name)
-                as! UIView.Type).init(frame: CGRectZero)
+                as! UIView.Type).init(frame: CGRect.zero)
             self.view.addSubview(view)
             view.VFLFullInstall("Left,Right, Bottom,Top=\(self.topLayoutGuide).Bottom")
         }

@@ -12,49 +12,59 @@ import UIKit
 
 public extension UIView {
     // first type is String conflict with interpolation. so add prefix label
-    func VFLConstraints(format format:String, args:[AnyObject]) -> [NSLayoutConstraint] {
-        var argsIncludeSelf : [AnyObject] = [self]
-        argsIncludeSelf.appendContentsOf(args)
+    @nonobjc
+    func VFLConstraints(format:String, args:[Any]) -> [NSLayoutConstraint] {
+        var argsIncludeSelf : [Any] = [self]
+        argsIncludeSelf.append(contentsOf: args)
         return VFL.VFLViewConstraints(format, self, argsIncludeSelf)
     }
 
-    func VFLConstraints(format format:String, _ args:AnyObject...) -> [NSLayoutConstraint] {
+    @nonobjc
+    func VFLConstraints(format:String, _ args:Any...) -> [NSLayoutConstraint] {
         return self.VFLConstraints(format: format, args: args)
     }
 
-    func VFLInstall(format format:String, _ args:AnyObject...) -> [NSLayoutConstraint] {
+    @nonobjc
+    @discardableResult
+    func VFLInstall(format:String, _ args:Any...) -> [NSLayoutConstraint] {
         let constraints = self.VFLConstraints(format: format, args: args)
-        NSLayoutConstraint.activateConstraints(constraints)
+        NSLayoutConstraint.activate(constraints)
         return constraints
     }
 
-    func VFLFullInstall(format format:String, _ args:AnyObject...) -> [NSLayoutConstraint] {
+    @nonobjc
+    @discardableResult
+    func VFLFullInstall(format:String, _ args:Any...) -> [NSLayoutConstraint] {
         self.translatesAutoresizingMaskIntoConstraints = false
         let constraints = self.VFLConstraints(format: format, args: args)
-        NSLayoutConstraint.activateConstraints(constraints)
+        NSLayoutConstraint.activate(constraints)
         return constraints
     }
 
     // MARK: - interpolation
-    func VFLConstraints(interpolation:VFLInterpolation) -> [NSLayoutConstraint] {
-        let (format, env) = interpolation.result()
-        return VFL.VFLViewConstraints(format, self, env)
+    func VFLConstraints(_ interpolation:VFLInterpolation) -> [NSLayoutConstraint] {
+        let format = NSMutableString()
+        let env = NSMutableArray(object: self)
+        interpolation.result(format, env)
+        return VFL.VFLViewConstraints(format as String, self, env)
     }
 
-    func VFLInstall(interpolation:VFLInterpolation) -> [NSLayoutConstraint] {
+    @discardableResult
+    func VFLInstall(_ interpolation:VFLInterpolation) -> [NSLayoutConstraint] {
         let constraints = self.VFLConstraints(interpolation)
-        NSLayoutConstraint.activateConstraints(constraints)
+        NSLayoutConstraint.activate(constraints)
         return constraints
     }
 
-    func VFLFullInstall(interpolation:VFLInterpolation) -> [NSLayoutConstraint] {
+    @discardableResult
+    func VFLFullInstall(_ interpolation:VFLInterpolation) -> [NSLayoutConstraint] {
         let constraints = self.VFLConstraints(interpolation)
         self.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activateConstraints(constraints)
+        NSLayoutConstraint.activate(constraints)
         return constraints
     }
 
-    func addConstraints(interpolation: VFLInterpolation) {
+    func addConstraints(_ interpolation: VFLInterpolation) {
         let constraints = self.VFLConstraints(interpolation)
         self.addConstraints(constraints)
     }

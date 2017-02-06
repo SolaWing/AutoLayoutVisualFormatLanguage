@@ -10,7 +10,7 @@
 import Foundation
 import UIKit
 
-func RGB(color: UInt32) -> UIColor {
+func RGB(_ color: UInt32) -> UIColor {
     return UIColor(red: CGFloat((color>>16)&0xff)/255.0,
         green: CGFloat((color>>8)&0xff)/255.0,
         blue: CGFloat(color&0xff)/255.0,
@@ -23,7 +23,7 @@ extension UILabel {
         self.init()
         self.text = title
         self.textColor = color
-        self.textAlignment = NSTextAlignment.Center
+        self.textAlignment = NSTextAlignment.center
         self.numberOfLines = 0
     }
 }
@@ -32,12 +32,12 @@ extension UIView {
     convenience init(color: UIColor) {
         self.init()
         self.layer.borderWidth = 1.0
-        self.layer.borderColor = UIColor.lightGrayColor().CGColor
+        self.layer.borderColor = UIColor.lightGray.cgColor
         self.backgroundColor = color
     }
 
     func showBorder() {
         self.layer.borderWidth = 1.0
-        self.layer.borderColor = UIColor.lightGrayColor().CGColor
+        self.layer.borderColor = UIColor.lightGray.cgColor
     }
 }

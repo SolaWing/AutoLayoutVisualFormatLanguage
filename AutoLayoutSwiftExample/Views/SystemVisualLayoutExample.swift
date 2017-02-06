@@ -24,7 +24,7 @@ class SystemVisualLayoutExample: UIView {
 
     func initialize() {
         let scrollView = UIScrollView(frame: self.bounds)
-        scrollView.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
+        scrollView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         self.addSubview(scrollView)
 
         let containerView = UIView()
@@ -62,13 +62,13 @@ class SystemVisualLayoutExample: UIView {
 
     func firstExampleView() -> UIView {
         let view = UIView()
-        let button = UIButton(type: UIButtonType.Custom)
+        let button = UIButton(type: UIButtonType.custom)
         button.layer.borderWidth = 1;
         button.layer.cornerRadius = 5;
-        button.backgroundColor = UIColor.blueColor()
+        button.backgroundColor = UIColor.blue
 
         let textField = UITextField()
-        textField.borderStyle = UITextBorderStyle.Bezel
+        textField.borderStyle = UITextBorderStyle.bezel
         view.addSubview(button)
         view.addSubview(textField)
 
@@ -109,19 +109,19 @@ class SystemVisualLayoutExample: UIView {
 
     func completeLineView() -> UIView {
         let view = UIView()
-        let find = UIButton(type: .System)
-        find.setTitle("Find", forState: .Normal);
-        let findNext = UIButton(type: .System)
-        findNext.setTitle("Find Next", forState: .Normal)
+        let find = UIButton(type: .system)
+        find.setTitle("Find", for: UIControlState());
+        let findNext = UIButton(type: .system)
+        findNext.setTitle("Find Next", for: UIControlState())
         let textField = UITextField()
-        textField.borderStyle = .Bezel
+        textField.borderStyle = .bezel
         view.addSubview(find)
         view.addSubview(findNext)
         view.addSubview(textField)
 
         /// a complete Line
-        ["find":find, "findNext":findNext, "textField":textField, "minWidth": 50]
-        .VFLFullInstall("|-[find]-[findNext]-[textField(>=minWidth)]-| b; V:|-[find]-|")
+        let d : [String : Any] = ["find":find, "findNext":findNext, "textField":textField, "minWidth": 50]
+        d.VFLFullInstall("|-[find]-[findNext]-[textField(>=minWidth)]-| b; V:|-[find]-|")
 
         return view
     }

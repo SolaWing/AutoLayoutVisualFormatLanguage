@@ -9,11 +9,11 @@
 
 #import <UIKit/UIKit.h>
 
-//! Project version number for VFL.
-FOUNDATION_EXPORT double VFLVersionNumber;
-
-//! Project version string for VFL.
-FOUNDATION_EXPORT const unsigned char VFLVersionString[];
+////! Project version number for VFL.
+//FOUNDATION_EXPORT double VFLVersionNumber;
+//
+////! Project version string for VFL.
+//FOUNDATION_EXPORT const unsigned char VFLVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <VFL/PublicHeader.h>
 
@@ -22,4 +22,3 @@ FOUNDATION_EXPORT const unsigned char VFLVersionString[];
 #import <VFL/NSArray+SWAutoLayout.h>
 #import <VFL/NSDictionary+SWAutoLayout.h>
 #import <VFL/UIView+SWAutoLayout.h>
-#import <VFL/NSLayoutConstraint+SWAutoLayout.h>

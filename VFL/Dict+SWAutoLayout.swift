@@ -10,26 +10,29 @@
 import Foundation
 import UIKit
 
-public extension Dictionary where Value : AnyObject {
-    func VFLConstraints(format:String) -> [NSLayoutConstraint] {
-        return VFL.VFLConstraints(format, self as! AnyObject)
+public extension Dictionary {
+    func VFLConstraints(_ format:String) -> [NSLayoutConstraint] {
+        return VFL.VFLConstraints(format, self)
     }
 
-    func VFLInstall(format:String) -> [NSLayoutConstraint] {
-        let constrains = VFL.VFLConstraints(format, self as! AnyObject)
-        NSLayoutConstraint.activateConstraints(constrains)
+    @discardableResult
+    func VFLInstall(_ format:String) -> [NSLayoutConstraint] {
+        let constrains = VFL.VFLConstraints(format, self)
+        NSLayoutConstraint.activate(constrains)
         return constrains
     }
 
-    func VFLFullInstall(format:String) -> [NSLayoutConstraint] {
+    @discardableResult
+    func VFLFullInstall(_ format:String) -> [NSLayoutConstraint] {
         self.translatesAutoresizingMaskIntoConstraints(false)
 
-        let constrains = VFL.VFLConstraints(format, self as! AnyObject)
-        NSLayoutConstraint.activateConstraints(constrains)
+        let constrains = VFL.VFLConstraints(format, self)
+        NSLayoutConstraint.activate(constrains)
         return constrains
     }
 
-    func translatesAutoresizingMaskIntoConstraints(trans:Bool) -> Dictionary {
+    @discardableResult
+    func translatesAutoresizingMaskIntoConstraints(_ trans:Bool) -> Dictionary {
         for (_, element) in self {
             if let view = element as? UIView {
                 view.translatesAutoresizingMaskIntoConstraints = trans

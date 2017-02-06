@@ -41,7 +41,7 @@ class IndividualViewExample: UIView {
             // attr2 default equal to attr1, you may omit it if it's same.
             // view call VFLFullInstall is $0, other param begin from $1
             view.VFLFullInstall(format:["Left>=$1+$4, Right<=$1-$4, Top>=$1+$4, Bottom<=$1-$4",
-                "Width=$1.Width-$2@999, Height=$1-$3@999, X@1, Y@1"].joinWithSeparator(","),
+                "Width=$1.Width-$2@999, Height=$1-$3@999, X@1, Y@1"].joined(separator: ","),
                 lastView, width, height, margin)
 
             lastView = view;
@@ -56,19 +56,20 @@ class IndividualViewExample: UIView {
         VFLConstraintForKey("y")?.constant = p.y
     }
 
-    func updateCenter(var p:CGPoint) {
+    func updateCenter(_ p:CGPoint) {
+        var p = p
         p.x -= self.bounds.size.width / 2
         p.y -= self.bounds.size.height / 2
         self.updateCenter(offset: p)
     }
 
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesMoved(touches, withEvent: event)
-        self.updateCenter(touches.first!.locationInView(self))
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesMoved(touches, with: event)
+        self.updateCenter(touches.first!.location(in: self))
     }
 
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesEnded(touches, withEvent: event)
-        self.updateCenter(touches.first!.locationInView(self))
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        self.updateCenter(touches.first!.location(in: self))
     }
 }

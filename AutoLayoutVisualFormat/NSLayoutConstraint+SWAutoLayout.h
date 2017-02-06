@@ -7,6 +7,8 @@
 //  Copyright © 2015年 SW. All rights reserved.
 //
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_8_0
+
 #import <UIKit/UIKit.h>
 
 @interface NSLayoutConstraint (SWAutoLayout)
@@ -17,3 +19,5 @@
 + (void)deactivateConstraints:(NSArray<NSLayoutConstraint *> * _Nonnull)constraints;
 
 @end
+
+#endif

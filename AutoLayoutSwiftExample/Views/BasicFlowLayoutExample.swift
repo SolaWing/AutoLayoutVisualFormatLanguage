@@ -30,18 +30,18 @@ class BasicFlowLayoutExample: UIView {
         self.addSubview(centerView)
         self.addSubview(rightView)
 
-        let minusButton = UIButton(type: .Custom)
-        minusButton.setTitle("-", forState:.Normal)
-        minusButton.setTitleColor(RGB(0x0000FF), forState:.Normal)
-        minusButton.backgroundColor = UIColor.whiteColor()
-        minusButton.addTarget(self, action:"clickMinusButton", forControlEvents:.TouchUpInside)
+        let minusButton = UIButton(type: .custom)
+        minusButton.setTitle("-", for:UIControlState())
+        minusButton.setTitleColor(RGB(0x0000FF), for:UIControlState())
+        minusButton.backgroundColor = UIColor.white
+        minusButton.addTarget(self, action:#selector(BasicFlowLayoutExample.clickMinusButton), for:.touchUpInside)
         leftView.addSubview(minusButton)
 
-        let plusButton = UIButton(type: .Custom)
-        plusButton.setTitle("+", forState:.Normal)
-        plusButton.setTitleColor(RGB(0x0000FF), forState:.Normal)
-        plusButton.backgroundColor = UIColor.whiteColor()
-        plusButton.addTarget(self, action:"clickPlusButton", forControlEvents:.TouchUpInside)
+        let plusButton = UIButton(type: .custom)
+        plusButton.setTitle("+", for:UIControlState())
+        plusButton.setTitleColor(RGB(0x0000FF), for:UIControlState())
+        plusButton.backgroundColor = UIColor.white
+        plusButton.addTarget(self, action:#selector(BasicFlowLayoutExample.clickPlusButton), for:.touchUpInside)
         rightView.addSubview(plusButton)
 
         // create flow layout from left to right.
@@ -64,11 +64,11 @@ class BasicFlowLayoutExample: UIView {
         if var space = VFLConstraintForKey("space0")?.constant {
             if space > 60 { return }
             space += 10;
-            for var i = 0; i < 4; ++i {
+            for i in 0 ..< 4 {
                 VFLConstraintForKey(String(format:"space%d", i) )!.constant = space;
             }
 
-            UIView.animateWithDuration(0.25, animations:{
+            UIView.animate(withDuration: 0.25, animations:{
                 self.layoutIfNeeded()
             })
         }
@@ -79,11 +79,11 @@ class BasicFlowLayoutExample: UIView {
         if var space = VFLConstraintForKey("space0")?.constant {
             if space == 0 { return }
             space -= 10;
-            for var i = 0; i < 4; ++i {
+            for i in 0 ..< 4 {
                 VFLConstraintForKey(String(format:"space%d", i) )!.constant = space;
             }
 
-            UIView.animateWithDuration(0.25, animations:{
+            UIView.animate(withDuration: 0.25, animations:{
                 self.layoutIfNeeded()
             })
         }

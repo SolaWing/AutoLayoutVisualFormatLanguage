@@ -27,7 +27,7 @@ class SwitchLayoutExample: UIView {
     }
 
     func initialize() {
-        self.backgroundColor = UIColor.grayColor()
+        self.backgroundColor = UIColor.gray
 
         let yellowView = UIView(color: RGB(0xCCCC00))
         let blueView = UIView(color: RGB(0x0000FF))
@@ -41,11 +41,11 @@ class SwitchLayoutExample: UIView {
             view.translatesAutoresizingMaskIntoConstraints = false
         }
 
-        let button = UIButton(type: .Custom)
-        button.setTitleColor(UIColor.blueColor(), forState:.Normal)
-        button.setTitleColor(UIColor.whiteColor(), forState:.Highlighted)
-        button.setTitle("Touch Me", forState:.Normal)
-        button.addTarget(self, action:"touchButton", forControlEvents:.TouchUpInside)
+        let button = UIButton(type: .custom)
+        button.setTitleColor(UIColor.blue, for:UIControlState())
+        button.setTitleColor(UIColor.white, for:.highlighted)
+        button.setTitle("Touch Me", for:UIControlState())
+        button.addTarget(self, action:#selector(SwitchLayoutExample.touchButton), for:.touchUpInside)
         yellowView.addSubview(button)
         button.VFLFullInstall("X,Y") // center button in superview
 
@@ -61,11 +61,10 @@ class SwitchLayoutExample: UIView {
         // rearrange views so 0:Yellow 1:rightView 2:bottomView 3:leftView 4:topView
         var views = Array(arrayLiteral: self.views[0])
         self.phase %= 8
-        var i : UInt32
-        for i = self.phase/2; i < 4; ++i {
+        for i in self.phase/2 ..< 4 {
             views.append( self.views[Int(i+1)] )
         }
-        for i = 0; i < self.phase/2; ++i {
+        for i in 0 ..< self.phase/2 {
             views.append( self.views[Int(i+1)] )
         }
 
@@ -74,20 +73,20 @@ class SwitchLayoutExample: UIView {
             self.localConstraints = views.VFLInstall([
                 "|-[$3]-[$0(X,Y)]-[$1]-| WHY",
                 "V:|-[$4]-[$0]-[$2]-| WHX"
-                ].joinWithSeparator(";"))
+                ].joined(separator: ";"))
         } else {
             self.localConstraints = views.VFLInstall([
                 "|-[$3(Y=$2)]-20-[$0(X,Y)]-20-[$1(Y=$4)]-| WH",
                 "V:|-[$4(X=$3)]-20-[$0]-20-[$2(X=$1)]-| WH"
-                ].joinWithSeparator(";"))
+                ].joined(separator: ";"))
         }
     }
 
     func touchButton() {
-        ++(self.phase)
+        (self.phase) += 1
         self.applyLayout()
 
-        UIView.animateWithDuration(0.25, animations:{
+        UIView.animate(withDuration: 0.25, animations:{
             self.layoutIfNeeded()
         })
     }

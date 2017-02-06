@@ -10,106 +10,102 @@
 import Foundation
 import UIKit
 
-public func constraints(interpolation: VFLInterpolation) -> [NSLayoutConstraint] {
+public func constraints(_ interpolation: VFLInterpolation) -> [NSLayoutConstraint] {
     let (format, env) = interpolation.result()
     return VFL.VFLConstraints(format, env)
 }
 
-public func install(interpolation: VFLInterpolation) -> [NSLayoutConstraint] {
+@discardableResult
+public func install(_ interpolation: VFLInterpolation) -> [NSLayoutConstraint] {
     let (format, env) = interpolation.result()
     return VFL.VFLInstall(format, env)
 }
 
-public func fullInstall(interpolation: VFLInterpolation) -> [NSLayoutConstraint] {
+@discardableResult
+public func fullInstall(_ interpolation: VFLInterpolation) -> [NSLayoutConstraint] {
     let (format, env) = interpolation.result()
     return VFL.VFLFullInstall(format, env)
 }
 
-func buildInterpolationResult(parts: [VFLInterpolation]) -> (format: String, env: [AnyObject])! {
+func buildInterpolationResult(_ parts: [VFLInterpolation]) -> (format: String, env: [AnyObject])! {
     let format = NSMutableString()
     let env = NSMutableArray()
     for part in parts {
         part.result(format, env)
         if !format.hasSuffix(";") {
-            format.appendString("; ")
+            format.append("; ")
         }
     }
     return (format as String, env as [AnyObject])
 }
 
-public func constraints(interpolation: [VFLInterpolation]) -> [NSLayoutConstraint] {
+// array of VFLInterpolation for long interpolation string
+
+public func constraints(_ interpolation: [VFLInterpolation]) -> [NSLayoutConstraint] {
     let (format, env) = buildInterpolationResult(interpolation)
     return VFL.VFLConstraints(format, env)
 }
 
-public func install(interpolation: [VFLInterpolation]) -> [NSLayoutConstraint] {
+@discardableResult
+public func install(_ interpolation: [VFLInterpolation]) -> [NSLayoutConstraint] {
     let (format, env) = buildInterpolationResult(interpolation)
     return VFL.VFLInstall(format, env)
 }
 
-public func fullInstall(interpolation: [VFLInterpolation]) -> [NSLayoutConstraint] {
+@discardableResult
+public func fullInstall(_ interpolation: [VFLInterpolation]) -> [NSLayoutConstraint] {
     let (format, env) = buildInterpolationResult(interpolation)
     return VFL.VFLFullInstall(format, env)
 }
 
-public enum VFLInterpolation : StringInterpolationConvertible, StringLiteralConvertible {
+// MARK: -
+public enum VFLInterpolation : ExpressibleByStringInterpolation, ExpressibleByStringLiteral {
 
-    case Format(String)
-    case Metric(CGFloat)
-    case Collection([VFLInterpolation])
-    case Other(AnyObject)
+    case format(String)
+    case metric(CGFloat)
+    case collection([VFLInterpolation])
+    case other(AnyObject)
 
-    // MARK: StringLiteralConvertible
+    // MARK: ExpressibleByStringLiteral
     public init(stringLiteral value: StringLiteralType){
-        self = .Format(value)
+        self = .format(value)
     }
 
     public init(extendedGraphemeClusterLiteral value: ExtendedGraphemeClusterType){
-        self = .Format(value)
+        self = .format(value)
     }
 
     public init(unicodeScalarLiteral value: UnicodeScalarType) {
-        self = .Format(value)
+        self = .format(value)
     }
 
-    // MARK: StringInterpolationConvertible
+    // MARK: ExpressibleByStringInterpolation
     public init(stringInterpolation strings: VFLInterpolation...) {
-        self = .Collection(strings)
+        self = .collection(strings)
     }
 
     public init(stringInterpolationSegment str: String) {
-        self = .Format(str)
+        self = .format(str)
     }
 
     public init(stringInterpolationSegment value: CGFloat) {
-        self = .Metric(value)
+        self = .metric(value)
     }
 
     public init<T>(stringInterpolationSegment expr: T) {
-        self = .Other( expr as! AnyObject )
+        self = .other( expr as AnyObject )
     }
 
     func result() -> (format: String, env: [AnyObject])! {
         switch self {
-        case .Collection(let parts):
+        case .collection(let parts):
             let env = NSMutableArray(capacity: parts.count)
             let format = NSMutableString()
             for part in parts {
-                switch part {
-                case .Format(let str):
-                    format.appendString(str)
-                case .Metric(let value):
-                    format.appendFormat("$%u", env.count)
-                    env.addObject(value)
-                case .Other(let obj):
-                    format.appendFormat("$%u", env.count)
-                    env.addObject(obj)
-                default:
-                    assertionFailure("invalid part to build result")
-                }
+                part.result(format, env)
             }
             return (format as String, env as [AnyObject])
-        case .Format(let format):
+        case .format(let format):
             return (format, [])
         default:
             assertionFailure("call result on incomplete type")
@@ -118,22 +114,20 @@ public enum VFLInterpolation : StringInterpolationConvertible, StringLiteralConv
     }
 
     /** fill format and env acording to self part */
-    func result(format: NSMutableString, _ env: NSMutableArray) {
+    func result(_ format: NSMutableString, _ env: NSMutableArray) {
         switch self {
-        case .Format(let str):
-            format.appendString(str)
-        case .Metric(let value):
+        case .format(let str):
+            format.append(str)
+        case .metric(let value):
             format.appendFormat("$%u", env.count)
-            env.addObject(value)
-        case .Other(let obj):
+            env.add(value)
+        case .other(let obj):
             format.appendFormat("$%u", env.count)
-            env.addObject(obj)
-        case .Collection(let parts): // recursive add format and env
+            env.add(obj)
+        case .collection(let parts): // recursive add format and env
             for part in parts {
                 part.result(format, env)
             }
-//        default:
-//            assertionFailure("invalid part to build result")
         }
     }
 }

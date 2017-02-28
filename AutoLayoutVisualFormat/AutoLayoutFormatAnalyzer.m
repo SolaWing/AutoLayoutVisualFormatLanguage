@@ -51,13 +51,14 @@ typedef struct analyzeEnv{
     bool vertical;
 } AnalyzeEnv;
 
+bool VFLEnableAssert = 0;
 
 #ifdef DEBUG
 #define DLOG(format, ...) NSLog(@"%s[%d]: "format, __FILE__, __LINE__,  ##__VA_ARGS__)
 #define WARN(...) NSCAssert(false, __VA_ARGS__)
 #else
 #define DLOG(...)
-#define WARN(...)
+#define WARN(...) if (VFLEnableAssert) { NSCAssert(false, __VA_ARGS__); }
 #endif
 
 #define SkipSpace(charPtr) while( isspace(*(charPtr)) ) {++(charPtr);}

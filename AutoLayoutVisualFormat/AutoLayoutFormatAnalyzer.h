@@ -11,6 +11,9 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
+
+extern bool VFLEnableAssert;
+
 /** the syntax is as follow. and completely compatible with Apple Visual Format Language
 
 <visualFormat>      :   <visualStatement>(;<visualStatement>)*

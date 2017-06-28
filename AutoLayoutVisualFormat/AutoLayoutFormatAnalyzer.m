@@ -413,7 +413,7 @@ static const char* analyzeViewStatement(const char* format, AnalyzeEnv* env, UIV
     NSCAssert(*outView, @"can't found identifier at %s!", format);
 
     SkipSpace(format);
-    if (*format == '!') { (*outView).translatesAutoresizingMaskIntoConstraints = NO; SkipSpace(format); }
+    if (*format == '!') { (*outView).translatesAutoresizingMaskIntoConstraints = NO; ++format; SkipSpace(format); }
     if (*format == '(') { // [view(predicateList)]: view specific predicate
         *outConstraints = [NSMutableArray new];
         NSMutableArray* predicates = [NSMutableArray new];

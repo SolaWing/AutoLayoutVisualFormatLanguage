@@ -53,13 +53,6 @@ typedef struct analyzeEnv{
 
 bool VFLEnableAssert = 0;
 
-#ifdef DEBUG
-#define DLOG(format, ...) NSLog(@"%s:%d: "format, __FILE__, __LINE__,  ##__VA_ARGS__)
-#define WARN(...) NSCAssert(false, __VA_ARGS__)
-#define WARN(format, ...) if (VFLEnableAssert) { NSCAssert(false, format, ##__VA_ARGS__); } else { NSLog(@"%s:%d: " format, __FILE__, __LINE__, ##__VA_ARGS__ ); }
-#else
-#define DLOG(...)
-
 #define RELEASEWarn(desc, ...) { \
 NSString *__assert_fn__ = [NSString stringWithUTF8String:__PRETTY_FUNCTION__]; \
 __assert_fn__ = __assert_fn__ ? __assert_fn__ : @"<Unknown Function>"; \
@@ -70,7 +63,16 @@ file:__assert_file__ \
 lineNumber:__LINE__ description:(desc), ##__VA_ARGS__]; \
 }
 
+#ifdef DEBUG
+
+#define DLOG(format, ...) NSLog(@"%s:%d: "format, __FILE__, __LINE__,  ##__VA_ARGS__)
+#define WARN(...) RELEASEWarn(__VA_ARGS__)
+
+#else
+
+#define DLOG(...)
 #define WARN(format, ...) if (VFLEnableAssert) { RELEASEWarn(format, ##__VA_ARGS__); } else { NSLog(@"%s:%d: "format, __FILE__, __LINE__, ##__VA_ARGS__ ); }
+
 #endif
 
 #define SkipSpace(charPtr) while( isspace(*(charPtr)) ) {++(charPtr);}

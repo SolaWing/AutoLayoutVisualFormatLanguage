@@ -67,11 +67,13 @@ lineNumber:__LINE__ description:(desc), ##__VA_ARGS__]; \
 
 #define DLOG(format, ...) NSLog(@"%s:%d: "format, __FILE__, __LINE__,  ##__VA_ARGS__)
 #define WARN(...) RELEASEWarn(__VA_ARGS__)
+#define WARNWithFormat(desc, ...) RELEASEWarn(desc "(left: %s)", ##__VA_ARGS__, format)
 
 #else
 
 #define DLOG(...)
 #define WARN(format, ...) if (VFLEnableAssert) { RELEASEWarn(format, ##__VA_ARGS__); } else { NSLog(@"%s:%d: "format, __FILE__, __LINE__, ##__VA_ARGS__ ); }
+#define WARNWithFormat(desc, ...) WARN(desc "(left: %s)", ##__VA_ARGS__, format)
 
 #endif
 
@@ -437,7 +439,7 @@ static const char* analyzeViewStatement(const char* format, AnalyzeEnv* env, UIV
         if (*format == ')') {
             ++format;
         } else {
-            WARN(@"[WARN] unclose ')'");
+            WARNWithFormat(@"[WARN] unclose ')'");
         }
     } else {
          *outConstraints = nil;
@@ -501,7 +503,7 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
                     if (*format == '-') {
                         ++format;
                     } else {
-                        WARN(@"[WARN] predicate connection should end with -");
+                        WARNWithFormat(@"[WARN] predicate connection should end with -");
                     }
                     goto CONTINUE_LOOP;
                 }
@@ -528,7 +530,7 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
                 SkipSpace(format);
                 if (*format == ']') { ++format; }
                 else {
-                    WARN(@"[WARN] view statement should end with ]");
+                    WARNWithFormat(@"[WARN] view statement should end with ]");
                 }
                 goto CONTINUE_LOOP;
             }
@@ -550,7 +552,7 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
             case ';': { ++format; } // ; mark this statement is end. exit
             case '\0': { goto exit; }
             case ' ': case '\t': case '\n': { break; }
-            default: { WARN(@"[WARN] shouldn't enter!"); break; }
+            default: { WARNWithFormat(@"[WARN] shouldn't enter!"); break; }
         }
         ++format;
     } while(true);

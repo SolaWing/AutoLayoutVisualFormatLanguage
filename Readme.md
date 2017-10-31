@@ -26,6 +26,8 @@ project, and import "AutoLayoutVisualFormatLib.h"
 For Swift project, there have a **VFL framework** target, you can add target
 dependency to it, and import VFL module.
 
+Or if you use carthage, you can add `github "SolaWing/AutoLayoutVisualFormatLanguage" "master"` to Carthage, and execute `carthage update`
+
 How to use
 ==========
 

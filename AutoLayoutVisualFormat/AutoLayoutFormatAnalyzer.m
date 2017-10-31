@@ -72,7 +72,12 @@ lineNumber:__LINE__ description:(desc), ##__VA_ARGS__]; \
 #else
 
 #define DLOG(...)
-#define WARN(format, ...) if (VFLEnableAssert) { RELEASEWarn(format, ##__VA_ARGS__); } else { NSLog(@"%s:%d: "format, __FILE__, __LINE__, ##__VA_ARGS__ ); }
+#define WARN(format, ...)                                            \
+    if (VFLEnableAssert) {                                           \
+        RELEASEWarn(format, ##__VA_ARGS__);                          \
+    } else {                                                         \
+        NSLog(@"%s:%d: " format, __FILE__, __LINE__, ##__VA_ARGS__); \
+    }
 #define WARNWithFormat(desc, ...) WARN(desc "(left: %s)", ##__VA_ARGS__, format)
 
 #endif

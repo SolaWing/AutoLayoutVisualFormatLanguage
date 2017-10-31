@@ -10,6 +10,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#define VFLVersion 1.01
+
 NS_ASSUME_NONNULL_BEGIN
 
 extern bool VFLEnableAssert;

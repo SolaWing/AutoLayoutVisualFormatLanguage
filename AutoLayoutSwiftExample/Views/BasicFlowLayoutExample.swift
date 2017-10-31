@@ -59,7 +59,7 @@ class BasicFlowLayoutExample: UIView {
         plusButton.VFLFullInstall("X,Y")
     }
 
-    func clickMinusButton() {
+    @objc func clickMinusButton() {
         // add space to minus width
         if var space = VFLConstraintForKey("space0")?.constant {
             if space > 60 { return }
@@ -74,7 +74,7 @@ class BasicFlowLayoutExample: UIView {
         }
     }
 
-    func clickPlusButton() {
+    @objc func clickPlusButton() {
         // minus space to add width
         if var space = VFLConstraintForKey("space0")?.constant {
             if space == 0 { return }

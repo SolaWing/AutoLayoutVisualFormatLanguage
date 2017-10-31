@@ -82,7 +82,7 @@ class SwitchLayoutExample: UIView {
         }
     }
 
-    func touchButton() {
+    @objc func touchButton() {
         (self.phase) += 1
         self.applyLayout()
 

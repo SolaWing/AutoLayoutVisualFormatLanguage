@@ -26,7 +26,7 @@ project, and import "AutoLayoutVisualFormatLib.h"
 For Swift project, there have a **VFL framework** target, you can add target
 dependency to it, and import VFL module.
 
-Or if you use carthage, you can add `github "SolaWing/AutoLayoutVisualFormatLanguage" "master"` to Carthage, and execute `carthage update`
+Or if you use carthage, you can add `github "SolaWing/AutoLayoutVisualFormatLanguage" "master"` to Cartfile, and execute `carthage update`
 
 How to use
 ==========
@@ -245,6 +245,8 @@ PR is also welcome.
 若是Objective-C的项目, 直接把**AutoLayoutVisualFormat**文件夹拖进项目里, 导入"AutoLayoutVisualFormatLib.h"头文件即可使用
 
 若是Swift项目, 可以使用**VFL framework**, 添加依赖, 导入VFL模块即可使用
+
+如果使用Carthage, 把`github "SolaWing/AutoLayoutVisualFormatLanguage" "master"` 加入 `Cartfile`, 并更新`carthage update`
 
 如何使用
 ==========

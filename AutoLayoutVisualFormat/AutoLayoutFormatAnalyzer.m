@@ -594,17 +594,21 @@ NSArray<NSLayoutConstraint*>* VFLFullInstall(NSString* format, id env) {
     return ret;
 }
 
-NSArray<NSLayoutConstraint*>* VFLViewConstraints(NSString* format, UIView* view, id env) {
-    NSCParameterAssert(format);
+NSArray<NSLayoutConstraint*>* VFLViewConstraints(NSString* formatString, UIView* view, id env) {
+    NSCParameterAssert(formatString);
     NSCParameterAssert(view);
     NSCParameterAssert(env);
 
     NSMutableArray* constraints = [NSMutableArray new];
     AnalyzeEnv environment = {constraints, env, [env isKindOfClass:[NSArray class]], 0};
-    const char* formatPtr = format.UTF8String;
+    const char* format = formatString.UTF8String;
 
     NSMutableArray* predicates = [NSMutableArray new];
-    analyzePredicateListStatement(formatPtr, &environment, predicates);
+    format = analyzePredicateListStatement(format, &environment, predicates);
+    if (*format != '\0') {
+        WARNWithFormat(@"[WARN] unfinish formatString");
+    }
+
     buildConstraints(view, predicates, nil, NO, constraints);
 
     return constraints;

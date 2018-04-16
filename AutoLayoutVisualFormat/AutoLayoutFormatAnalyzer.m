@@ -82,6 +82,9 @@ lineNumber:__LINE__ description:(desc), ##__VA_ARGS__]; \
 
 #endif
 
+#define Assert(_condition_, ...) \
+    if (__builtin_expect(!(_condition_), 0)) { WARN(__VA_ARGS__); }
+
 #define SkipSpace(charPtr) while( isspace(*(charPtr)) ) {++(charPtr);}
 
 #define kDefaultSpace 8
@@ -154,7 +157,7 @@ static const char* tryGetIndexValue(const char* format, AnalyzeEnv* env, id* out
     if (*format == '$') {
         ++format;
         it = _tryGetIndexValue(format, env, out);
-        NSCAssert1(*out, @"can't found indexValue at %s", format);
+        Assert(*out, @"can't found indexValue at %s", format);
         return it;
     } else if (!env->envIsArray) { // dict $ may omit
         it = _tryGetIndexValue(format, env, out);
@@ -183,13 +186,13 @@ static void buildConstraints(id leftView, NSArray* predicates, id rightView, boo
 
     if (leftView == SUPER_TOKEN) { // [V]-|
         leftView = [rightView superview];
-        NSCAssert(leftView, @"superview not exist!");
+        Assert(leftView, @"superview not exist!");
 
         defAttr1 = defAttr2 = vertical ?
             NSLayoutAttributeBottom : NSLayoutAttributeRight;
     } else if (rightView == SUPER_TOKEN) { // |-[V]
         rightView = [leftView superview];
-        NSCAssert(rightView, @"superview not exist!");
+        Assert(rightView, @"superview not exist!");
 
         defAttr1 = defAttr2 = vertical ?
             NSLayoutAttributeTop : NSLayoutAttributeLeft;
@@ -349,7 +352,7 @@ static const char* analyzePredicateStatement(const char* format, AnalyzeEnv* env
             }
             // it's attr1
             (*outPredicate)->attr1 = getAttr(*format);
-            NSCAssert((*outPredicate)->attr1 != 0, @"format error: unexpect attr type %c", *format);
+            Assert((*outPredicate)->attr1 != 0, @"format error: unexpect attr type %c", *format);
             format = identifierEnd;
         }
     }
@@ -387,7 +390,7 @@ Attr2:
         ++format;
         SkipSpace(format);
         identifierEnd = analyzeConstant(format, env, &((*outPredicate)->multiplier));
-        NSCAssert( identifierEnd != format, @"* should follow metric. at %s", format);
+        Assert( identifierEnd != format, @"* should follow metric. at %s", format);
         format = identifierEnd;
     }
 
@@ -404,7 +407,7 @@ Priority:
         ++format;
         SkipSpace(format);
         identifierEnd = analyzeConstant(format, env, &((*outPredicate)->priority));
-        NSCAssert( identifierEnd != format, @"@ should follow priority. at %s", format);
+        Assert( identifierEnd != format, @"@ should follow priority. at %s", format);
         format = identifierEnd;
     }
 
@@ -431,7 +434,7 @@ static const char* analyzeViewStatement(const char* format, AnalyzeEnv* env, UIV
     if (*format == '$') ++format;
     format = _tryGetIndexValue(format, env, outView);
     // outView should be UIView or layoutGuide
-    NSCAssert(*outView, @"can't found identifier at %s!", format);
+    Assert(*outView, @"can't found identifier at %s!", format);
 
     SkipSpace(format);
     if (*format == '!') { (*outView).translatesAutoresizingMaskIntoConstraints = NO; ++format; SkipSpace(format); }
@@ -457,11 +460,11 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
     // set H or V according to label. if not set, don't change.(init default to H)
     if (*format == 'V') {
         env->vertical = true;
-        NSCAssert(*(format+1) == ':', @"V should followed by :!");
+        Assert(*(format+1) == ':', @"V should followed by :!");
         format += 2;
     } else if (*format == 'H') {
         env->vertical = false;
-        NSCAssert(*(format+1) == ':', @"H should followed by :!");
+        Assert(*(format+1) == ':', @"H should followed by :!");
         format += 2;
     }
 
@@ -512,7 +515,7 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
                     }
                     goto CONTINUE_LOOP;
                 }
-                NSCAssert(NO, @"shouldn't happen!");
+                Assert(NO, @"shouldn't happen!");
             }
             case '[': { // view statement
             View:

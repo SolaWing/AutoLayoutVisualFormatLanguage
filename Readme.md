@@ -68,10 +68,8 @@ let constraints = VFLConstraints(formatString, env);
 </br>
 **for convenience, VFL mainly have three kind of API:**
 
-* API like `VFLConstraints`, create a array of constraints, and return it. this
-  is the basic api
-* API like `VFLInstall`, like `VFLConstraints`, but activate these constraints
-  immediately.
+* API like `VFLConstraints`, create a array of constraints, and return it. this is the basic api
+* API like `VFLInstall`, like `VFLConstraints`, but activate these constraints immediately.
 * API like `VFLFullInstall`, will set `translatesAutoresizingMaskIntoConstraints` to NO for all views in Array or Dict, or the view self if use View's API.
 
 and for Objective-C, there have macros to support **variadic** params like format string:
@@ -288,9 +286,7 @@ let constraints = VFLConstraints(formatString, env);
 **本项目主要有三种类型的API:**
 
 * 类似`VFLConstraints`的API, 创建一组约束并返回. 这是最基本的API.
-  is the basic api
 * 类似`VFLInstall`的API, 除创建约束并返回外, 还会自动生效
-  immediately.
 * 类似`VFLFullInstall`的API, 除自动生效外, 会将相应视图`translatesAutoresizingMaskIntoConstraints`属性设为NO. (数组字典中的View, 使用View扩展类中的API则为View自身)
 
 对于Objective-C项目, 有支持**可变参数**的方便使用的宏.

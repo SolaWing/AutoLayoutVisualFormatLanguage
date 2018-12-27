@@ -62,13 +62,13 @@ class SystemVisualLayoutExample: UIView {
 
     func firstExampleView() -> UIView {
         let view = UIView()
-        let button = UIButton(type: UIButtonType.custom)
+        let button = UIButton(type: UIButton.ButtonType.custom)
         button.layer.borderWidth = 1;
         button.layer.cornerRadius = 5;
         button.backgroundColor = UIColor.blue
 
         let textField = UITextField()
-        textField.borderStyle = UITextBorderStyle.bezel
+        textField.borderStyle = UITextField.BorderStyle.bezel
         view.addSubview(button)
         view.addSubview(textField)
 
@@ -110,9 +110,9 @@ class SystemVisualLayoutExample: UIView {
     func completeLineView() -> UIView {
         let view = UIView()
         let find = UIButton(type: .system)
-        find.setTitle("Find", for: UIControlState());
+        find.setTitle("Find", for: UIControl.State());
         let findNext = UIButton(type: .system)
-        findNext.setTitle("Find Next", for: UIControlState())
+        findNext.setTitle("Find Next", for: UIControl.State())
         let textField = UITextField()
         textField.borderStyle = .bezel
         view.addSubview(find)

@@ -31,15 +31,15 @@ class BasicFlowLayoutExample: UIView {
         self.addSubview(rightView)
 
         let minusButton = UIButton(type: .custom)
-        minusButton.setTitle("-", for:UIControlState())
-        minusButton.setTitleColor(RGB(0x0000FF), for:UIControlState())
+        minusButton.setTitle("-", for:UIControl.State())
+        minusButton.setTitleColor(RGB(0x0000FF), for:UIControl.State())
         minusButton.backgroundColor = UIColor.white
         minusButton.addTarget(self, action:#selector(BasicFlowLayoutExample.clickMinusButton), for:.touchUpInside)
         leftView.addSubview(minusButton)
 
         let plusButton = UIButton(type: .custom)
-        plusButton.setTitle("+", for:UIControlState())
-        plusButton.setTitleColor(RGB(0x0000FF), for:UIControlState())
+        plusButton.setTitle("+", for:UIControl.State())
+        plusButton.setTitleColor(RGB(0x0000FF), for:UIControl.State())
         plusButton.backgroundColor = UIColor.white
         plusButton.addTarget(self, action:#selector(BasicFlowLayoutExample.clickPlusButton), for:.touchUpInside)
         rightView.addSubview(plusButton)

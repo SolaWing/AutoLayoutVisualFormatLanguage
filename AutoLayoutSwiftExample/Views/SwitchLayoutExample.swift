@@ -42,9 +42,9 @@ class SwitchLayoutExample: UIView {
         }
 
         let button = UIButton(type: .custom)
-        button.setTitleColor(UIColor.blue, for:UIControlState())
+        button.setTitleColor(UIColor.blue, for:UIControl.State())
         button.setTitleColor(UIColor.white, for:.highlighted)
-        button.setTitle("Touch Me", for:UIControlState())
+        button.setTitle("Touch Me", for:UIControl.State())
         button.addTarget(self, action:#selector(SwitchLayoutExample.touchButton), for:.touchUpInside)
         yellowView.addSubview(button)
         button.VFLFullInstall("X,Y") // center button in superview

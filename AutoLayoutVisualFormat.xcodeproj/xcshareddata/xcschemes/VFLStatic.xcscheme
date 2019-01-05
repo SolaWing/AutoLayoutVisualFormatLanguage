@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "212A164D21D50CC7007DB60D"
-               BuildableName = "VFLStatic.framework"
+               BuildableName = "VFL.framework"
                BlueprintName = "VFLStatic"
                ReferencedContainer = "container:AutoLayoutVisualFormat.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "212A164D21D50CC7007DB60D"
-            BuildableName = "VFLStatic.framework"
+            BuildableName = "VFL.framework"
             BlueprintName = "VFLStatic"
             ReferencedContainer = "container:AutoLayoutVisualFormat.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "212A164D21D50CC7007DB60D"
-            BuildableName = "VFLStatic.framework"
+            BuildableName = "VFL.framework"
             BlueprintName = "VFLStatic"
             ReferencedContainer = "container:AutoLayoutVisualFormat.xcodeproj">
          </BuildableReference>

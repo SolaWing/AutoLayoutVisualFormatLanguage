@@ -71,6 +71,8 @@
 		21F88EAB1BB2D95A008AFDDB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21F88EA91BB2D95A008AFDDB /* Main.storyboard */; };
 		21F88EAD1BB2D95A008AFDDB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21F88EAC1BB2D95A008AFDDB /* Assets.xcassets */; };
 		21F88EB01BB2D95A008AFDDB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21F88EAE1BB2D95A008AFDDB /* LaunchScreen.storyboard */; };
+		3429CC266C20563E2384EEDF /* Pods_AutoLayoutSwiftExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AB4D4502101233EB1B25B19 /* Pods_AutoLayoutSwiftExample.framework */; };
+		A21103EC71EAF0BD1D713D7F /* libPods-AutoLayoutVisualFormatExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 16F8A8CC30B50897C2146111 /* libPods-AutoLayoutVisualFormatExample.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -144,6 +146,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		13FEFDAF817AD5680D7446B4 /* Pods-AutoLayoutSwiftExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutoLayoutSwiftExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-AutoLayoutSwiftExample/Pods-AutoLayoutSwiftExample.release.xcconfig"; sourceTree = "<group>"; };
+		16F8A8CC30B50897C2146111 /* libPods-AutoLayoutVisualFormatExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AutoLayoutVisualFormatExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2106E3D31C1BEF16009539B8 /* SystemVisualLayoutExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemVisualLayoutExample.swift; sourceTree = "<group>"; };
 		210A01921CC4CE710040DE1D /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		210A01941CC4CE710040DE1D /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
@@ -202,6 +206,10 @@
 		21F88EAC1BB2D95A008AFDDB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		21F88EAF1BB2D95A008AFDDB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		21F88EB11BB2D95A008AFDDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		615156926A49D2F092A9B22D /* Pods-AutoLayoutVisualFormatExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutoLayoutVisualFormatExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AutoLayoutVisualFormatExample/Pods-AutoLayoutVisualFormatExample.debug.xcconfig"; sourceTree = "<group>"; };
+		6AB4D4502101233EB1B25B19 /* Pods_AutoLayoutSwiftExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AutoLayoutSwiftExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E92864DA827503A8B27B4CAD /* Pods-AutoLayoutSwiftExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutoLayoutSwiftExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AutoLayoutSwiftExample/Pods-AutoLayoutSwiftExample.debug.xcconfig"; sourceTree = "<group>"; };
+		F01DBAB0A2DD0221213D6D7E /* Pods-AutoLayoutVisualFormatExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutoLayoutVisualFormatExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-AutoLayoutVisualFormatExample/Pods-AutoLayoutVisualFormatExample.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,6 +233,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				21C6C9D11BAF902E007B6F58 /* libAutoLayoutVisualFormat.a in Frameworks */,
+				A21103EC71EAF0BD1D713D7F /* libPods-AutoLayoutVisualFormatExample.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,6 +257,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				217BC2301C1C75E70028A406 /* VFL.framework in Frameworks */,
+				3429CC266C20563E2384EEDF /* Pods_AutoLayoutSwiftExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +308,8 @@
 				217BC2221C1C75D50028A406 /* VFL */,
 				210A01931CC4CE710040DE1D /* Tests */,
 				2173704E1BAD2E8600366B5D /* Products */,
+				9D0556FFF65311DC1E698354 /* Pods */,
+				4783583DB5A4293D917B300E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -390,6 +402,26 @@
 			path = AutoLayoutSwiftExample;
 			sourceTree = "<group>";
 		};
+		4783583DB5A4293D917B300E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6AB4D4502101233EB1B25B19 /* Pods_AutoLayoutSwiftExample.framework */,
+				16F8A8CC30B50897C2146111 /* libPods-AutoLayoutVisualFormatExample.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9D0556FFF65311DC1E698354 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E92864DA827503A8B27B4CAD /* Pods-AutoLayoutSwiftExample.debug.xcconfig */,
+				13FEFDAF817AD5680D7446B4 /* Pods-AutoLayoutSwiftExample.release.xcconfig */,
+				615156926A49D2F092A9B22D /* Pods-AutoLayoutVisualFormatExample.debug.xcconfig */,
+				F01DBAB0A2DD0221213D6D7E /* Pods-AutoLayoutVisualFormatExample.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -460,6 +492,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 217370731BAD2E8600366B5D /* Build configuration list for PBXNativeTarget "AutoLayoutVisualFormatExample" */;
 			buildPhases = (
+				35B9B765231FCC76128BA12B /* [CP] Check Pods Manifest.lock */,
 				217370491BAD2E8600366B5D /* Sources */,
 				2173704A1BAD2E8600366B5D /* Frameworks */,
 				2173704B1BAD2E8600366B5D /* Resources */,
@@ -515,6 +548,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 21F88EB21BB2D95A008AFDDB /* Build configuration list for PBXNativeTarget "AutoLayoutSwiftExample" */;
 			buildPhases = (
+				34C7EDB64DFF1E99B9A117FD /* [CP] Check Pods Manifest.lock */,
 				21F88E9D1BB2D95A008AFDDB /* Sources */,
 				21F88E9E1BB2D95A008AFDDB /* Frameworks */,
 				21F88E9F1BB2D95A008AFDDB /* Resources */,
@@ -628,6 +662,53 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		34C7EDB64DFF1E99B9A117FD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AutoLayoutSwiftExample-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		35B9B765231FCC76128BA12B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AutoLayoutVisualFormatExample-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		210A018E1CC4CE710040DE1D /* Sources */ = {
@@ -950,13 +1031,13 @@
 		};
 		217370741BAD2E8600366B5D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 615156926A49D2F092A9B22D /* Pods-AutoLayoutVisualFormatExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = $PROJECT_DIR/AutoLayoutVisualFormatExample/example.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/AutoLayoutVisualFormatExample/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "SW.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -964,13 +1045,13 @@
 		};
 		217370751BAD2E8600366B5D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F01DBAB0A2DD0221213D6D7E /* Pods-AutoLayoutVisualFormatExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = $PROJECT_DIR/AutoLayoutVisualFormatExample/example.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/AutoLayoutVisualFormatExample/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "SW.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1045,6 +1126,7 @@
 		};
 		21F88EB31BB2D95A008AFDDB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E92864DA827503A8B27B4CAD /* Pods-AutoLayoutSwiftExample.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1052,7 +1134,6 @@
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = AutoLayoutSwiftExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = SW.AutoLayoutSwiftExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1062,13 +1143,13 @@
 		};
 		21F88EB41BB2D95A008AFDDB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 13FEFDAF817AD5680D7446B4 /* Pods-AutoLayoutSwiftExample.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = AutoLayoutSwiftExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = SW.AutoLayoutSwiftExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;

@@ -45,7 +45,7 @@ public extension UIView {
     func VFLConstraints(_ interpolation:VFLInterpolation) -> [NSLayoutConstraint] {
         let format = NSMutableString()
         let env = NSMutableArray(object: self)
-        interpolation.result(format, env)
+        interpolation.resultInto(format, env)
         return VFL.VFLViewConstraints(format as String, self, env)
     }
 

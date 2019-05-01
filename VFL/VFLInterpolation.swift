@@ -31,7 +31,7 @@ func buildInterpolationResult(_ parts: [VFLInterpolation]) -> (format: String, e
     let format = NSMutableString()
     let env = NSMutableArray()
     for part in parts {
-        part.result(format, env)
+        part.resultInto(format, env)
         if !format.hasSuffix(";") {
             format.append("; ")
         }
@@ -59,63 +59,59 @@ public func fullInstall(_ interpolation: [VFLInterpolation]) -> [NSLayoutConstra
 }
 
 // MARK: -
-public enum VFLInterpolation : ExpressibleByStringInterpolation, ExpressibleByStringLiteral {
+public struct VFLInterpolation : ExpressibleByStringInterpolation, ExpressibleByStringLiteral {
+    public struct StringInterpolation: StringInterpolationProtocol {
+        public init(literalCapacity: Int, interpolationCount: Int) {
+            storage.reserveCapacity(interpolationCount * 2 + 1)
+        }
+        public init(string: String) {
+            storage.append(.format(string))
+        }
 
-    case format(String)
-    case metric(CGFloat)
-    case collection([VFLInterpolation])
-    case other(AnyObject)
+        public mutating func appendLiteral(_ literal: StringLiteralType) {
+            storage.append(.format(literal))
+        }
+        public mutating func appendInterpolation<T: BinaryFloatingPoint>(_ value: T) {
+            storage.append(.metric(CGFloat(value)))
+        }
+        public mutating func appendInterpolation<T: BinaryInteger>(_ value: T) {
+            storage.append(.metric(CGFloat(value)))
+        }
+        public mutating func appendInterpolation<T: AnyObject>(_ value: T) {
+            storage.append(.other(value))
+        }
+        public enum Parts {
+            /// literal string part
+            case format(String)
+            /// metrics part
+            case metric(CGFloat)
+            /// any constraint item type, like View or guide
+            case other(AnyObject)
+        }
+        var storage = [Parts]()
+    }
+    var parts: StringInterpolation
 
     // MARK: ExpressibleByStringLiteral
     public init(stringLiteral value: StringLiteralType){
-        self = .format(value)
+        parts = StringInterpolation(string: value)
     }
 
     public init(extendedGraphemeClusterLiteral value: ExtendedGraphemeClusterType){
-        self = .format(value)
+        parts = StringInterpolation(string: value)
     }
 
     public init(unicodeScalarLiteral value: UnicodeScalarType) {
-        self = .format(value)
+        parts = StringInterpolation(string: value)
     }
 
     // MARK: ExpressibleByStringInterpolation
-    public init(stringInterpolation strings: VFLInterpolation...) {
-        self = .collection(strings)
+    public init(stringInterpolation: StringInterpolation) {
+        parts = stringInterpolation
     }
 
-    public init(stringInterpolationSegment str: String) {
-        self = .format(str)
-    }
-
-    public init(stringInterpolationSegment value: CGFloat) {
-        self = .metric(value)
-    }
-
-    public init<T>(stringInterpolationSegment expr: T) {
-        self = .other( expr as AnyObject )
-    }
-
-    func result() -> (format: String, env: [AnyObject])! {
-        switch self {
-        case .collection(let parts):
-            let env = NSMutableArray(capacity: parts.count)
-            let format = NSMutableString()
-            for part in parts {
-                part.result(format, env)
-            }
-            return (format as String, env as [AnyObject])
-        case .format(let format):
-            return (format, [])
-        default:
-            assertionFailure("call result on incomplete type")
-            return nil
-        }
-    }
-
-    /** fill format and env acording to self part */
-    func result(_ format: NSMutableString, _ env: NSMutableArray) {
-        switch self {
+    func fillResult(format: NSMutableString, env: NSMutableArray, part: StringInterpolation.Parts) {
+        switch part {
         case .format(let str):
             format.append(str)
         case .metric(let value):
@@ -124,10 +120,21 @@ public enum VFLInterpolation : ExpressibleByStringInterpolation, ExpressibleBySt
         case .other(let obj):
             format.appendFormat("$%u", env.count)
             env.add(obj)
-        case .collection(let parts): // recursive add format and env
-            for part in parts {
-                part.result(format, env)
-            }
+        }
+    }
+
+    func result() -> (format: String, env: [AnyObject])! {
+        let parts = self.parts.storage
+        let env = NSMutableArray(capacity: parts.count)
+        let format = NSMutableString()
+        resultInto(format, env)
+        return (format as String, env as [AnyObject])
+    }
+
+    /// fill format and env acording to self part
+    func resultInto(_ format: NSMutableString, _ env: NSMutableArray) {
+        parts.storage.forEach {
+            fillResult(format: format, env: env, part: $0)
         }
     }
 }

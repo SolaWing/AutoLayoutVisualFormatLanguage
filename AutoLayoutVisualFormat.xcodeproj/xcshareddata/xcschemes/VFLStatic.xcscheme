@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "212A164D21D50CC7007DB60D"
+               BlueprintIdentifier = "069A91C64601485F25A240EF2FE44EC5"
                BuildableName = "VFL.framework"
                BlueprintName = "VFLStatic"
                ReferencedContainer = "container:AutoLayoutVisualFormat.xcodeproj">
@@ -28,7 +28,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "210A01911CC4CE710040DE1D"
+               BlueprintIdentifier = "4070FD3418BA85844E4223ADEACF6432"
                BuildableName = "Tests.xctest"
                BlueprintName = "Tests"
                ReferencedContainer = "container:AutoLayoutVisualFormat.xcodeproj">
@@ -46,7 +46,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "210A01911CC4CE710040DE1D"
+               BlueprintIdentifier = "4070FD3418BA85844E4223ADEACF6432"
                BuildableName = "Tests.xctest"
                BlueprintName = "Tests"
                ReferencedContainer = "container:AutoLayoutVisualFormat.xcodeproj">
@@ -56,7 +56,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "212A164D21D50CC7007DB60D"
+            BlueprintIdentifier = "069A91C64601485F25A240EF2FE44EC5"
             BuildableName = "VFL.framework"
             BlueprintName = "VFLStatic"
             ReferencedContainer = "container:AutoLayoutVisualFormat.xcodeproj">
@@ -78,7 +78,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "212A164D21D50CC7007DB60D"
+            BlueprintIdentifier = "069A91C64601485F25A240EF2FE44EC5"
             BuildableName = "VFL.framework"
             BlueprintName = "VFLStatic"
             ReferencedContainer = "container:AutoLayoutVisualFormat.xcodeproj">
@@ -96,7 +96,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "212A164D21D50CC7007DB60D"
+            BlueprintIdentifier = "069A91C64601485F25A240EF2FE44EC5"
             BuildableName = "VFL.framework"
             BlueprintName = "VFLStatic"
             ReferencedContainer = "container:AutoLayoutVisualFormat.xcodeproj">

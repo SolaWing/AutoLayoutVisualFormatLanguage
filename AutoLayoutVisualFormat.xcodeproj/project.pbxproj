@@ -11,15 +11,10 @@
 		06FBB1EC6ADA4BF0D92405012CE1F7B0 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E35E1A4029720DC3553CBAEADC82E9 /* DetailViewController.swift */; };
 		0A1BAB613B0D46FBD969D9FDD6965898 /* libAutoLayoutVisualFormat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 154197CD9A22757D3F4C089FCE16EE99 /* libAutoLayoutVisualFormat.a */; };
 		0C3028C79EA6ECDBE769481E28DCD4F7 /* NSLayoutConstraint+SWAutoLayout.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62657A226BC8721127E0E75E9BCCA677 /* NSLayoutConstraint+SWAutoLayout.h */; };
-		0D31440D6E4F92C5548E130A65D4E4B4 /* VFL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68CC85B4C693A51C25DFCF0A9E9048A1 /* VFL.framework */; };
-		105BDCB23C69D6AE2B0D590E372A46F3 /* Dict+SWAutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994EEAD873A254D91E19F01312EBF984 /* Dict+SWAutoLayout.swift */; };
 		1307B9C2310F8F9F7F6436EF42A4FCB1 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57478887280ABB105E654D47D77B338 /* Global.swift */; };
-		184901A5D85E0D9FDD3B7BB72DCA819E /* UIView+SWAutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9EADB1B1B91BDE406BC1F4A08DC76 /* UIView+SWAutoLayout.swift */; };
 		1B387A700619998BF7C2D6A0F497B172 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F04D4FF7BC4F9A4159B56D6658F5015 /* LaunchScreen.storyboard */; };
-		1E4ED03B8AE6DC508A06B3F08A33D883 /* AutoLayoutFormatAnalyzer.h in Headers */ = {isa = PBXBuildFile; fileRef = 72C4EAF5C39D0A6625B8EBEE6454ECD8 /* AutoLayoutFormatAnalyzer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2305BFCF86412F3BF4DBD48EE4F5A23A /* NSArray+SWAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F95690950305ECAB5C6DC0E3A383296 /* NSArray+SWAutoLayout.m */; };
 		2331C89AF5DF3BD19F9CEC3A3BC74CC3 /* IndividualViewExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5129D214A2E16EBB49A97172F5B7FBC5 /* IndividualViewExample.swift */; };
-		244521E76AFCF09689303B6410E6E32E /* NSDictionary+SWAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A7020D9D258E6EBCC3982C6993032901 /* NSDictionary+SWAutoLayout.m */; };
 		255EAA55B65C4BDA6CAC0D01B222F1AF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A36E0A3ABFD0F25A59152E0DC2FC26C5 /* LaunchScreen.xib */; };
 		2BF93002A8C7CFE1595E38C047AFBA07 /* UIView+SWAutoLayout.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C5D4D07598F60A650E5594532ECA910B /* UIView+SWAutoLayout.h */; };
 		306A906DFA6781BC16CB8F8885E060CC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B21CDF95186C3B07260A363C05E233 /* main.m */; };
@@ -27,7 +22,6 @@
 		3BB44904301288F115F0A1C53FF2B75A /* UIView+SWAutoLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = C5D4D07598F60A650E5594532ECA910B /* UIView+SWAutoLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3EB24B4133DACE567AB45E22AC119387 /* UIView+SWAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1880D4B5130DB610278416FD127FB384 /* UIView+SWAutoLayout.m */; };
 		469163A5CB50D9E2CF44E2CA0FC1845E /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F308521A0A9EEEDB3641AA7769420B /* MasterViewController.m */; };
-		50A06ACB0EC90FEC7D05FE06E80FF799 /* UIView+SWAutoLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = C5D4D07598F60A650E5594532ECA910B /* UIView+SWAutoLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		50F93F989BAF859795A495B2D117682F /* Dict+SWAutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994EEAD873A254D91E19F01312EBF984 /* Dict+SWAutoLayout.swift */; };
 		51912C2347B18B1C5A11BE328E8FE5B4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B78728BF3FDB46010769AFD6BA0A114E /* AppDelegate.m */; };
 		54B4B5FB674757340680C872503C2C7B /* AutoLayoutFormatAnalyzer.h in Headers */ = {isa = PBXBuildFile; fileRef = 72C4EAF5C39D0A6625B8EBEE6454ECD8 /* AutoLayoutFormatAnalyzer.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -41,34 +35,23 @@
 		78E304EF5F4314A6F14127E501F82F1B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B60F50314D4D6C477D4DA5204432660D /* Images.xcassets */; };
 		7919E1203F1B560F3054E844BBC31AA2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7173CA17AB9B86E5C78114697CBBD68A /* Main.storyboard */; };
 		79C949F09184CD2AB1FE85F397B51F16 /* AutoLayoutFormatAnalyzer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 72C4EAF5C39D0A6625B8EBEE6454ECD8 /* AutoLayoutFormatAnalyzer.h */; };
-		7D002C7D0EC2808CB899D49DCCD74D31 /* VFL.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 68CC85B4C693A51C25DFCF0A9E9048A1 /* VFL.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7FFB08018A819C787B722FBDCA930654 /* UIView+SWAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1880D4B5130DB610278416FD127FB384 /* UIView+SWAutoLayout.m */; };
-		80E88D90C59244A1EB8591A295D44632 /* Array+SWAutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0F66B3E0200A49F4BC9007A741ECD8 /* Array+SWAutoLayout.swift */; };
-		879507029182F1090E2B412375C54A1A /* VFLInterpolation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8C2B52AB974F5D21666BB08C9046C /* VFLInterpolation.swift */; };
 		88448C2F9570F344D96A429B52862404 /* AutoLayoutVisualFormatLib.m in Sources */ = {isa = PBXBuildFile; fileRef = ED72A86213F279F422F4EDAF92A5666F /* AutoLayoutVisualFormatLib.m */; };
 		8D6F2260C2F0FC4FE0F698F182723A31 /* Array+SWAutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0F66B3E0200A49F4BC9007A741ECD8 /* Array+SWAutoLayout.swift */; };
-		8E490223014B06C33E5D3A2996E7ABF1 /* NSArray+SWAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F95690950305ECAB5C6DC0E3A383296 /* NSArray+SWAutoLayout.m */; };
 		98C9F5EAB748CDB4B6007A1F0F7C6369 /* libAutoLayoutVisualFormat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 154197CD9A22757D3F4C089FCE16EE99 /* libAutoLayoutVisualFormat.a */; };
 		9D701B5905A327A65538D64DCCCBC7A2 /* VFLInterpolation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8C2B52AB974F5D21666BB08C9046C /* VFLInterpolation.swift */; };
 		AD8E74FF4F6B66BE0524D28AC8CF987F /* Pods_AutoLayoutSwiftExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6114865FB35E540A0488101DE042AC05 /* Pods_AutoLayoutSwiftExample.framework */; };
 		ADFD80C12B3101BE4DE779C2B486B847 /* AutoLayoutFormatAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C9F4D4CFFCB9E3482D019C2B3A9A751 /* AutoLayoutFormatAnalyzer.m */; };
-		AF9755B9A506A77341BBB51004D64333 /* VFL.h in Headers */ = {isa = PBXBuildFile; fileRef = 064A7E2BA73DC3C0D6E12EC58BF17333 /* VFL.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B5944D9064B8E94EDC7B808B13A0B76F /* SwitchLayoutExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 235EAE760FA76297474E10A226E8E3E1 /* SwitchLayoutExample.m */; };
-		B6A4CEEC0543294624A9D81281F3E6A9 /* AutoLayoutFormatAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C9F4D4CFFCB9E3482D019C2B3A9A751 /* AutoLayoutFormatAnalyzer.m */; };
 		B9201ADCBFB631D57D87674FAABEBA02 /* UIView+SWAutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9EADB1B1B91BDE406BC1F4A08DC76 /* UIView+SWAutoLayout.swift */; };
 		C1B49B6CE89376F29AA9E55AF4F72D57 /* NSDictionary+SWAutoLayout.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6D077912D43C973C13A613E0C520CFFB /* NSDictionary+SWAutoLayout.h */; };
 		C97EA4A5F0AD698DDD47C7A83F4137B7 /* AutoLayoutVisualFormatLib.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8DBA807511C204A366267150D20EA9A6 /* AutoLayoutVisualFormatLib.h */; };
 		D12E298464CD90239308FE9BB1B0C797 /* NSDictionary+SWAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A7020D9D258E6EBCC3982C6993032901 /* NSDictionary+SWAutoLayout.m */; };
 		D4CB73249CE93ECF7262A59A4CE2FDB6 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77B6B55100DBCEFCDB04A504735D2E89 /* DetailViewController.m */; };
 		D6F1B1CA777300F58CA6E7D1E42BE0EE /* VFL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68CC85B4C693A51C25DFCF0A9E9048A1 /* VFL.framework */; };
-		DC522B13EFB26ED92AE38C822C639572 /* NSLayoutConstraint+SWAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A5396A9E7A2257F3439D53396CE96419 /* NSLayoutConstraint+SWAutoLayout.m */; };
 		DD778D921DA041E1EEC6C3D60FD23141 /* VFL.h in Headers */ = {isa = PBXBuildFile; fileRef = 064A7E2BA73DC3C0D6E12EC58BF17333 /* VFL.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E0DF063E099FFEE970D28150BD4C5DB2 /* AutoLayoutVisualFormatLib.m in Sources */ = {isa = PBXBuildFile; fileRef = ED72A86213F279F422F4EDAF92A5666F /* AutoLayoutVisualFormatLib.m */; };
-		E49D530611707A873ED7BF64E8135C59 /* NSArray+SWAutoLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A9104201AAE70C4BB3259E70357EAFB /* NSArray+SWAutoLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EC2C88D94B0ECF6B8B8D380856F4ED85 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E57609126A5E6CF9E923D4763C0210 /* AppDelegate.swift */; };
 		EEDFFF197797B4A0902F0331C29B9B40 /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CBBDA358F959DC07B7E98A2825C5698 /* Tests.m */; };
 		F02BF8783475250CF8F38909EF0E375C /* BasicFlowLayoutExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294868FBA17F2F981916047268E54CBD /* BasicFlowLayoutExample.swift */; };
-		F0D36D7736BE3F1F9D8C428ABBE22FF6 /* NSDictionary+SWAutoLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D077912D43C973C13A613E0C520CFFB /* NSDictionary+SWAutoLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F34D4C49A53E39D895196BB77D8ACF49 /* BasicFlowLayoutExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F423047E10067FECEC060F4881C929 /* BasicFlowLayoutExample.m */; };
 		F8595C4B5875F06F6BFBE922AB171E5F /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CC849063A4BE02D58D898F67145B1F1 /* MasterViewController.swift */; };
 		F9002621072C45C28DC2CA8DC564C48E /* NSDictionary+SWAutoLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D077912D43C973C13A613E0C520CFFB /* NSDictionary+SWAutoLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -76,19 +59,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		1367B8709427B2FD647DF735C38EE17E /* PBXContainerItemProxy */ = {
+		31BEFDCED436EE42D5B0201518CF5484 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D9500612B28DCB0385D241BE0C060EEC /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 069A91C64601485F25A240EF2FE44EC5;
-			remoteInfo = VFLStatic;
-		};
-		2C400FBFEAAD8690EC20B0536FE936B9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D9500612B28DCB0385D241BE0C060EEC /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 069A91C64601485F25A240EF2FE44EC5;
-			remoteInfo = VFLStatic;
+			remoteGlobalIDString = FA8C81CD854ED7E2882728C709ADD0BA;
+			remoteInfo = VFL;
 		};
 		D7A8C33B05E3E61525C4EBB0ACF3EC2A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -107,17 +83,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		1DA103244EC8D6B819651CD259FEB103 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				7D002C7D0EC2808CB899D49DCCD74D31 /* VFL.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C01AB6611BC3D34C8D73012B7FFC3D71 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -169,7 +134,6 @@
 		64530E46AB50F86221CA8FDB6A2B5142 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		67E57609126A5E6CF9E923D4763C0210 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		68CC85B4C693A51C25DFCF0A9E9048A1 /* VFL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VFL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		68CC85B4C693A51C25DFCF0A9E9048A1 /* VFL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VFL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A0F66B3E0200A49F4BC9007A741ECD8 /* Array+SWAutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+SWAutoLayout.swift"; sourceTree = "<group>"; };
 		6CBBDA358F959DC07B7E98A2825C5698 /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		6D077912D43C973C13A613E0C520CFFB /* NSDictionary+SWAutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+SWAutoLayout.h"; sourceTree = "<group>"; };
@@ -220,13 +184,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5A905CE16E8403B8E5F26CA4CA220AB1 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		91F3C8D38394AB3BD1011719BA6C6C3F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -257,7 +214,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D31440D6E4F92C5548E130A65D4E4B4 /* VFL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,18 +380,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		5CF9787A367C784014F6AF97C08CC7C3 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1E4ED03B8AE6DC508A06B3F08A33D883 /* AutoLayoutFormatAnalyzer.h in Headers */,
-				E49D530611707A873ED7BF64E8135C59 /* NSArray+SWAutoLayout.h in Headers */,
-				F0D36D7736BE3F1F9D8C428ABBE22FF6 /* NSDictionary+SWAutoLayout.h in Headers */,
-				50A06ACB0EC90FEC7D05FE06E80FF799 /* UIView+SWAutoLayout.h in Headers */,
-				AF9755B9A506A77341BBB51004D64333 /* VFL.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C89C00848A923700988CD96670D00643 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -451,24 +395,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		069A91C64601485F25A240EF2FE44EC5 /* VFLStatic */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7718787E667CBD2A7AD81B2E78933294 /* Build configuration list for PBXNativeTarget "VFLStatic" */;
-			buildPhases = (
-				A632BBCC02CD38D62B2C37C773CE54E7 /* Sources */,
-				5A905CE16E8403B8E5F26CA4CA220AB1 /* Frameworks */,
-				5CF9787A367C784014F6AF97C08CC7C3 /* Headers */,
-				9C7D602D75F93DEF8E3DBE83015C62A9 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = VFLStatic;
-			productName = VFL;
-			productReference = 68CC85B4C693A51C25DFCF0A9E9048A1 /* VFL.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 		4070FD3418BA85844E4223ADEACF6432 /* Tests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8AB50BDE6C495253C3A43D53AEA90E2D /* Build configuration list for PBXNativeTarget "Tests" */;
@@ -480,7 +406,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				77FA001B40A1646A5F89B53965506464 /* PBXTargetDependency */,
 			);
 			name = Tests;
 			productName = Tests;
@@ -512,12 +437,11 @@
 				D4E5315F59AFC6F180C5BB6E0B1A1B69 /* Sources */,
 				91F3C8D38394AB3BD1011719BA6C6C3F /* Frameworks */,
 				EF013E1EAB89BD6FD857B1995AA58371 /* Resources */,
-				1DA103244EC8D6B819651CD259FEB103 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				ECE73DDF82FE869F874C6A73CF9B29DF /* PBXTargetDependency */,
+				837A7B8103F88349B86E17D4D1DC4A1F /* PBXTargetDependency */,
 			);
 			name = AutoLayoutSwiftExample;
 			productName = AutoLayoutSwiftExample;
@@ -579,22 +503,19 @@
 					4070FD3418BA85844E4223ADEACF6432 = {
 						CreatedOnToolsVersion = 7.2;
 					};
-					069A91C64601485F25A240EF2FE44EC5 = {
+					6F78827CBD757A320015FFA92D721CED = {
+						CreatedOnToolsVersion = 6.4;
+					};
+					AAF6FFA2E183EDD12EB476F96189B751 = {
+						CreatedOnToolsVersion = 7.0;
 						LastSwiftMigration = 1020;
 					};
 					BA1D10773183B2476D01A1B4885BA3B0 = {
 						CreatedOnToolsVersion = 6.4;
 					};
-					6F78827CBD757A320015FFA92D721CED = {
-						CreatedOnToolsVersion = 6.4;
-					};
 					FA8C81CD854ED7E2882728C709ADD0BA = {
 						CreatedOnToolsVersion = 7.1.1;
 						LastSwiftMigration = 1010;
-					};
-					AAF6FFA2E183EDD12EB476F96189B751 = {
-						CreatedOnToolsVersion = 7.0;
-						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -617,7 +538,6 @@
 				AAF6FFA2E183EDD12EB476F96189B751 /* AutoLayoutSwiftExample */,
 				FA8C81CD854ED7E2882728C709ADD0BA /* VFL */,
 				4070FD3418BA85844E4223ADEACF6432 /* Tests */,
-				069A91C64601485F25A240EF2FE44EC5 /* VFLStatic */,
 			);
 		};
 /* End PBXProject section */
@@ -644,13 +564,6 @@
 				78E304EF5F4314A6F14127E501F82F1B /* Images.xcassets in Resources */,
 				255EAA55B65C4BDA6CAC0D01B222F1AF /* LaunchScreen.xib in Resources */,
 				7919E1203F1B560F3054E844BBC31AA2 /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9C7D602D75F93DEF8E3DBE83015C62A9 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -742,23 +655,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A632BBCC02CD38D62B2C37C773CE54E7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				80E88D90C59244A1EB8591A295D44632 /* Array+SWAutoLayout.swift in Sources */,
-				B6A4CEEC0543294624A9D81281F3E6A9 /* AutoLayoutFormatAnalyzer.m in Sources */,
-				E0DF063E099FFEE970D28150BD4C5DB2 /* AutoLayoutVisualFormatLib.m in Sources */,
-				105BDCB23C69D6AE2B0D590E372A46F3 /* Dict+SWAutoLayout.swift in Sources */,
-				8E490223014B06C33E5D3A2996E7ABF1 /* NSArray+SWAutoLayout.m in Sources */,
-				244521E76AFCF09689303B6410E6E32E /* NSDictionary+SWAutoLayout.m in Sources */,
-				DC522B13EFB26ED92AE38C822C639572 /* NSLayoutConstraint+SWAutoLayout.m in Sources */,
-				7FFB08018A819C787B722FBDCA930654 /* UIView+SWAutoLayout.m in Sources */,
-				184901A5D85E0D9FDD3B7BB72DCA819E /* UIView+SWAutoLayout.swift in Sources */,
-				879507029182F1090E2B412375C54A1A /* VFLInterpolation.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D4E5315F59AFC6F180C5BB6E0B1A1B69 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -806,15 +702,10 @@
 			target = 6F78827CBD757A320015FFA92D721CED /* AutoLayoutVisualFormat */;
 			targetProxy = D7A8C33B05E3E61525C4EBB0ACF3EC2A /* PBXContainerItemProxy */;
 		};
-		77FA001B40A1646A5F89B53965506464 /* PBXTargetDependency */ = {
+		837A7B8103F88349B86E17D4D1DC4A1F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 069A91C64601485F25A240EF2FE44EC5 /* VFLStatic */;
-			targetProxy = 2C400FBFEAAD8690EC20B0536FE936B9 /* PBXContainerItemProxy */;
-		};
-		ECE73DDF82FE869F874C6A73CF9B29DF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 069A91C64601485F25A240EF2FE44EC5 /* VFLStatic */;
-			targetProxy = 1367B8709427B2FD647DF735C38EE17E /* PBXContainerItemProxy */;
+			target = FA8C81CD854ED7E2882728C709ADD0BA /* VFL */;
+			targetProxy = 31BEFDCED436EE42D5B0201518CF5484 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -867,31 +758,6 @@
 			};
 			name = Debug;
 		};
-		11ED1ADF117630143889653A6346959F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_TESTABILITY = YES;
-				INFOPLIST_FILE = VFL/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = SW.VFL;
-				PRODUCT_MODULE_NAME = VFL;
-				PRODUCT_NAME = VFL;
-				SKIP_INSTALL = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 		14382F38F747F8C6503D1C185C12851E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -905,9 +771,10 @@
 				INFOPLIST_FILE = VFL/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = mh_dylib;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = SW.VFL;
-				PRODUCT_NAME = VFL;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1034,9 +901,10 @@
 				INFOPLIST_FILE = VFL/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = mh_dylib;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = SW.VFL;
-				PRODUCT_NAME = VFL;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1100,7 +968,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1124,30 +992,6 @@
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
-		};
-		DBDD058242A7C48B6DC05791B46B8BA5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = VFL/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = SW.VFL;
-				PRODUCT_MODULE_NAME = VFL;
-				PRODUCT_NAME = VFL;
-				SKIP_INSTALL = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
 		};
 		DD4C02165C344274888CD0AFF4C0E728 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -1189,15 +1033,6 @@
 			buildConfigurations = (
 				63FFC991480CBBF9E600291E75F00259 /* Debug */,
 				39FE7E954F8BA2C0AAAA2EFAF2BDE4D0 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		7718787E667CBD2A7AD81B2E78933294 /* Build configuration list for PBXNativeTarget "VFLStatic" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				11ED1ADF117630143889653A6346959F /* Debug */,
-				DBDD058242A7C48B6DC05791B46B8BA5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

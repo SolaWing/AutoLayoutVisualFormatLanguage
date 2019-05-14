@@ -12,19 +12,19 @@ import UIKit
 
 public func constraints(_ interpolation: VFLInterpolation) -> [NSLayoutConstraint] {
     let (format, env) = interpolation.result()
-    return VFL.VFLConstraints(format, env)
+    return VFLConstraints(format, env)
 }
 
 @discardableResult
 public func install(_ interpolation: VFLInterpolation) -> [NSLayoutConstraint] {
     let (format, env) = interpolation.result()
-    return VFL.VFLInstall(format, env)
+    return VFLInstall(format, env)
 }
 
 @discardableResult
 public func fullInstall(_ interpolation: VFLInterpolation) -> [NSLayoutConstraint] {
     let (format, env) = interpolation.result()
-    return VFL.VFLFullInstall(format, env)
+    return VFLFullInstall(format, env)
 }
 
 func buildInterpolationResult(_ parts: [VFLInterpolation]) -> (format: String, env: [AnyObject])! {
@@ -43,19 +43,19 @@ func buildInterpolationResult(_ parts: [VFLInterpolation]) -> (format: String, e
 
 public func constraints(_ interpolation: [VFLInterpolation]) -> [NSLayoutConstraint] {
     let (format, env) = buildInterpolationResult(interpolation)
-    return VFL.VFLConstraints(format, env)
+    return VFLConstraints(format, env)
 }
 
 @discardableResult
 public func install(_ interpolation: [VFLInterpolation]) -> [NSLayoutConstraint] {
     let (format, env) = buildInterpolationResult(interpolation)
-    return VFL.VFLInstall(format, env)
+    return VFLInstall(format, env)
 }
 
 @discardableResult
 public func fullInstall(_ interpolation: [VFLInterpolation]) -> [NSLayoutConstraint] {
     let (format, env) = buildInterpolationResult(interpolation)
-    return VFL.VFLFullInstall(format, env)
+    return VFLFullInstall(format, env)
 }
 
 // MARK: -

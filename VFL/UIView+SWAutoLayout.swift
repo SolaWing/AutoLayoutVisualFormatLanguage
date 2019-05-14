@@ -16,7 +16,7 @@ public extension UIView {
     func VFLConstraints(format:String, args:[Any]) -> [NSLayoutConstraint] {
         var argsIncludeSelf : [Any] = [self]
         argsIncludeSelf.append(contentsOf: args)
-        return VFL.VFLViewConstraints(format, self, argsIncludeSelf)
+        return VFLViewConstraints(format, self, argsIncludeSelf)
     }
 
     @nonobjc
@@ -46,7 +46,7 @@ public extension UIView {
         let format = NSMutableString()
         let env = NSMutableArray(object: self)
         interpolation.resultInto(format, env)
-        return VFL.VFLViewConstraints(format as String, self, env)
+        return VFLViewConstraints(format as String, self, env)
     }
 
     @discardableResult

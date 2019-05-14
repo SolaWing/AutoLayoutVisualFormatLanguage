@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "217BC2201C1C75D50028A406"
+               BlueprintIdentifier = "FA8C81CD854ED7E2882728C709ADD0BA"
                BuildableName = "VFL.framework"
                BlueprintName = "VFL"
                ReferencedContainer = "container:AutoLayoutVisualFormat.xcodeproj">
@@ -46,7 +46,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "217BC2201C1C75D50028A406"
+            BlueprintIdentifier = "FA8C81CD854ED7E2882728C709ADD0BA"
             BuildableName = "VFL.framework"
             BlueprintName = "VFL"
             ReferencedContainer = "container:AutoLayoutVisualFormat.xcodeproj">
@@ -64,7 +64,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "217BC2201C1C75D50028A406"
+            BlueprintIdentifier = "FA8C81CD854ED7E2882728C709ADD0BA"
             BuildableName = "VFL.framework"
             BlueprintName = "VFL"
             ReferencedContainer = "container:AutoLayoutVisualFormat.xcodeproj">

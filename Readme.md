@@ -29,6 +29,8 @@ dependency to it, and import VFL module.
 Or if you use carthage, you can add `github "SolaWing/AutoLayoutVisualFormatLanguage" "master"` to Cartfile, and execute `carthage update`.
 (if you choose static framework, you need `-ObjC` OTHER_LDFLAGS)
 
+Or if you use pod, you can add `pod 'VFL', :git => 'https://github.com/SolaWing/AutoLayoutVisualFormatLanguage', :tag => '2.0.1'`
+
 How to use
 ==========
 

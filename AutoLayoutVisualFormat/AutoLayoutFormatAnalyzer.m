@@ -178,8 +178,8 @@ static inline bool AttributeNeedPair(NSLayoutAttribute attr) {
 #define SUPER_TOKEN [NSNull null]
 #define DEFAULT_CONNECTION_TOKEN [NSNull null]
 /** create constraint and add it into constraints
- * @param leftView: view at equation left.
- * @param rightView: view at equation right.
+ * @param leftView view at equation left.
+ * @param rightView view at equation right.
  * */
 static void buildConstraints(id leftView, NSArray* predicates, id rightView, bool vertical, NSMutableArray* constraints) {
     NSLayoutAttribute defAttr1, defAttr2;

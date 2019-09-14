@@ -70,8 +70,8 @@ extern bool VFLEnableAssert;
 
 /** create and return a array of constraints
  *
- * @param format: VFL format string
- * @param env:    NSArray or NSDictionary, used as index env
+ * @param format VFL format string
+ * @param env    NSArray or NSDictionary, used as index env
  */
 NSArray<NSLayoutConstraint*>* VFLConstraints(NSString* format, id env);
 

@@ -81,3 +81,9 @@ static NSUInteger getMaxIndexValueInFormat(NSString* format) {
 }
 
 @end
+
+@implementation UILayoutGuide(SWAutoLayout)
+
+- (UIView *)superview { return self.owningView; }
+
+@end

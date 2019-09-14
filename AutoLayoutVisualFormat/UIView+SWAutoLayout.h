@@ -31,3 +31,9 @@
 - (NSArray<NSLayoutConstraint*>*)VFLFullInstall:(NSString*)format withArgs:(NSArray*)args;
 
 @end
+
+@interface UILayoutGuide(SWAutoLayout)
+
+- (UIView*)superview; /// compatible with view, to work with superview
+
+@end

@@ -67,7 +67,7 @@ lineNumber:__LINE__ description:(desc), ##__VA_ARGS__]; \
 
 #define DLOG(format, ...) NSLog(@"%s:%d: "format, __FILE__, __LINE__,  ##__VA_ARGS__)
 #define WARN(...) RELEASEWarn(__VA_ARGS__)
-#define WARNWithFormat(desc, ...) RELEASEWarn(desc "(left: %s)", ##__VA_ARGS__, format)
+#define WARNWithFormat(desc, ...) RELEASEWarn(desc " (left: %s)", ##__VA_ARGS__, format)
 
 #else
 
@@ -438,19 +438,27 @@ static const char* analyzeViewStatement(const char* format, AnalyzeEnv* env, UIV
 
     SkipSpace(format);
     if (*format == '!') { (*outView).translatesAutoresizingMaskIntoConstraints = NO; ++format; SkipSpace(format); }
-    if (*format == '(') { // [view(predicateList)]: view specific predicate
-        *outConstraints = [NSMutableArray new];
-        NSMutableArray* predicates = [NSMutableArray new];
-        format = analyzePredicateListStatement(format+1, env, predicates);
-        buildConstraints(*outView, predicates, nil, env->vertical, *outConstraints);
-        SkipSpace(format);
+    bool wrapInParen = false;
+    if (*format == '(') {
+        // [view(predicateList)]: view specific predicate
+        // now the paren is optional. (Swift interpolate syntax is odd with paren)
+        // TODO: test
+        wrapInParen = true;
+        ++format;
+    }
+
+    *outConstraints = [NSMutableArray new];
+    NSMutableArray* predicates = [NSMutableArray new];
+    format = analyzePredicateListStatement(format, env, predicates);
+    buildConstraints(*outView, predicates, nil, env->vertical, *outConstraints);
+    SkipSpace(format);
+
+    if (wrapInParen) {
         if (*format == ')') {
             ++format;
         } else {
             WARNWithFormat(@"[WARN] unclose ')'");
         }
-    } else {
-         *outConstraints = nil;
     }
     return format;
 }

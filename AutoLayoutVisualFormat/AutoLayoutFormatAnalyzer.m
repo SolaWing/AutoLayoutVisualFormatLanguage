@@ -288,6 +288,7 @@ static const char* analyzeConstant(const char* format, AnalyzeEnv* env, CGFloat*
     return format;
 }
 
+/// if no relation set, has no effect
 static inline const char* analyzeRelation(const char* format, NSLayoutRelation* outRelation){
     if (*format == '='){
         *outRelation = NSLayoutRelationEqual;
@@ -302,7 +303,9 @@ static inline const char* analyzeRelation(const char* format, NSLayoutRelation* 
     return format;
 }
 
-static const char* analyzePredicateStatement(const char* format, AnalyzeEnv* env, Predicate** outPredicate) {
+static const char* analyzePredicateStatement(const char* format, AnalyzeEnv* env, Predicate*__strong * outPredicate) {
+    NSCAssert(!isspace(*format), @"precondition: SkipSpace");
+
     // (<identifier>:)?(<attr1>)?(<relation>)?(<viewIndex>)?(.?<attr2>)?(*<multiplier>)?(<constant>)?(@<priority>)?
     // because each part is optional, need to check if is the later part
     *outPredicate = [Predicate new];
@@ -310,9 +313,8 @@ static const char* analyzePredicateStatement(const char* format, AnalyzeEnv* env
     const char* identifierEnd;
     id obj;
 
-    SkipSpace(format);
-    (*outPredicate)->constant = strtod(format, (char**)&identifierEnd);
     // check first is number, this is a common use case. if so, direct get as constant and jump to last
+    (*outPredicate)->constant = strtod(format, (char**)&identifierEnd);
     if (format != identifierEnd)
     {
         format = identifierEnd;
@@ -418,7 +420,11 @@ static const char* analyzePredicateListStatement(const char* format, AnalyzeEnv*
     Predicate* predicate;
     do
     {
+        SkipSpace(format);
+        const char* old = format;
         format = analyzePredicateStatement(format, env, &predicate);
+        if (old == format) { break; } // no predicate content
+
         [predicates addObject:predicate];
 
         SkipSpace(format);
@@ -429,7 +435,7 @@ static const char* analyzePredicateListStatement(const char* format, AnalyzeEnv*
     return format;
 }
 
-static const char* analyzeViewStatement(const char* format, AnalyzeEnv* env, UIView** outView, NSMutableArray** outConstraints) {
+static const char* analyzeViewStatement(const char* format, AnalyzeEnv* env, UIView** outView, NSMutableArray*__strong* outConstraints) {
     SkipSpace(format);
     if (*format == '$') ++format;
     format = _tryGetIndexValue(format, env, outView);
@@ -437,20 +443,25 @@ static const char* analyzeViewStatement(const char* format, AnalyzeEnv* env, UIV
     Assert(*outView, @"can't found identifier at %s!", format);
 
     SkipSpace(format);
-    if (*format == '!') { (*outView).translatesAutoresizingMaskIntoConstraints = NO; ++format; SkipSpace(format); }
-    bool wrapInParen = false;
-    if (*format == '(') {
-        // [view(predicateList)]: view specific predicate
-        // now the paren is optional. (Swift interpolate syntax is odd with paren)
-        // TODO: test
-        wrapInParen = true;
-        ++format;
+    if (*format == '!') {
+        (*outView).translatesAutoresizingMaskIntoConstraints = NO;
+        ++format; SkipSpace(format);
     }
+    // jump out early if no predicate, dep on out syntax [$view ]
+    if (*format == ']') { *outConstraints = nil; return format; }
+
+    // [view(predicateList)]: view specific predicate
+    // now the paren is optional. (Swift interpolate syntax is odd with paren)
+    // TODO: test
+    bool wrapInParen = *format == '(';
+    if (wrapInParen) { ++format; }
 
     *outConstraints = [NSMutableArray new];
     NSMutableArray* predicates = [NSMutableArray new];
     format = analyzePredicateListStatement(format, env, predicates);
-    buildConstraints(*outView, predicates, nil, env->vertical, *outConstraints);
+    if (predicates.count > 0) {
+        buildConstraints(*outView, predicates, nil, env->vertical, *outConstraints);
+    }
     SkipSpace(format);
 
     if (wrapInParen) {
@@ -508,13 +519,18 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
                     [connections addObject:DEFAULT_CONNECTION_TOKEN];
                     goto Superview;
                 } else { // should be a Predicate list
-                    if (*format == '(') { ++format; } // may enclosed by a ()
+                    bool wrapInParen = *format == '('; // may enclosed by a ()
+                    if (wrapInParen) { ++format; }
 
                     format = analyzePredicateListStatement(format, env, connections);
 
                     SkipSpace(format);
-                    if (*format == ')') {
-                        ++format; SkipSpace(format);
+                    if (wrapInParen) {
+                        if (*format == ')') {
+                            ++format; SkipSpace(format);
+                        } else {
+                            WARNWithFormat(@"[WARN] should match paren!");
+                        }
                     }
                     if (*format == '-') {
                         ++format;
@@ -620,7 +636,9 @@ NSArray<NSLayoutConstraint*>* VFLViewConstraints(NSString* formatString, UIView*
         WARNWithFormat(@"[WARN] unfinish formatString");
     }
 
-    buildConstraints(view, predicates, nil, NO, constraints);
+    if (predicates.count > 0) {
+        buildConstraints(view, predicates, nil, NO, constraints);
+    }
 
     return constraints;
 }

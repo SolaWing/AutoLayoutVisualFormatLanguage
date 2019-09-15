@@ -8,7 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import <UIKit/UIKit.h>
-#import "AutoLayoutVisualFormatLib.h"
+#import <VFL/VFL.h>
 
 @interface NSLayoutConstraint (testHelper)
 
@@ -52,6 +52,7 @@
 
 #define PP_IDENTITY(...) __VA_ARGS__
 
+/// use to guard basic view predicate analyzer is ok
 - (void)testViewPredicate {
     UIView* superView = [[UIView alloc] initWithFrame:CGRectMake(0,0, 1000, 1000)];
     UIView* subview = [UIView new];
@@ -60,6 +61,11 @@
 
     NSArray* layouts;
     NSLayoutConstraint* layout;
+
+    layouts = [subview VFLConstraints:@"", metric];
+    XCTAssertEqual(layouts.count, 0u);
+
+
 #define CreateSubViewConstraint(attr1, relation, toView, attr2, mul, cons, pri) \
     layout = [NSLayoutConstraint constraintWithItem:subview                     \
                                           attribute:attr1                       \
@@ -148,6 +154,7 @@
     XCTAssertEqualObjects(layouts[4], layout);
 }
 
+// use to assure full VFL statement is ok
 - (void)testVFL {
     // prepare
     UIView* superView = [[UIView alloc] initWithFrame:CGRectMake(0,0, 1000, 1000)];
@@ -197,7 +204,7 @@
     XCTAssertEqualObjects( [arrayEnv[0] VFLConstraints:@"L>=8, L<=6@5, L==7"], [arrayEnv VFLConstraints:@"|->8, <6@5,=7-[$0]"] );
     XCTAssertEqualObjects( ([superView VFLConstraints:@"R>=$1+8, R<=$1+6@5, R==$1+7", arrayEnv[0]]), [arrayEnv VFLConstraints:@"[$0]-(>8, <6@5,=7)-|"] );
 
-    // multi chain view and align
+    // multi chain view and align. should have same order
     layouts = [arrayEnv VFLConstraints:@"|- (>15, < 50) -[$0($6)] - [$1][$2] - | LTRBXYltbWH"];
     compareLayouts = [NSMutableArray new];
     [compareLayouts addObjectsFromArray:[(UIView*)arrayEnv[0] VFLConstraints:@"L>15, L<50, W=$1", arrayEnv[6]]];
@@ -218,10 +225,10 @@
     [compareLayouts addObjectsFromArray:[views constraintsAlignAllViews:NSLayoutAttributeHeight]];
     XCTAssertEqualObjects(layouts, compareLayouts);
 
-    // multi statement and change H, V
+    // multi statement and change H, V, optional [View ()]
     layouts = [arrayEnv VFLConstraints:@"|-[$0(W=$0.H+$8)]-| X;"
         "V:[$0][$1($7)] L;"
-        "[$0][$1(L=$0.R+$7, R@20)] L;"
+        "[$0][$1 L=$0.R+$7, R@20] L;"
         "H:[$1][$2][$3] XY;" ];
     compareLayouts = [NSMutableArray new];
     // default horizontal

@@ -11,6 +11,7 @@
 		06FBB1EC6ADA4BF0D92405012CE1F7B0 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E35E1A4029720DC3553CBAEADC82E9 /* DetailViewController.swift */; };
 		0A1BAB613B0D46FBD969D9FDD6965898 /* libAutoLayoutVisualFormat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 154197CD9A22757D3F4C089FCE16EE99 /* libAutoLayoutVisualFormat.a */; };
 		0C3028C79EA6ECDBE769481E28DCD4F7 /* NSLayoutConstraint+SWAutoLayout.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62657A226BC8721127E0E75E9BCCA677 /* NSLayoutConstraint+SWAutoLayout.h */; };
+		0D31440D6E4F92C5548E130A65D4E4B4 /* VFL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68CC85B4C693A51C25DFCF0A9E9048A1 /* VFL.framework */; };
 		1307B9C2310F8F9F7F6436EF42A4FCB1 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57478887280ABB105E654D47D77B338 /* Global.swift */; };
 		1B387A700619998BF7C2D6A0F497B172 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F04D4FF7BC4F9A4159B56D6658F5015 /* LaunchScreen.storyboard */; };
 		2305BFCF86412F3BF4DBD48EE4F5A23A /* NSArray+SWAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F95690950305ECAB5C6DC0E3A383296 /* NSArray+SWAutoLayout.m */; };
@@ -214,6 +215,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D31440D6E4F92C5548E130A65D4E4B4 /* VFL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

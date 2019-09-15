@@ -47,8 +47,9 @@ typedef _SWLayoutPredicate Predicate;
 typedef struct analyzeEnv{
     __unsafe_unretained NSMutableArray* constraints;
     __unsafe_unretained id env; // array or dict
-    bool envIsArray;
+    bool envIsArray; // speed check cache
     bool vertical;
+    bool mainViewUseAutolayout;
 } AnalyzeEnv;
 
 bool VFLEnableAssert = 0;
@@ -442,9 +443,14 @@ static const char* analyzeViewStatement(const char* format, AnalyzeEnv* env, UIV
     // outView should be UIView or layoutGuide
     Assert(*outView, @"can't found identifier at %s!", format);
 
+    // auto change the [View]'s layout to use autolayout
+    if (env->mainViewUseAutolayout && [*outView respondsToSelector:@selector(translatesAutoresizingMaskIntoConstraints)]) {
+        (*outView).translatesAutoresizingMaskIntoConstraints = false;
+    }
+
     SkipSpace(format);
     if (*format == '!') {
-        (*outView).translatesAutoresizingMaskIntoConstraints = NO;
+        WARNWithFormat(@"! in view statement no longer supported!");
         ++format; SkipSpace(format);
     }
     // jump out early if no predicate, dep on out syntax [$view ]
@@ -579,8 +585,6 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
             case 'W': [env->constraints addObjectsFromArray:[connectViews constraintsAlignAllViews:NSLayoutAttributeWidth]]    ; break;
             case 'H': [env->constraints addObjectsFromArray:[connectViews constraintsAlignAllViews:NSLayoutAttributeHeight]]   ; break;
 
-            case '!': [connectViews translatesAutoresizingMaskIntoConstraints:NO]; break;
-
             case ';': { ++format; } // ; mark this statement is end. exit
             case '\0': { goto exit; }
             case ' ': case '\t': case '\n': { break; }
@@ -594,12 +598,12 @@ exit:
 
 
 #pragma mark - API
-NSArray<NSLayoutConstraint*>* VFLConstraints(NSString* format, id env) {
+NSArray<NSLayoutConstraint*>* _VFLConstraints(NSString* format, id env, bool mainViewUseAutolayout) {
     NSCParameterAssert(format);
     NSCParameterAssert(env);
 
     NSMutableArray* constraints = [NSMutableArray new];
-    AnalyzeEnv environment = {constraints, env, [env isKindOfClass:[NSArray class]], false};
+    AnalyzeEnv environment = {constraints, env, [env isKindOfClass:[NSArray class]], false, mainViewUseAutolayout};
     const char* formatPtr = format.UTF8String;
     while(*formatPtr) {
         formatPtr = analyzeStatement(formatPtr, &environment);
@@ -608,15 +612,18 @@ NSArray<NSLayoutConstraint*>* VFLConstraints(NSString* format, id env) {
     return constraints;
 }
 
+NSArray<NSLayoutConstraint*>* VFLConstraints(NSString* format, id env) {
+    return _VFLConstraints(format, env, false);
+}
+
 NSArray<NSLayoutConstraint*>* VFLInstall(NSString* format, id env) {
-    NSArray* ret = VFLConstraints(format, env);
+    NSArray* ret = _VFLConstraints(format, env, false);
     [NSLayoutConstraint activateConstraints:ret];
     return ret;
 }
 
 NSArray<NSLayoutConstraint*>* VFLFullInstall(NSString* format, id env) {
-    [env translatesAutoresizingMaskIntoConstraints:NO];
-    NSArray* ret = VFLConstraints(format, env);
+    NSArray* ret = _VFLConstraints(format, env, true);
     [NSLayoutConstraint activateConstraints:ret];
     return ret;
 }
@@ -627,7 +634,7 @@ NSArray<NSLayoutConstraint*>* VFLViewConstraints(NSString* formatString, UIView*
     NSCParameterAssert(env);
 
     NSMutableArray* constraints = [NSMutableArray new];
-    AnalyzeEnv environment = {constraints, env, [env isKindOfClass:[NSArray class]], 0};
+    AnalyzeEnv environment = {constraints, env, [env isKindOfClass:[NSArray class]], false, false};
     const char* format = formatString.UTF8String;
 
     NSMutableArray* predicates = [NSMutableArray new];

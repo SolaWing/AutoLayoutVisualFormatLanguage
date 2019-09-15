@@ -17,18 +17,12 @@ public extension Array {
 
     @discardableResult
     func VFLInstall(_ format:String) -> [NSLayoutConstraint] {
-        let constrains = VFL.VFLConstraints(format, self)
-        NSLayoutConstraint.activate(constrains)
-        return constrains
+        return VFL.VFLInstall(format, self)
     }
 
     @discardableResult
     func VFLFullInstall(_ format:String) -> [NSLayoutConstraint] {
-        self.translatesAutoresizingMaskIntoConstraints(false)
-
-        let constrains = VFL.VFLConstraints(format, self)
-        NSLayoutConstraint.activate(constrains)
-        return constrains
+        return VFL.VFLFullInstall(format, self)
     }
 
     @discardableResult

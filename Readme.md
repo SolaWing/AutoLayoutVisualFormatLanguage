@@ -207,8 +207,8 @@ VFL recognize first letter as attribute, after is ignoring and can write word co
 `[view(Right=-10, Bottom=-10)]`  
 `[view(Right=|-10, Bottom=|-10)]`  
 
-* A full complete constraint example:(as `attr1 == view2.attr2 * multiplier + constant @priority`, each part is optional and have default value)  
-`[view(Left==|.Left * 1.0 + 0 @1000, Top==|.Top * 1.0 + 0 @1000)]`
+* A full complete constraint example:(as `attr1 == view2.attr2 * multiplier + constant @priority`, each part is optional and have default value, and the paren() is optional)  
+`[view Left==|.Left * 1.0 + 0 @1000, Top==|.Top * 1.0 + 0 @1000]`
 
 full detail syntax you can see in `AutoLayoutFormatAnalyzer.h`
 
@@ -424,9 +424,8 @@ VFL使用首字母来区分指定的属性, 后面的字母忽略, 所以可以�
 `[view(Right=-10, Bottom=-10)]`  
 `[view(Right=|-10, Bottom=|-10)]`  
 
-* 完整的约束语法:(`attr1 == view2.attr2 * multiplier + constant @priority`,
-  每一部分都有相应的默认值且可省略)  
-`[view(Left==|.Left * 1.0 + 0 @1000, Top==|.Top * 1.0 + 0 @1000)]`
+* 完整的约束语法:(`attr1 == view2.attr2 * multiplier + constant @priority`, 每一部分都有相应的默认值且可省略, 括号也可以省略)  
+`[view Left==|.Left * 1.0 + 0 @1000, Top==|.Top * 1.0 + 0 @1000]`
 
 完整语法解释请看`AutoLayoutFormatAnalyzer.h`
 

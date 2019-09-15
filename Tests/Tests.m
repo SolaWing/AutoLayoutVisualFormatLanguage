@@ -50,6 +50,31 @@
     [super tearDown];
 }
 
+typedef struct {
+    NSMutableArray* array;
+    NSMutableDictionary* dict;
+    UIView* superView;
+} ENV;
+static ENV prepareVFL() {
+    ENV env = {
+        [NSMutableArray arrayWithCapacity:10],
+        [NSMutableDictionary dictionaryWithCapacity:10],
+        .superView = [[UIView alloc] initWithFrame:CGRectMake(0,0, 1000, 1000)]
+    };
+    for (NSUInteger i = 0; i < 5; ++i) {
+        UIView* v = [UIView new];
+        [env.superView addSubview:v];
+        [env.array addObject:v];
+        env.dict[[NSString stringWithFormat:@"v%lu", i]] = v;
+    }
+    for (NSUInteger i = 0; i < 5; ++i) {
+        id metric = @(i * 10);
+        [env.array addObject:metric];
+        env.dict[[NSString stringWithFormat:@"m%lu", i]] = metric;
+    }
+    return env;
+}
+
 #define PP_IDENTITY(...) __VA_ARGS__
 
 /// use to guard basic view predicate analyzer is ok
@@ -156,62 +181,49 @@
 
 // use to assure full VFL statement is ok
 - (void)testVFL {
-    // prepare
-    UIView* superView = [[UIView alloc] initWithFrame:CGRectMake(0,0, 1000, 1000)];
-    NSMutableArray* arrayEnv = [NSMutableArray arrayWithCapacity:10];
-    NSMutableDictionary* dictEnv = [NSMutableDictionary dictionaryWithCapacity:10];
-    for (NSUInteger i = 0; i < 5; ++i) {
-        UIView* v = [UIView new];
-        [superView addSubview:v];
-        [arrayEnv addObject:v];
-        dictEnv[[NSString stringWithFormat:@"v%lu", i]] = v;
-    }
-    for (NSUInteger i = 0; i < 5; ++i) {
-        id metric = @(i * 10);
-        [arrayEnv addObject:metric];
-        dictEnv[[NSString stringWithFormat:@"m%lu", i]] = metric;
-    }
+    ENV env = prepareVFL();
+    typeof(env.superView) superView = env.superView;
 
     // view predicate prove correct in testViewPredicate, so can use it to ensure correct
 
     // default connection
     NSArray* layouts;
     NSMutableArray* compareLayouts;
-    XCTAssertEqualObjects( [arrayEnv[0] VFLConstraints:@"L=8"], [arrayEnv VFLConstraints:@"H:|-[$0]"] );
-    XCTAssertEqualObjects( ([superView VFLConstraints:@"R=$1+8", arrayEnv[0]]), [arrayEnv VFLConstraints:@"[0]-|"] );
-    XCTAssertEqualObjects( ([(UIView*)arrayEnv[0] VFLConstraints:@"L=$1.R+8", arrayEnv[1]]), [arrayEnv VFLConstraints:@"[$1]-[0]"] );
-    XCTAssertEqualObjects( [arrayEnv[0] VFLConstraints:@"T=8"], [arrayEnv VFLConstraints:@"V:|-[0]"] );
-    XCTAssertEqualObjects( ([superView VFLConstraints:@"B=$1+8", arrayEnv[0]]), [arrayEnv VFLConstraints:@"V:[0]-|"] );
-    XCTAssertEqualObjects( ([(UIView*)arrayEnv[0] VFLConstraints:@"T=$1.B+8", arrayEnv[1]]), [arrayEnv VFLConstraints:@"V:[1]-[0]"] );
+    XCTAssertEqualObjects( [env.array[0] VFLConstraints:@"L=8"], [env.array VFLConstraints:@"H:|-[$0]"] );
+    XCTAssertEqualObjects( ([superView VFLConstraints:@"R=$1+8", env.array[0]]), [env.array VFLConstraints:@"[0]-|"] );
+    XCTAssertEqualObjects( ([(UIView*)env.array[0] VFLConstraints:@"L=$1.R+8", env.array[1]]), [env.array VFLConstraints:@"[$1]-[0]"] );
+    XCTAssertEqualObjects( [env.array[0] VFLConstraints:@"T=8"], [env.array VFLConstraints:@"V:|-[0]"] );
+    XCTAssertEqualObjects( ([superView VFLConstraints:@"B=$1+8", env.array[0]]), [env.array VFLConstraints:@"V:[0]-|"] );
+    XCTAssertEqualObjects( ([(UIView*)env.array[0] VFLConstraints:@"T=$1.B+8", env.array[1]]), [env.array VFLConstraints:@"V:[1]-[0]"] );
 
     // flush connection
-    XCTAssertEqualObjects( [arrayEnv[0] VFLConstraints:@"L"], [arrayEnv VFLConstraints:@"|[0]"] );
-    XCTAssertEqualObjects( ([superView VFLConstraints:@"R=$1", arrayEnv[0]]), [arrayEnv VFLConstraints:@"[0]|"] );
-    XCTAssertEqualObjects( ([(UIView*)arrayEnv[0] VFLConstraints:@"L=$1.R", arrayEnv[1]]), [arrayEnv VFLConstraints:@"[1][0]"] );
-    XCTAssertEqualObjects( [arrayEnv[0] VFLConstraints:@"T"], [arrayEnv VFLConstraints:@"V:|[0]"] );
-    XCTAssertEqualObjects( ([superView VFLConstraints:@"B=$1", arrayEnv[0]]), [arrayEnv VFLConstraints:@"V:[0]|"] );
-    XCTAssertEqualObjects( ([(UIView*)arrayEnv[0] VFLConstraints:@"T=$1.B", arrayEnv[1]]), [arrayEnv VFLConstraints:@"V:[1][0]"] );
+    XCTAssertEqualObjects( [env.array[0] VFLConstraints:@"L"], [env.array VFLConstraints:@"|[0]"] );
+    XCTAssertEqualObjects( ([superView VFLConstraints:@"R=$1", env.array[0]]), [env.array VFLConstraints:@"[0]|"] );
+    XCTAssertEqualObjects( ([(UIView*)env.array[0] VFLConstraints:@"L=$1.R", env.array[1]]), [env.array VFLConstraints:@"[1][0]"] );
+    XCTAssertEqualObjects( [env.array[0] VFLConstraints:@"T"], [env.array VFLConstraints:@"V:|[0]"] );
+    XCTAssertEqualObjects( ([superView VFLConstraints:@"B=$1", env.array[0]]), [env.array VFLConstraints:@"V:[0]|"] );
+    XCTAssertEqualObjects( ([(UIView*)env.array[0] VFLConstraints:@"T=$1.B", env.array[1]]), [env.array VFLConstraints:@"V:[1][0]"] );
 
     // specifiy connection
-    XCTAssertEqualObjects( [arrayEnv[0] VFLConstraints:@"L=8"], [arrayEnv VFLConstraints:@"|-8-[$0]"] );
-    XCTAssertEqualObjects( ([superView VFLConstraints:@"R=$1+$2", arrayEnv[0], arrayEnv[6]]), [arrayEnv VFLConstraints:@"[0]-$6-|"] );
-    XCTAssertEqualObjects( ([(UIView*)arrayEnv[0] VFLConstraints:@"L=$1.R+8", arrayEnv[1]]), [arrayEnv VFLConstraints:@"[$1]-8-[0]"] );
-    XCTAssertEqualObjects( [arrayEnv[0] VFLConstraints:@"T=8"], [arrayEnv VFLConstraints:@"V:|-8-[0]"] );
-    XCTAssertEqualObjects( ([superView VFLConstraints:@"B=$1+8", arrayEnv[0]]), [arrayEnv VFLConstraints:@"V:[0]-8-|"] );
-    XCTAssertEqualObjects( ([(UIView*)arrayEnv[0] VFLConstraints:@"T=$1.B+8", arrayEnv[1]]), [arrayEnv VFLConstraints:@"V:[1]-8-[0]"] );
+    XCTAssertEqualObjects( [env.array[0] VFLConstraints:@"L=8"], [env.array VFLConstraints:@"|-8-[$0]"] );
+    XCTAssertEqualObjects( ([superView VFLConstraints:@"R=$1+$2", env.array[0], env.array[6]]), [env.array VFLConstraints:@"[0]-$6-|"] );
+    XCTAssertEqualObjects( ([(UIView*)env.array[0] VFLConstraints:@"L=$1.R+8", env.array[1]]), [env.array VFLConstraints:@"[$1]-8-[0]"] );
+    XCTAssertEqualObjects( [env.array[0] VFLConstraints:@"T=8"], [env.array VFLConstraints:@"V:|-8-[0]"] );
+    XCTAssertEqualObjects( ([superView VFLConstraints:@"B=$1+8", env.array[0]]), [env.array VFLConstraints:@"V:[0]-8-|"] );
+    XCTAssertEqualObjects( ([(UIView*)env.array[0] VFLConstraints:@"T=$1.B+8", env.array[1]]), [env.array VFLConstraints:@"V:[1]-8-[0]"] );
 
     // multi complex connection
-    XCTAssertEqualObjects( [arrayEnv[0] VFLConstraints:@"L>=8, L<=6@5, L==7"], [arrayEnv VFLConstraints:@"|->8, <6@5,=7-[$0]"] );
-    XCTAssertEqualObjects( ([superView VFLConstraints:@"R>=$1+8, R<=$1+6@5, R==$1+7", arrayEnv[0]]), [arrayEnv VFLConstraints:@"[$0]-(>8, <6@5,=7)-|"] );
+    XCTAssertEqualObjects( [env.array[0] VFLConstraints:@"L>=8, L<=6@5, L==7"], [env.array VFLConstraints:@"|->8, <6@5,=7-[$0]"] );
+    XCTAssertEqualObjects( ([superView VFLConstraints:@"R>=$1+8, R<=$1+6@5, R==$1+7", env.array[0]]), [env.array VFLConstraints:@"[$0]-(>8, <6@5,=7)-|"] );
 
     // multi chain view and align. should have same order
-    layouts = [arrayEnv VFLConstraints:@"|- (>15, < 50) -[$0($6)] - [$1][$2] - | LTRBXYltbWH"];
+    layouts = [env.array VFLConstraints:@"|- (>15, < 50) -[$0($6)] - [$1][$2] - | LTRBXYltbWH"];
     compareLayouts = [NSMutableArray new];
-    [compareLayouts addObjectsFromArray:[(UIView*)arrayEnv[0] VFLConstraints:@"L>15, L<50, W=$1", arrayEnv[6]]];
-    [compareLayouts addObjectsFromArray:[(UIView*)arrayEnv[1] VFLConstraints:@"L=$1.R+8", arrayEnv[0]]];
-    [compareLayouts addObjectsFromArray:[(UIView*)arrayEnv[2] VFLConstraints:@"L=$1.R", arrayEnv[1]]];
-    [compareLayouts addObjectsFromArray:[superView VFLConstraints:@"R=$1.R+8", arrayEnv[2]]];
-    NSArray* views = @[arrayEnv[0], arrayEnv[1], arrayEnv[2]];
+    [compareLayouts addObjectsFromArray:[(UIView*)env.array[0] VFLConstraints:@"L>15, L<50, W=$1", env.array[6]]];
+    [compareLayouts addObjectsFromArray:[(UIView*)env.array[1] VFLConstraints:@"L=$1.R+8", env.array[0]]];
+    [compareLayouts addObjectsFromArray:[(UIView*)env.array[2] VFLConstraints:@"L=$1.R", env.array[1]]];
+    [compareLayouts addObjectsFromArray:[superView VFLConstraints:@"R=$1.R+8", env.array[2]]];
+    NSArray* views = @[env.array[0], env.array[1], env.array[2]];
     [compareLayouts addObjectsFromArray:[views constraintsAlignAllViews:NSLayoutAttributeLeft]];
     [compareLayouts addObjectsFromArray:[views constraintsAlignAllViews:NSLayoutAttributeTop]];
     [compareLayouts addObjectsFromArray:[views constraintsAlignAllViews:NSLayoutAttributeRight]];
@@ -226,38 +238,69 @@
     XCTAssertEqualObjects(layouts, compareLayouts);
 
     // multi statement and change H, V, optional [View ()]
-    layouts = [arrayEnv VFLConstraints:@"|-[$0(W=$0.H+$8)]-| X;"
+    layouts = [env.array VFLConstraints:@"|-[$0(W=$0.H+$8)]-| X;"
         "V:[$0][$1($7)] L;"
         "[$0][$1 L=$0.R+$7, R@20] L;"
         "H:[$1][$2][$3] XY;" ];
     compareLayouts = [NSMutableArray new];
     // default horizontal
-    [compareLayouts addObjectsFromArray:[(UIView*)arrayEnv[0] VFLConstraints:@"L=8, W=$0.H+$1", arrayEnv[8]]];
-    [compareLayouts addObjectsFromArray:[superView VFLConstraints:@"R=$1+8", arrayEnv[0]]];
+    [compareLayouts addObjectsFromArray:[(UIView*)env.array[0] VFLConstraints:@"L=8, W=$0.H+$1", env.array[8]]];
+    [compareLayouts addObjectsFromArray:[superView VFLConstraints:@"R=$1+8", env.array[0]]];
     // change to vertical
-    [compareLayouts addObjectsFromArray:[(UIView*)arrayEnv[1] VFLConstraints:@"T=$1.B, H=$2", arrayEnv[0], arrayEnv[7]]];
-    [compareLayouts addObjectsFromArray:[@[arrayEnv[0], arrayEnv[1]] constraintsAlignAllViews:NSLayoutAttributeLeft]];
+    [compareLayouts addObjectsFromArray:[(UIView*)env.array[1] VFLConstraints:@"T=$1.B, H=$2", env.array[0], env.array[7]]];
+    [compareLayouts addObjectsFromArray:[@[env.array[0], env.array[1]] constraintsAlignAllViews:NSLayoutAttributeLeft]];
     // continue to vertical. and same repeat constraint
-    [compareLayouts addObjectsFromArray:[(UIView*)arrayEnv[1] VFLConstraints:@"T=$1.B, L=$1.R+$2, R@20", arrayEnv[0], arrayEnv[7]]];
-    [compareLayouts addObjectsFromArray:[@[arrayEnv[0], arrayEnv[1]] constraintsAlignAllViews:NSLayoutAttributeLeft]];
+    [compareLayouts addObjectsFromArray:[(UIView*)env.array[1] VFLConstraints:@"T=$1.B, L=$1.R+$2, R@20", env.array[0], env.array[7]]];
+    [compareLayouts addObjectsFromArray:[@[env.array[0], env.array[1]] constraintsAlignAllViews:NSLayoutAttributeLeft]];
     // change back to horizontal
-    [compareLayouts addObjectsFromArray:[(UIView*)arrayEnv[2] VFLConstraints:@"L=$1.R", arrayEnv[1]]];
-    [compareLayouts addObjectsFromArray:[(UIView*)arrayEnv[3] VFLConstraints:@"L=$1.R", arrayEnv[2]]];
-    [compareLayouts addObjectsFromArray:[@[arrayEnv[1], arrayEnv[2], arrayEnv[3]] constraintsAlignAllViews:NSLayoutAttributeCenterX]];
-    [compareLayouts addObjectsFromArray:[@[arrayEnv[1], arrayEnv[2], arrayEnv[3]] constraintsAlignAllViews:NSLayoutAttributeCenterY]];
+    [compareLayouts addObjectsFromArray:[(UIView*)env.array[2] VFLConstraints:@"L=$1.R", env.array[1]]];
+    [compareLayouts addObjectsFromArray:[(UIView*)env.array[3] VFLConstraints:@"L=$1.R", env.array[2]]];
+    [compareLayouts addObjectsFromArray:[@[env.array[1], env.array[2], env.array[3]] constraintsAlignAllViews:NSLayoutAttributeCenterX]];
+    [compareLayouts addObjectsFromArray:[@[env.array[1], env.array[2], env.array[3]] constraintsAlignAllViews:NSLayoutAttributeCenterY]];
     XCTAssertEqualObjects(layouts, compareLayouts);
 
     // multi statement use dict env
-    layouts = [dictEnv VFLConstraints:@"|-[v0(abc:W=v0.H+m3)]-| X;"
+    layouts = [env.dict VFLConstraints:@"|-[v0(abc:W=v0.H+m3)]-| X;"
         "V:[$v0][v1(m2)] L;"
         "[v0][v1(L=$v0.R+$m2, R@20)] L;"
         "H:[v1][v2][v3] XY;" ];
     XCTAssertEqualObjects(layouts, compareLayouts);
+
+    // all constraints shouldn't change translatesAutoresizingMaskIntoConstraints
+    for (UIView* element in env.array){
+        if ([element isKindOfClass:[UIView class]]) {
+            XCTAssertEqual(element.translatesAutoresizingMaskIntoConstraints, true);
+        }
+    }
 }
 
 - (void)testException {
     VFLEnableAssert = true;
     XCTAssertThrows(VFLConstraints(@"[$1]", [NSDictionary dictionary]));
+}
+
+- (void)testFullInstall {
+    ENV env = prepareVFL();
+    // typeof(env.superView) superView = env.superView;
+
+    // only change translatesAutoresizingMaskIntoConstraints for view in []
+    // no format, no effect
+    __auto_type output = [env.array VFLFullInstall:@""];
+    XCTAssertEqual(output.count, 0u);
+    for (UIView* element in env.array){
+        if ([element isKindOfClass:[UIView class]]) {
+            XCTAssertEqual(element.translatesAutoresizingMaskIntoConstraints, true);
+        }
+    }
+
+    // only change the main view's translatesAutoresizingMaskIntoConstraints
+    output = [env.array VFLFullInstall:@"[$0($1)]"];
+    XCTAssertEqual(output.count, 1u);
+    XCTAssertEqual(output[0].active, true);
+    for (UIView* element in [env.array subarrayWithRange:NSMakeRange(1, 4)]){
+        XCTAssertEqual(element.translatesAutoresizingMaskIntoConstraints, true);
+    }
+    
 }
 
 //- (void)testPerformanceExample {

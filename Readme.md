@@ -149,6 +149,8 @@ for array env, ref the index by $0, $1...
 for swift, you can use string interpolation directly.  
 
 ##### Connect between views. (same as [Apple's Syntax][0])
+Compatible NOTE: Apple horizontal use leading to trailing, I think Left to Right is more controllable and less confuse.
+so in my implementation, default H: means Left to Right(not leading to trailing), and a new keyword F: meas leading to trailing(same as Apple VFL H:)
 
 * Connect two view with standard space:  
   `[button]-[textField]`

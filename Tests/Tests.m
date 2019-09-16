@@ -53,17 +53,17 @@
 typedef struct {
     NSMutableArray* array;
     NSMutableDictionary* dict;
-    UIView* superView;
+    UIView* superview;
 } ENV;
 static ENV prepareVFL() {
     ENV env = {
         [NSMutableArray arrayWithCapacity:10],
         [NSMutableDictionary dictionaryWithCapacity:10],
-        .superView = [[UIView alloc] initWithFrame:CGRectMake(0,0, 1000, 1000)]
+        .superview = [[UIView alloc] initWithFrame:CGRectMake(0,0, 1000, 1000)]
     };
     for (NSUInteger i = 0; i < 5; ++i) {
         UIView* v = [UIView new];
-        [env.superView addSubview:v];
+        [env.superview addSubview:v];
         [env.array addObject:v];
         env.dict[[NSString stringWithFormat:@"v%lu", i]] = v;
     }
@@ -79,10 +79,10 @@ static ENV prepareVFL() {
 
 /// use to guard basic view predicate analyzer is ok
 - (void)testViewPredicate {
-    UIView* superView = [[UIView alloc] initWithFrame:CGRectMake(0,0, 1000, 1000)];
+    UIView* superview = [[UIView alloc] initWithFrame:CGRectMake(0,0, 1000, 1000)];
     UIView* subview = [UIView new];
     id metric = @(30.0);
-    [superView addSubview:subview];
+    [superview addSubview:subview];
 
     NSArray* layouts;
     NSLayoutConstraint* layout;
@@ -111,15 +111,15 @@ static ENV prepareVFL() {
 #define AssertAttrChar(ch, attr, toView)                                                           \
     AssertEqualConstraint(@#ch, attr, NSLayoutRelationEqual, toView, attr, 1.0, 0, 1000)
 
-    AssertAttrChar(L, NSLayoutAttributeLeft, superView)
-    AssertAttrChar(R, NSLayoutAttributeRight, superView)
-    AssertAttrChar(T, NSLayoutAttributeTop, superView)
-    AssertAttrChar(B, NSLayoutAttributeBottom, superView)
-    AssertAttrChar(X, NSLayoutAttributeCenterX, superView)
-    AssertAttrChar(Y, NSLayoutAttributeCenterY, superView)
-    AssertAttrChar(l, NSLayoutAttributeLeading, superView)
-    AssertAttrChar(t, NSLayoutAttributeTrailing, superView)
-    AssertAttrChar(b, NSLayoutAttributeBaseline, superView) // attr need secondView, default superView
+    AssertAttrChar(L, NSLayoutAttributeLeft, superview)
+    AssertAttrChar(R, NSLayoutAttributeRight, superview)
+    AssertAttrChar(T, NSLayoutAttributeTop, superview)
+    AssertAttrChar(B, NSLayoutAttributeBottom, superview)
+    AssertAttrChar(X, NSLayoutAttributeCenterX, superview)
+    AssertAttrChar(Y, NSLayoutAttributeCenterY, superview)
+    AssertAttrChar(l, NSLayoutAttributeLeading, superview)
+    AssertAttrChar(t, NSLayoutAttributeTrailing, superview)
+    AssertAttrChar(b, NSLayoutAttributeBaseline, superview) // attr need secondView, default superview
 
     AssertAttrChar(W, NSLayoutAttributeWidth, nil) // toView default nil
     AssertAttrChar(H, NSLayoutAttributeHeight, nil)
@@ -161,7 +161,7 @@ static ENV prepareVFL() {
 
     // complete constraint test
     AssertEqualConstraint(PP_IDENTITY(@"Left > $0.Right * 0.2 + 500 @$1", metric), NSLayoutAttributeLeft, NSLayoutRelationGreaterThanOrEqual , subview, NSLayoutAttributeRight, 0.2, 500, [metric doubleValue]);
-    AssertEqualConstraint(PP_IDENTITY(@"Height < |.Width * 1.5 - 500 @$1", metric), NSLayoutAttributeHeight, NSLayoutRelationLessThanOrEqual , superView, NSLayoutAttributeWidth, 1.5, -500, [metric doubleValue]);
+    AssertEqualConstraint(PP_IDENTITY(@"Height < |.Width * 1.5 - 500 @$1", metric), NSLayoutAttributeHeight, NSLayoutRelationLessThanOrEqual , superview, NSLayoutAttributeWidth, 1.5, -500, [metric doubleValue]);
 
     // multi predicate
     layouts = [subview VFLConstraints:@"Width > 100, Height < $1, Height < $0.Width, Left = |.Right - 300, Right = |.Left * 2 + 200 @999", metric];
@@ -173,48 +173,66 @@ static ENV prepareVFL() {
     XCTAssertEqualObjects(layouts[1], layout);
     CreateSubViewConstraint(NSLayoutAttributeHeight, NSLayoutRelationLessThanOrEqual, subview, NSLayoutAttributeWidth, 1.0, 0, 1000);
     XCTAssertEqualObjects(layouts[2], layout);
-    CreateSubViewConstraint(NSLayoutAttributeLeft, NSLayoutRelationEqual, superView, NSLayoutAttributeRight, 1.0, -300, 1000);
+    CreateSubViewConstraint(NSLayoutAttributeLeft, NSLayoutRelationEqual, superview, NSLayoutAttributeRight, 1.0, -300, 1000);
     XCTAssertEqualObjects(layouts[3], layout);
-    CreateSubViewConstraint(NSLayoutAttributeRight, NSLayoutRelationEqual, superView, NSLayoutAttributeLeft, 2.0, 200, 999);
+    CreateSubViewConstraint(NSLayoutAttributeRight, NSLayoutRelationEqual, superview, NSLayoutAttributeLeft, 2.0, 200, 999);
     XCTAssertEqualObjects(layouts[4], layout);
 }
 
 // use to assure full VFL statement is ok
 - (void)testVFL {
     ENV env = prepareVFL();
-    typeof(env.superView) superView = env.superView;
+    typeof(env.superview) superview = env.superview;
 
     // view predicate prove correct in testViewPredicate, so can use it to ensure correct
 
     // default connection
     NSArray* layouts;
     NSMutableArray* compareLayouts;
-    XCTAssertEqualObjects( [env.array[0] VFLConstraints:@"L=8"], [env.array VFLConstraints:@"H:|-[$0]"] );
-    XCTAssertEqualObjects( ([superView VFLConstraints:@"R=$1+8", env.array[0]]), [env.array VFLConstraints:@"[0]-|"] );
+
+#define AssertAppleVFLEqual(appleFormat, myFormat) \
+    XCTAssertEqualObjects([NSLayoutConstraint constraintsWithVisualFormat:appleFormat options:0 metrics:nil views:env.dict], \
+                          [env.dict VFLConstraints:myFormat]) // same as apple's VFL
+#define AssertAppleVFLHorzontalEqual(format) AssertAppleVFLEqual(@"H:" format, @"F:" format);
+#define AssertAppleVFLVerticleEqual(format) AssertAppleVFLEqual(@"V:" format, @"V:" format);
+
+    AssertAppleVFLHorzontalEqual(@"|-[v0]-4-[v1][v2]-|");
+    AssertAppleVFLVerticleEqual(@"|-[v0]-4-[v1][v2]-|");
+    
+    XCTAssertEqualObjects( ([env.array[0] VFLConstraints:@"L=$1", superview.layoutMarginsGuide]), [env.array VFLConstraints:@"H:|-[$0]"] );
+    XCTAssertEqualObjects( ([superview.layoutMarginsGuide VFLConstraints:@"R=$1", env.array[0]]), [env.array VFLConstraints:@"[0]-|"] );
     XCTAssertEqualObjects( ([(UIView*)env.array[0] VFLConstraints:@"L=$1.R+8", env.array[1]]), [env.array VFLConstraints:@"[$1]-[0]"] );
-    XCTAssertEqualObjects( [env.array[0] VFLConstraints:@"T=8"], [env.array VFLConstraints:@"V:|-[0]"] );
-    XCTAssertEqualObjects( ([superView VFLConstraints:@"B=$1+8", env.array[0]]), [env.array VFLConstraints:@"V:[0]-|"] );
+    XCTAssertEqualObjects( ([env.array[0] VFLConstraints:@"T=$1", superview.layoutMarginsGuide]), [env.array VFLConstraints:@"V:|-[0]"] );
+    XCTAssertEqualObjects( ([superview.layoutMarginsGuide VFLConstraints:@"B=$1", env.array[0]]), [env.array VFLConstraints:@"V:[0]-|"] );
     XCTAssertEqualObjects( ([(UIView*)env.array[0] VFLConstraints:@"T=$1.B+8", env.array[1]]), [env.array VFLConstraints:@"V:[1]-[0]"] );
 
     // flush connection
     XCTAssertEqualObjects( [env.array[0] VFLConstraints:@"L"], [env.array VFLConstraints:@"|[0]"] );
-    XCTAssertEqualObjects( ([superView VFLConstraints:@"R=$1", env.array[0]]), [env.array VFLConstraints:@"[0]|"] );
+    XCTAssertEqualObjects( ([superview VFLConstraints:@"R=$1", env.array[0]]), [env.array VFLConstraints:@"[0]|"] );
     XCTAssertEqualObjects( ([(UIView*)env.array[0] VFLConstraints:@"L=$1.R", env.array[1]]), [env.array VFLConstraints:@"[1][0]"] );
     XCTAssertEqualObjects( [env.array[0] VFLConstraints:@"T"], [env.array VFLConstraints:@"V:|[0]"] );
-    XCTAssertEqualObjects( ([superView VFLConstraints:@"B=$1", env.array[0]]), [env.array VFLConstraints:@"V:[0]|"] );
+    XCTAssertEqualObjects( ([superview VFLConstraints:@"B=$1", env.array[0]]), [env.array VFLConstraints:@"V:[0]|"] );
     XCTAssertEqualObjects( ([(UIView*)env.array[0] VFLConstraints:@"T=$1.B", env.array[1]]), [env.array VFLConstraints:@"V:[1][0]"] );
 
     // specifiy connection
     XCTAssertEqualObjects( [env.array[0] VFLConstraints:@"L=8"], [env.array VFLConstraints:@"|-8-[$0]"] );
-    XCTAssertEqualObjects( ([superView VFLConstraints:@"R=$1+$2", env.array[0], env.array[6]]), [env.array VFLConstraints:@"[0]-$6-|"] );
+    XCTAssertEqualObjects( ([superview VFLConstraints:@"R=$1+$2", env.array[0], env.array[6]]), [env.array VFLConstraints:@"[0]-$6-|"] );
     XCTAssertEqualObjects( ([(UIView*)env.array[0] VFLConstraints:@"L=$1.R+8", env.array[1]]), [env.array VFLConstraints:@"[$1]-8-[0]"] );
     XCTAssertEqualObjects( [env.array[0] VFLConstraints:@"T=8"], [env.array VFLConstraints:@"V:|-8-[0]"] );
-    XCTAssertEqualObjects( ([superView VFLConstraints:@"B=$1+8", env.array[0]]), [env.array VFLConstraints:@"V:[0]-8-|"] );
+    XCTAssertEqualObjects( ([superview VFLConstraints:@"B=$1+8", env.array[0]]), [env.array VFLConstraints:@"V:[0]-8-|"] );
     XCTAssertEqualObjects( ([(UIView*)env.array[0] VFLConstraints:@"T=$1.B+8", env.array[1]]), [env.array VFLConstraints:@"V:[1]-8-[0]"] );
+
+    // width constraint
+    AssertAppleVFLHorzontalEqual(@"[v0(>=50)]");
+    AssertAppleVFLVerticleEqual(@"[v0(>=50)]");
+
+    // equal width
+    AssertAppleVFLHorzontalEqual(@"[v0(==v1)]");
+    AssertAppleVFLVerticleEqual(@"[v0(==v1)]");
 
     // multi complex connection
     XCTAssertEqualObjects( [env.array[0] VFLConstraints:@"L>=8, L<=6@5, L==7"], [env.array VFLConstraints:@"|->8, <6@5,=7-[$0]"] );
-    XCTAssertEqualObjects( ([superView VFLConstraints:@"R>=$1+8, R<=$1+6@5, R==$1+7", env.array[0]]), [env.array VFLConstraints:@"[$0]-(>8, <6@5,=7)-|"] );
+    XCTAssertEqualObjects( ([superview VFLConstraints:@"R>=$1+8, R<=$1+6@5, R==$1+7", env.array[0]]), [env.array VFLConstraints:@"[$0]-(>8, <6@5,=7)-|"] );
 
     // multi chain view and align. should have same order
     layouts = [env.array VFLConstraints:@"|- (>15, < 50) -[$0($6)] - [$1][$2] - | LTRBXYltbWH"];
@@ -222,7 +240,7 @@ static ENV prepareVFL() {
     [compareLayouts addObjectsFromArray:[(UIView*)env.array[0] VFLConstraints:@"L>15, L<50, W=$1", env.array[6]]];
     [compareLayouts addObjectsFromArray:[(UIView*)env.array[1] VFLConstraints:@"L=$1.R+8", env.array[0]]];
     [compareLayouts addObjectsFromArray:[(UIView*)env.array[2] VFLConstraints:@"L=$1.R", env.array[1]]];
-    [compareLayouts addObjectsFromArray:[superView VFLConstraints:@"R=$1.R+8", env.array[2]]];
+    [compareLayouts addObjectsFromArray:[superview.layoutMarginsGuide VFLConstraints:@"R=$1", env.array[2]]];
     NSArray* views = @[env.array[0], env.array[1], env.array[2]];
     [compareLayouts addObjectsFromArray:[views constraintsAlignAllViews:NSLayoutAttributeLeft]];
     [compareLayouts addObjectsFromArray:[views constraintsAlignAllViews:NSLayoutAttributeTop]];
@@ -244,8 +262,8 @@ static ENV prepareVFL() {
         "H:[$1][$2][$3] XY;" ];
     compareLayouts = [NSMutableArray new];
     // default horizontal
-    [compareLayouts addObjectsFromArray:[(UIView*)env.array[0] VFLConstraints:@"L=8, W=$0.H+$1", env.array[8]]];
-    [compareLayouts addObjectsFromArray:[superView VFLConstraints:@"R=$1+8", env.array[0]]];
+    [compareLayouts addObjectsFromArray:[(UIView*)env.array[0] VFLConstraints:@"L=$2, W=$0.H+$1", env.array[8], superview.layoutMarginsGuide]];
+    [compareLayouts addObjectsFromArray:[superview.layoutMarginsGuide VFLConstraints:@"R=$1", env.array[0]]];
     // change to vertical
     [compareLayouts addObjectsFromArray:[(UIView*)env.array[1] VFLConstraints:@"T=$1.B, H=$2", env.array[0], env.array[7]]];
     [compareLayouts addObjectsFromArray:[@[env.array[0], env.array[1]] constraintsAlignAllViews:NSLayoutAttributeLeft]];
@@ -281,7 +299,7 @@ static ENV prepareVFL() {
 
 - (void)testFullInstall {
     ENV env = prepareVFL();
-    // typeof(env.superView) superView = env.superView;
+    // typeof(env.superview) superview = env.superview;
 
     // only change translatesAutoresizingMaskIntoConstraints for view in []
     // no format, no effect

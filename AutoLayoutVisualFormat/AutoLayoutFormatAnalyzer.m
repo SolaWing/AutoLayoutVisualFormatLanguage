@@ -48,8 +48,14 @@ typedef struct analyzeEnv{
     __unsafe_unretained NSMutableArray* constraints;
     __unsafe_unretained id env; // array or dict
     bool envIsArray; // speed check cache
-    bool vertical;
+    enum {
+        HORIZONTAL = 0,
+        VERTICAL = 1,
+        FLOW = 2,
+    } direction;
+    bool flow;
     bool mainViewUseAutolayout;
+    bool supportGuide;
 } AnalyzeEnv;
 
 bool VFLEnableAssert = 0;
@@ -179,34 +185,45 @@ static inline bool AttributeNeedPair(NSLayoutAttribute attr) {
 #define SUPER_TOKEN [NSNull null]
 #define DEFAULT_CONNECTION_TOKEN [NSNull null]
 /** create constraint and add it into constraints
- * @param leftView view at equation left.
- * @param rightView view at equation right.
+ * @param leftView the main view at equation left.
+ * [otherView]-[leftView]: will be leftView.attr = otherView.attr + num
+ * [leftView(predicates)]: otherView will be nil and rightView set in predicates
  * */
-static void buildConstraints(id leftView, NSArray* predicates, id rightView, bool vertical, NSMutableArray* constraints) {
+static void buildConstraints(id leftView, NSArray* predicates, id otherView, NSMutableArray* constraints, AnalyzeEnv* env) {
     NSLayoutAttribute defAttr1, defAttr2;
+    UIView*__strong *superview = nil;
 
     if (leftView == SUPER_TOKEN) { // [V]-|
-        leftView = [rightView superview];
+        leftView = [otherView superview];
+        superview = &leftView;
         Assert(leftView, @"superview not exist!");
 
-        defAttr1 = defAttr2 = vertical ?
-            NSLayoutAttributeBottom : NSLayoutAttributeRight;
-    } else if (rightView == SUPER_TOKEN) { // |-[V]
-        rightView = [leftView superview];
-        Assert(rightView, @"superview not exist!");
+        switch( env->direction ){
+            case HORIZONTAL: { defAttr1 = defAttr2 = NSLayoutAttributeRight; } break;
+            case VERTICAL:   { defAttr1 = defAttr2 = NSLayoutAttributeBottom; } break;
+            case FLOW:       { defAttr1 = defAttr2 = NSLayoutAttributeTrailing; } break;
+            default:         { NSCAssert(false, @"should have a valid direction!!");  } break;
+        }
+    } else if (otherView == SUPER_TOKEN) { // |-[V]
+        otherView = [leftView superview];
+        superview = &otherView;
+        Assert(otherView, @"superview not exist!");
 
-        defAttr1 = defAttr2 = vertical ?
-            NSLayoutAttributeTop : NSLayoutAttributeLeft;
-    } else if (!rightView){ // [V(...)]
-        defAttr1 = defAttr2 = vertical ?
+        switch( env->direction ){
+            case HORIZONTAL: { defAttr1 = defAttr2 = NSLayoutAttributeLeft; } break;
+            case VERTICAL:   { defAttr1 = defAttr2 = NSLayoutAttributeTop; } break;
+            case FLOW:       { defAttr1 = defAttr2 = NSLayoutAttributeLeading; } break;
+            default:         { NSCAssert(false, @"should have a valid direction!!");  } break;
+        }
+    } else if (!otherView){ // [V(...)]
+        defAttr1 = defAttr2 = env->direction == VERTICAL ?
             NSLayoutAttributeHeight : NSLayoutAttributeWidth;
     } else { // [V]-[V]
-        if (vertical) {
-            defAttr1 = NSLayoutAttributeTop;
-            defAttr2 = NSLayoutAttributeBottom;
-        } else {
-            defAttr1 = NSLayoutAttributeLeft;
-            defAttr2 = NSLayoutAttributeRight;
+        switch( env->direction ){
+            case HORIZONTAL: { defAttr1 = NSLayoutAttributeLeft; defAttr2 = NSLayoutAttributeRight; } break;
+            case VERTICAL:   { defAttr1 = NSLayoutAttributeTop; defAttr2 = NSLayoutAttributeBottom; } break;
+            case FLOW:       { defAttr1 = NSLayoutAttributeLeading; defAttr2 = NSLayoutAttributeTrailing; } break;
+            default:         { NSCAssert(false, @"should have a valid direction!!");  } break;
         }
     }
 
@@ -214,14 +231,19 @@ static void buildConstraints(id leftView, NSArray* predicates, id rightView, boo
         [constraints addObject:[NSLayoutConstraint
             constraintWithItem:leftView attribute:defAttr1
                      relatedBy:NSLayoutRelationEqual
-                        toItem:rightView attribute:defAttr2
+                        toItem:otherView attribute:defAttr2
                     multiplier:1.0 constant:0]];
     } else if (predicates[0] == DEFAULT_CONNECTION_TOKEN) { // [A]-[B]
+        CGFloat constant = kDefaultSpace;
+        if (env->supportGuide && superview) {
+            *superview = (id)[*superview layoutMarginsGuide];
+            constant = 0;
+        }
         [constraints addObject:[NSLayoutConstraint
             constraintWithItem:leftView attribute:defAttr1
                      relatedBy:NSLayoutRelationEqual
-                        toItem:rightView attribute:defAttr2
-                    multiplier:1.0 constant:kDefaultSpace]];
+                        toItem:otherView attribute:defAttr2
+                    multiplier:1.0 constant:constant]];
     } else { // contains specific predicate
         NSLayoutAttribute attr1, attr2;
         id view2;
@@ -243,8 +265,8 @@ static void buildConstraints(id leftView, NSArray* predicates, id rightView, boo
                     attr2 = defAttr2; // not set 2, use default
                 }
             }
-            // set rightView
-            if (rightView) view2 = rightView;
+            // set otherView
+            if (otherView) view2 = otherView;
             else{ // [view(predicates)]
                 if (predicate->view2 == SUPER_TOKEN ||
                     (!predicate->view2 && AttributeNeedPair(attr1)) )
@@ -466,7 +488,7 @@ static const char* analyzeViewStatement(const char* format, AnalyzeEnv* env, UIV
     NSMutableArray* predicates = [NSMutableArray new];
     format = analyzePredicateListStatement(format, env, predicates);
     if (predicates.count > 0) {
-        buildConstraints(*outView, predicates, nil, env->vertical, *outConstraints);
+        buildConstraints(*outView, predicates, nil, *outConstraints, env);
     }
     SkipSpace(format);
 
@@ -483,14 +505,22 @@ static const char* analyzeViewStatement(const char* format, AnalyzeEnv* env, UIV
 static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
     SkipSpace(format);
     // set H or V according to label. if not set, don't change.(init default to H)
-    if (*format == 'V') {
-        env->vertical = true;
-        Assert(*(format+1) == ':', @"V should followed by :!");
-        format += 2;
-    } else if (*format == 'H') {
-        env->vertical = false;
-        Assert(*(format+1) == ':', @"H should followed by :!");
-        format += 2;
+    switch( *format ){
+        case 'H': {
+            env->direction = HORIZONTAL;
+            Assert(*(format+1) == ':', @"H should followed by :!");
+            format += 2;
+        } break;
+        case 'F': {
+            env->direction = FLOW;
+            Assert(*(format+1) == ':', @"F should followed by :!");
+            format += 2;
+        } break;
+        case 'V': {
+            env->direction = VERTICAL;
+            Assert(*(format+1) == ':', @"V should followed by :!");
+            format += 2;
+        } break;
     }
 
     id firstView = nil;   ///< view at the - connection left
@@ -505,7 +535,7 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
             case '|': {
            Superview:
                 if (firstView) { // [V]-|
-                    buildConstraints(SUPER_TOKEN, connections, firstView, env->vertical, env->constraints);
+                    buildConstraints(SUPER_TOKEN, connections, firstView, env->constraints, env);
 
                     firstView = SUPER_TOKEN;
                     secondView = nil;
@@ -555,7 +585,7 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
                     // for connection, use
                     // secondView.attr = firstView.attr * mul + constant
                     // so constant can use positive number to represent space
-                    buildConstraints(secondView, connections, firstView, env->vertical, env->constraints);
+                    buildConstraints(secondView, connections, firstView, env->constraints, env);
                 }
                 if (viewConstraints) { // guarantee constraint create order from left to right
                      [env->constraints addObjectsFromArray:viewConstraints];
@@ -603,7 +633,18 @@ NSArray<NSLayoutConstraint*>* _VFLConstraints(NSString* format, id env, bool mai
     NSCParameterAssert(env);
 
     NSMutableArray* constraints = [NSMutableArray new];
-    AnalyzeEnv environment = {constraints, env, [env isKindOfClass:[NSArray class]], false, mainViewUseAutolayout};
+    AnalyzeEnv environment = {
+        constraints,
+        env,
+        [env isKindOfClass:[NSArray class]],
+        .direction = HORIZONTAL,
+        .mainViewUseAutolayout = mainViewUseAutolayout,
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_9_0
+        .supportGuide = true,
+#else
+        .supportGuide = [UIDevice currentDevice].systemVersion.floatValue >= 9.0
+#endif
+    };
     const char* formatPtr = format.UTF8String;
     while(*formatPtr) {
         formatPtr = analyzeStatement(formatPtr, &environment);
@@ -628,13 +669,24 @@ NSArray<NSLayoutConstraint*>* VFLFullInstall(NSString* format, id env) {
     return ret;
 }
 
-NSArray<NSLayoutConstraint*>* VFLViewConstraints(NSString* formatString, UIView* view, id env) {
+NSArray<NSLayoutConstraint*>* VFLViewConstraints(NSString* formatString, id view, id env) {
     NSCParameterAssert(formatString);
     NSCParameterAssert(view);
     NSCParameterAssert(env);
 
     NSMutableArray* constraints = [NSMutableArray new];
-    AnalyzeEnv environment = {constraints, env, [env isKindOfClass:[NSArray class]], false, false};
+    AnalyzeEnv environment = {
+        constraints,
+        env,
+        [env isKindOfClass:[NSArray class]],
+        .direction = HORIZONTAL,
+        .mainViewUseAutolayout = false,
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_9_0
+        .supportGuide = true,
+#else
+        .supportGuide = [UIDevice currentDevice].systemVersion.floatValue >= 9.0
+#endif
+    };
     const char* format = formatString.UTF8String;
 
     NSMutableArray* predicates = [NSMutableArray new];
@@ -644,7 +696,7 @@ NSArray<NSLayoutConstraint*>* VFLViewConstraints(NSString* formatString, UIView*
     }
 
     if (predicates.count > 0) {
-        buildConstraints(view, predicates, nil, NO, constraints);
+        buildConstraints(view, predicates, nil, constraints, &environment);
     }
 
     return constraints;

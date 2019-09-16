@@ -35,5 +35,10 @@
 @interface UILayoutGuide(SWAutoLayout)
 
 - (UIView*)superview; /// compatible with view, to work with superview
+- (NSArray<NSLayoutConstraint*>*)VFLConstraints:(NSString*)format, ...;
+- (NSArray<NSLayoutConstraint*>*)VFLInstall:(NSString*)format, ...;
+// Guide use autolayout and don't need full install
+- (NSArray<NSLayoutConstraint*>*)VFLConstraints:(NSString*)format withArgs:(NSArray*)args;
+- (NSArray<NSLayoutConstraint*>*)VFLInstall:(NSString*)format withArgs:(NSArray*)args;
 
 @end

@@ -86,4 +86,58 @@ static NSUInteger getMaxIndexValueInFormat(NSString* format) {
 
 - (UIView *)superview { return self.owningView; }
 
+// VFL same as UIView
+- (NSArray<NSLayoutConstraint*>*)VFLConstraints:(NSString*)format andVarArg:(va_list*)ap {
+    NSMutableArray* env = [NSMutableArray arrayWithObject:self];
+    NSUInteger count = getMaxIndexValueInFormat(format) + 1;
+    NSUInteger i = 1;
+    while ( i++<count ){
+        [env addObject: va_arg(*ap, id)];
+    }
+    return VFLViewConstraints(format, self, env);
+}
+
+- (NSArray<NSLayoutConstraint*>*)VFLConstraints:(NSString*)format, ... {
+    va_list ap; va_start(ap, format);
+    NSArray* constraints = [self VFLConstraints:format andVarArg:&ap];
+    va_end(ap);
+
+    return constraints;
+}
+
+- (NSArray<NSLayoutConstraint*>*)VFLInstall:(NSString*)format, ... {
+    va_list ap; va_start(ap, format);
+    NSArray* constraints = [self VFLConstraints:format andVarArg:&ap];
+    va_end(ap);
+    [NSLayoutConstraint activateConstraints:constraints];
+    return constraints;
+}
+
+- (NSArray<NSLayoutConstraint*>*)VFLFullInstall:(NSString*)format, ... {
+    va_list ap; va_start(ap, format);
+    NSArray* constraints = [self VFLConstraints:format andVarArg:&ap];
+    va_end(ap);
+    [NSLayoutConstraint activateConstraints:constraints];
+    return constraints;
+}
+
+#pragma mark - array api
+- (NSArray<NSLayoutConstraint*>*)VFLConstraints:(NSString*)format withArgs:(NSArray*)args {
+    NSMutableArray* obj = [NSMutableArray arrayWithObject:self];
+    [obj addObjectsFromArray:args];
+    return VFLViewConstraints(format, self, obj);
+}
+
+- (NSArray<NSLayoutConstraint*>*)VFLInstall:(NSString*)format withArgs:(NSArray*)args {
+    NSArray* constraints = [self VFLConstraints:format withArgs:args];
+    [NSLayoutConstraint activateConstraints:constraints];
+    return constraints;
+}
+
+- (NSArray<NSLayoutConstraint*>*)VFLFullInstall:(NSString*)format withArgs:(NSArray*)args {
+    NSArray* constraints = [self VFLConstraints:format withArgs:args];
+    [NSLayoutConstraint activateConstraints:constraints];
+    return constraints;
+}
+
 @end

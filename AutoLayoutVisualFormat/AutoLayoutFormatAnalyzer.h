@@ -19,7 +19,7 @@ extern bool VFLEnableAssert;
 /** the syntax is as follow. and completely compatible with Apple Visual Format Language
 
 <visualFormat>      :   <visualStatement>(;<visualStatement>)*
-<visualStatement>   :   (<orientation>:)?(<superview><connection>)?<view>(<connection><view>)*(<connection><superview>)?(<align>)*(<otherFlag>)*
+<visualStatement>   :   (<orientation>:)?(<layoutEdge><connection>)?<view>(<connection><view>)*(<connection><layoutEdge>)? (<align>)*
                         orient init default H, after visualStatement default equal to previous orient
 <orientation>       :   H|V|F
                         H: horizontal, connect from left to right
@@ -27,7 +27,11 @@ extern bool VFLEnableAssert;
                         F: flow, connect from leading to trailing.
                            this is same as Apple VFL's H. but I think left to right is more practical.
                            and in RTL context, leading to trailing may be hard to guarantee work in both direction.
-<superview>         :   |
+<layoutEdge>        :   |[msr]?
+                        | means superview
+                        |m means superview's margin guide
+                        |s means superview's safeAreaLayoutGuide
+                        |r means superview's readableContentGuide
 <view>              :   [<viewIndex>(<predicateList>)?]
 <align>             :   [LRTBXYltbWH]
                         Left,Right,Top,Bottom,CenterX,CenterY,leading,trailing,baseline,Width,Height
@@ -44,6 +48,7 @@ extern bool VFLEnableAssert;
                         relation default ==, priority default required. multiplier default 1.0, constant default 0
                         <viewIndex> can only be used in <view>, default nil.
                         or if first view attr must need a secondView, it's superview
+                        |, |m, etc. is a valid view token.
                         if attr2 followed, attr2 need use . to seperate
 
                         if attr1 and attr2 both empty, use default attr, that is:

@@ -18,14 +18,15 @@
 
 - (BOOL)isEqual:(NSLayoutConstraint*)object {
     if ([object isKindOfClass:[NSLayoutConstraint class]]) {
-        if (self.firstItem == object.firstItem
-            && self.secondItem == object.secondItem
-            && self.firstAttribute == object.firstAttribute
-            && self.secondAttribute == object.secondAttribute
-            && self.multiplier == object.multiplier
-            && self.constant == object.constant
-            && self.priority == object.priority)
-        {
+        // FIXME: get item may crash when dealloc, move it to last
+        if ( self.firstAttribute == object.firstAttribute
+                && self.secondAttribute == object.secondAttribute
+                && self.multiplier == object.multiplier
+                && self.constant == object.constant
+                && self.priority == object.priority
+                && self.firstItem == object.firstItem
+                && self.secondItem == object.secondItem
+        ) {
             return YES;
         }
     }
@@ -137,6 +138,11 @@ static ENV prepareVFL() {
 
     // view or metric Index test
     AssertEqualConstraint(PP_IDENTITY(@"$0"), NSLayoutAttributeWidth, NSLayoutRelationEqual, subview, NSLayoutAttributeWidth, 1.0, 0, 1000);
+    AssertEqualConstraint(PP_IDENTITY(@"|m"), NSLayoutAttributeWidth, NSLayoutRelationEqual, superview.layoutMarginsGuide, NSLayoutAttributeWidth, 1.0, 0, 1000);
+    AssertEqualConstraint(PP_IDENTITY(@"|r"), NSLayoutAttributeWidth, NSLayoutRelationEqual, superview.readableContentGuide, NSLayoutAttributeWidth, 1.0, 0, 1000);
+    if (@available(iOS 11.0, *)) {
+        AssertEqualConstraint(PP_IDENTITY(@"|s"), NSLayoutAttributeWidth, NSLayoutRelationEqual, superview.safeAreaLayoutGuide, NSLayoutAttributeWidth, 1.0, 0, 1000);
+    }
     AssertEqualConstraint(PP_IDENTITY(@"$1", metric), NSLayoutAttributeWidth, NSLayoutRelationEqual, nil, NSLayoutAttributeWidth, 1.0, [metric doubleValue], 1000);
 
     // specifiy attr2
@@ -164,7 +170,7 @@ static ENV prepareVFL() {
     AssertEqualConstraint(PP_IDENTITY(@"Height < |.Width * 1.5 - 500 @$1", metric), NSLayoutAttributeHeight, NSLayoutRelationLessThanOrEqual , superview, NSLayoutAttributeWidth, 1.5, -500, [metric doubleValue]);
 
     // multi predicate
-    layouts = [subview VFLConstraints:@"Width > 100, Height < $1, Height < $0.Width, Left = |.Right - 300, Right = |.Left * 2 + 200 @999", metric];
+    layouts = [subview VFLConstraints:@"Width > 100, Height < $1, Height < $0.Width, Left = |.Right - 300, Right = |m.Left * 2 + 200 @999", metric];
 
     XCTAssertEqual(layouts.count, 5u);
     CreateSubViewConstraint(NSLayoutAttributeWidth, NSLayoutRelationGreaterThanOrEqual, nil, NSLayoutAttributeWidth, 1.0, 100, 1000);
@@ -175,7 +181,7 @@ static ENV prepareVFL() {
     XCTAssertEqualObjects(layouts[2], layout);
     CreateSubViewConstraint(NSLayoutAttributeLeft, NSLayoutRelationEqual, superview, NSLayoutAttributeRight, 1.0, -300, 1000);
     XCTAssertEqualObjects(layouts[3], layout);
-    CreateSubViewConstraint(NSLayoutAttributeRight, NSLayoutRelationEqual, superview, NSLayoutAttributeLeft, 2.0, 200, 999);
+    CreateSubViewConstraint(NSLayoutAttributeRight, NSLayoutRelationEqual, superview.layoutMarginsGuide, NSLayoutAttributeLeft, 2.0, 200, 999);
     XCTAssertEqualObjects(layouts[4], layout);
 }
 

@@ -110,7 +110,7 @@ static inline NSLayoutAttribute getAttr(char attrChar){
         case 'b': return NSLayoutAttributeBaseline;
         case 'W': return NSLayoutAttributeWidth;
         case 'H': return NSLayoutAttributeHeight;
-        default: { return 0; }
+        default: { return NSLayoutAttributeNotAnAttribute; }
     }
 }
 
@@ -182,19 +182,56 @@ static inline bool AttributeNeedPair(NSLayoutAttribute attr) {
 
 #pragma mark - ANALYZER
 
-#define SUPER_TOKEN [NSNull null]
-#define DEFAULT_CONNECTION_TOKEN [NSNull null]
+#define SUPER_TOKEN @"v"
+#define SUPER_MARGIN_GUIDE_TOKEN @"m"
+#define SUPER_READABLE_GUIDE_TOKEN @"r"
+#define SUPER_SAFEAREA_GUIDE_TOKEN @"s"
+#define DEFAULT_CONNECTION_TOKEN ((id)kCFNull)
+
+static bool resolveSuperViewToken(id __strong* token, id subView) {
+    if (![*token isKindOfClass:[NSString class]]) { return false; }
+    switch( [(NSString*)*token characterAtIndex:0] ){
+        case 'v': { *token = [subView superview]; } break;
+        case 'm': { *token = [subView superview].layoutMarginsGuide; } break;
+        case 'r': { *token = [subView superview].readableContentGuide; } break;
+        case 's': {
+            if (@available(iOS 11.0, *)) {
+                *token = [subView superview].safeAreaLayoutGuide;
+            } else {
+                WARN(@"safeAreaLayoutGuide only support after iOS 11!");
+                *token = [subView superview].layoutMarginsGuide;
+            }
+        } break;
+        default: {
+            NSCAssert(false, @"unknown token %@", *token);
+        } break;
+    }
+    return true;
+}
+/// get the specific superview token.
+/// @param token the output token, always have a value set
+/// @return position after consume some char
+static const char* getSuperViewToken(const char* format, id __strong* token) {
+    switch( *format ){
+        case 'm': { *token = SUPER_MARGIN_GUIDE_TOKEN; } return format + 1;
+        case 'r': { *token = SUPER_READABLE_GUIDE_TOKEN; } return format + 1;
+        case 's': { *token = SUPER_SAFEAREA_GUIDE_TOKEN; } return format + 1;
+        default: { *token = SUPER_TOKEN; } return format;
+    }
+}
+
 /** create constraint and add it into constraints
  * @param leftView the main view at equation left.
  * [otherView]-[leftView]: will be leftView.attr = otherView.attr + num
  * [leftView(predicates)]: otherView will be nil and rightView set in predicates
  * */
 static void buildConstraints(id leftView, NSArray* predicates, id otherView, NSMutableArray* constraints, AnalyzeEnv* env) {
+    NSCAssert(leftView, @"leftView must exist!");
+    
     NSLayoutAttribute defAttr1, defAttr2;
     UIView*__strong *superview = nil;
 
-    if (leftView == SUPER_TOKEN) { // [V]-|
-        leftView = [otherView superview];
+    if (resolveSuperViewToken(&leftView, otherView)) { // [V]-|
         superview = &leftView;
         Assert(leftView, @"superview not exist!");
 
@@ -204,8 +241,7 @@ static void buildConstraints(id leftView, NSArray* predicates, id otherView, NSM
             case FLOW:       { defAttr1 = defAttr2 = NSLayoutAttributeTrailing; } break;
             default:         { NSCAssert(false, @"should have a valid direction!!");  } break;
         }
-    } else if (otherView == SUPER_TOKEN) { // |-[V]
-        otherView = [leftView superview];
+    } else if (resolveSuperViewToken(&otherView, leftView)) { // |-[V]
         superview = &otherView;
         Assert(otherView, @"superview not exist!");
 
@@ -235,7 +271,7 @@ static void buildConstraints(id leftView, NSArray* predicates, id otherView, NSM
                     multiplier:1.0 constant:0]];
     } else if (predicates[0] == DEFAULT_CONNECTION_TOKEN) { // [A]-[B]
         CGFloat constant = kDefaultSpace;
-        if (env->supportGuide && superview) {
+        if (env->supportGuide && superview && [*superview isKindOfClass:[UIView class]]) {
             *superview = (id)[*superview layoutMarginsGuide];
             constant = 0;
         }
@@ -265,17 +301,16 @@ static void buildConstraints(id leftView, NSArray* predicates, id otherView, NSM
                     attr2 = defAttr2; // not set 2, use default
                 }
             }
-            // set otherView
-            if (otherView) view2 = otherView;
-            else{ // [view(predicates)]
-                if (predicate->view2 == SUPER_TOKEN ||
-                    (!predicate->view2 && AttributeNeedPair(attr1)) )
-                {
-                    view2 = [leftView superview];
-                } else {
-                    view2 = predicate->view2;
-                }
-            }
+            view2 = predicate->view2;
+            // set otherView, it's a connection
+            if (otherView) { view2 = otherView; }
+            // not set otherView, it's a [view(predicates)]
+            else if (resolveSuperViewToken(&view2, leftView)) {
+                // view2 set in resolveSuperViewToken
+            } else if ( !view2 && AttributeNeedPair(attr1) ){
+                view2 = [leftView superview];
+            } // otherwise, default to predicate->view2
+
             constraint = [NSLayoutConstraint
                 constraintWithItem:leftView attribute:attr1
                          relatedBy:predicate->relation
@@ -389,8 +424,7 @@ static const char* analyzePredicateStatement(const char* format, AnalyzeEnv* env
     // check ViewIndex
     SkipSpace(format);
     if (*format == '|') { // check superview
-        ++format;
-        (*outPredicate)->view2 = SUPER_TOKEN;
+        format = getSuperViewToken(format + 1, &((*outPredicate)->view2));
     } else {
         format = tryGetIndexValue(format, env, &obj);
         if (obj) {
@@ -534,14 +568,14 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
         switch( *format ){
             case '|': {
            Superview:
+                format = getSuperViewToken(format+1, &secondView)-1; // -1 for balance ++ at the switch end
                 if (firstView) { // [V]-|
-                    buildConstraints(SUPER_TOKEN, connections, firstView, env->constraints, env);
+                    buildConstraints(secondView, connections, firstView, env->constraints, env);
 
-                    firstView = SUPER_TOKEN;
-                    secondView = nil;
+                    firstView = secondView;
                     [connections removeAllObjects];
                 } else { // first superview
-                    firstView = SUPER_TOKEN;
+                    firstView = secondView;
                 }
                 break;
             }
@@ -592,7 +626,6 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
                 }
 
                 firstView = secondView;
-                secondView = nil;
                 [connections removeAllObjects];
 
                 SkipSpace(format);

@@ -149,7 +149,7 @@ for array env, ref the index by $0, $1...
 for swift, you can use string interpolation directly.  
 
 ##### Connect between views. (same as [Apple's Syntax][0])
-Compatible NOTE: Apple horizontal use leading to trailing, I think Left to Right is more controllable and less confuse.
+Compatible NOTE: Apple default horizontal use leading to trailing, I think Left to Right is more controllable and less confuse.
 so in my implementation, default H: means Left to Right(not leading to trailing), and a new keyword F: meas leading to trailing(same as Apple VFL H:)
 
 * Connect two view with standard space:  
@@ -194,7 +194,7 @@ VFL recognize first letter as attribute, after is ignoring and can write word co
 `[button(Height=30)]`  
 `[view(Height= | * 0.5)]`  
 
-* Full Fill Super View: (use | token to represent superview)  
+* Full Fill Super View: (use | token to represent superview, or |m token to represent superview.layoutMarginGuide)  
 `[view(L, R, T, B)]`  
 `[view(Left, Right, Top, Bottom)]`  
 `[view(Left, Right, Top, Bottom)]`  
@@ -366,6 +366,7 @@ detail.VFLFullInstall("Left=\(title), Bottom=\(image)")
 对于swift项目, 除手动创建字典, 数组外, 支持字符串插值形式调用.
 
 ##### 连接视图. (和[苹果语法][0]一样)
+兼容性NOTE: 苹果VFL水平方向默认是从leading到trailing, 但我认为从左到右会更符合直觉。需要leading到trailing的，请使用F:的前缀标记
 
 * 标准间距  
   `[button]-[textField]`
@@ -411,7 +412,7 @@ VFL使用首字母来区分指定的属性, 后面的字母忽略, 所以可以�
 `[button(Height=30)]`  
 `[view(Height= | * 0.5)]`  
 
-* 完全填满SuperView: (使用 `|` 符号来代表superview)  
+* 完全填满SuperView: (使用 `|` 符号来代表superview, 或者`|m`符号来代表superview.layoutMarginGuide)  
 `[view(L, R, T, B)]`  
 `[view(Left, Right, Top, Bottom)]`  
 `[view(Left, Right, Top, Bottom)]`  

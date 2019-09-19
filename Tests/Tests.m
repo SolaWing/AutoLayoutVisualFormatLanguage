@@ -197,9 +197,14 @@ static ENV prepareVFL() {
     NSMutableArray* compareLayouts;
 
 #define AssertAppleVFLEqual(appleFormat, myFormat) \
-    XCTAssertEqualObjects([NSLayoutConstraint constraintsWithVisualFormat:appleFormat options:0 metrics:nil views:env.dict], \
-                          [env.dict VFLConstraints:myFormat]) // same as apple's VFL
-#define AssertAppleVFLHorzontalEqual(format) AssertAppleVFLEqual(@"H:" format, @"F:" format);
+    XCTAssertEqualObjects( \
+            [NSLayoutConstraint constraintsWithVisualFormat:appleFormat \
+                options:[myFormat hasPrefix:@"H:"] ? NSLayoutFormatDirectionLeftToRight : NSLayoutFormatDirectionLeadingToTrailing \
+                metrics:nil views:env.dict], \
+            [env.dict VFLConstraints:myFormat]) // same as apple's VFL
+#define AssertAppleVFLHorzontalEqual(format) \
+    AssertAppleVFLEqual(@"H:" format, @"F:" format); \
+    AssertAppleVFLEqual(@"H:" format, @"H:" format);
 #define AssertAppleVFLVerticleEqual(format) AssertAppleVFLEqual(@"V:" format, @"V:" format);
 
     AssertAppleVFLHorzontalEqual(@"|-[v0]-4-[v1][v2]-|");

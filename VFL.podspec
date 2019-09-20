@@ -37,6 +37,7 @@ Powerful and Easy to use AutoLayout Visual Format Language. it is:
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '6.0'
+  s.swift_versions = ['5.0']
 
   s.default_subspecs = 'Swift'
   s.module_name = 'VFL'

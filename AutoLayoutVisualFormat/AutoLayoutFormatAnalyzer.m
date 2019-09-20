@@ -321,6 +321,7 @@ static void buildConstraints(id leftView, NSArray* predicates, id otherView, NSM
             constraint.priority = predicate->priority;
             [constraints addObject:constraint];
             if (predicate->name.length > 0){ // if has name. associate it
+                constraint.identifier = predicate->name;
                 VFLSetObjectForKey(constraint, predicate->name);
             }
         }

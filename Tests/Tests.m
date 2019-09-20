@@ -112,6 +112,7 @@ static ENV prepareVFL() {
 #define AssertAttrChar(ch, attr, toView)                                                           \
     AssertEqualConstraint(@#ch, attr, NSLayoutRelationEqual, toView, attr, 1.0, 0, 1000)
 
+    // attr need secondView, default superview
     AssertAttrChar(L, NSLayoutAttributeLeft, superview)
     AssertAttrChar(R, NSLayoutAttributeRight, superview)
     AssertAttrChar(T, NSLayoutAttributeTop, superview)
@@ -120,9 +121,12 @@ static ENV prepareVFL() {
     AssertAttrChar(Y, NSLayoutAttributeCenterY, superview)
     AssertAttrChar(l, NSLayoutAttributeLeading, superview)
     AssertAttrChar(t, NSLayoutAttributeTrailing, superview)
-    AssertAttrChar(b, NSLayoutAttributeBaseline, superview) // attr need secondView, default superview
+    AssertAttrChar(b, NSLayoutAttributeBaseline, superview)
+    AssertAttrChar(b, NSLayoutAttributeLastBaseline, superview) // NSLayoutAttributeBaseline is equal to NSLayoutAttributeLastBaseline
+    AssertAttrChar(f, NSLayoutAttributeFirstBaseline, superview)
 
-    AssertAttrChar(W, NSLayoutAttributeWidth, nil) // toView default nil
+    // toView default nil
+    AssertAttrChar(W, NSLayoutAttributeWidth, nil)
     AssertAttrChar(H, NSLayoutAttributeHeight, nil)
 
     // in view predicate, attr default to width

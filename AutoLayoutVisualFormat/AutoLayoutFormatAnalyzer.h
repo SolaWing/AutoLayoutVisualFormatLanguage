@@ -33,8 +33,8 @@ extern bool VFLEnableAssert;
                         |s means superview's safeAreaLayoutGuide
                         |r means superview's readableContentGuide
 <view>              :   [<viewIndex>(<predicateList>)?]
-<align>             :   [LRTBXYltbWH]
-                        Left,Right,Top,Bottom,CenterX,CenterY,leading,trailing,baseline,Width,Height
+<align>             :   [LRTBXYltfbWH]
+                        Left,Right,Top,Bottom,CenterX,CenterY,leading,trailing,first baseline,last baseline,Width,Height
                         align all connect view in one statement(except superview) according to align flag
                         generate align constraints will connect adjacent views
 <connection>        :   <empty>|-<predicateList>-|-
@@ -63,8 +63,9 @@ extern bool VFLEnableAssert;
                         so, each predicate will convert to a constraint
                         for <connect>, equal to: secondView.attr1 == firstView.attr2 * multiplier + constant
                         for <view>, equal to: mainView.attr1 == predicateView.attr2 * multiplier + constant
-<attr>              :   [LRTBXYltbWH]
+<attr>              :   [LRTBXYltfbWH]
                         same as align attr, but the attr can spell full, like Left,baseline, etc.
+                        attr can be encapsulate by {}, use , to specify a combined attributes
 <relation>          :   ==|<=|>=
 <constant>          :   <number>|<metricIndex>
 <multiplier>        :   <number>|<metricIndex>

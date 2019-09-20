@@ -107,7 +107,8 @@ static inline NSLayoutAttribute getAttr(char attrChar){
         case 'Y': return NSLayoutAttributeCenterY;
         case 'l': return NSLayoutAttributeLeading;
         case 't': return NSLayoutAttributeTrailing;
-        case 'b': return NSLayoutAttributeBaseline;
+        case 'f': return NSLayoutAttributeFirstBaseline;
+        case 'b': return NSLayoutAttributeLastBaseline;
         case 'W': return NSLayoutAttributeWidth;
         case 'H': return NSLayoutAttributeHeight;
         default: { return NSLayoutAttributeNotAnAttribute; }
@@ -644,7 +645,8 @@ static const char* analyzeStatement(const char* format, AnalyzeEnv* env) {
             case 'Y': [env->constraints addObjectsFromArray:[connectViews constraintsAlignAllViews:NSLayoutAttributeCenterY]]  ; break;
             case 'l': [env->constraints addObjectsFromArray:[connectViews constraintsAlignAllViews:NSLayoutAttributeLeading]]  ; break;
             case 't': [env->constraints addObjectsFromArray:[connectViews constraintsAlignAllViews:NSLayoutAttributeTrailing]] ; break;
-            case 'b': [env->constraints addObjectsFromArray:[connectViews constraintsAlignAllViews:NSLayoutAttributeBaseline]] ; break;
+            case 'f': [env->constraints addObjectsFromArray:[connectViews constraintsAlignAllViews:NSLayoutAttributeFirstBaseline]] ; break;
+            case 'b': [env->constraints addObjectsFromArray:[connectViews constraintsAlignAllViews:NSLayoutAttributeLastBaseline]] ; break;
             case 'W': [env->constraints addObjectsFromArray:[connectViews constraintsAlignAllViews:NSLayoutAttributeWidth]]    ; break;
             case 'H': [env->constraints addObjectsFromArray:[connectViews constraintsAlignAllViews:NSLayoutAttributeHeight]]   ; break;
 

@@ -9,6 +9,9 @@
 
 import Foundation
 import UIKit
+#if canImport(AutoLayoutVisualFormat)
+@_exported import AutoLayoutVisualFormat
+#endif
 
 public func constraints(_ interpolation: VFLInterpolation) -> [NSLayoutConstraint] {
     let (format, env) = interpolation.result()

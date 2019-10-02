@@ -9,6 +9,9 @@
 
 import Foundation
 import UIKit
+#if canImport(AutoLayoutVisualFormat)
+import AutoLayoutVisualFormat
+#endif
 
 public extension UIView {
     // first type is String conflict with interpolation. so add prefix label

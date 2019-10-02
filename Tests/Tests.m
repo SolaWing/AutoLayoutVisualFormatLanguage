@@ -8,7 +8,11 @@
 
 #import <XCTest/XCTest.h>
 #import <UIKit/UIKit.h>
+#if __has_include(<VFL/VFL.h>)
 #import <VFL/VFL.h>
+#else
+#import "AutoLayoutVisualFormatLib.h"
+#endif
 
 @interface NSLayoutConstraint (testHelper)
 

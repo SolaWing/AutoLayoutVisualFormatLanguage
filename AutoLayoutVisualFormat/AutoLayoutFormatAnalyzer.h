@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#define VFLVersion 1.01
+#define VFLVersion 3.0
 
 NS_ASSUME_NONNULL_BEGIN
 
